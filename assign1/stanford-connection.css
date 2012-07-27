@@ -1,0 +1,82 @@
+/* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+/* End of css reset*/
+
+#main {
+	width: 990px;
+	font-family: sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+}
+#profile {
+	width: 760px;
+}
+#top_panel {
+	height: 120px;
+	background-color: #9A0000;
+}
+h1 {
+	color: #fff;
+	font-size: 64px;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 30px;
+}
+#logo {
+	float: right;
+}
+img {
+	display: block;
+}
+#left_col {
+	width: 200px;
+}
+#profile_pic {
+	float: left;
+	margin-bottom: 10px;
+}
+.titlebar {
+	border-top: 2px solid;
+	border-bottom: 2px solid;
+	background-color: #CC9191;
+	margin: 5px 0px;
+	padding: 5px;
+	clear: both;
+	font-weight: bold;
+}
+.info_field {
+	font-weight: bold;
+}
+.friend_name {
+	font-weight: bold;
+}
+#middle_col {
+	width:500px;
+}
+h2 {
+	font-size: 28px;
+	font-weight: bold;
+}
+.status_update {
+	border-top: 1px solid;
+	padding: 10px 0px 20px 0px;
+	font-size: 14px;
+}
+#post_updates {
+	width: 200px;
+}
+#post_updates_titlebar {
+	margin-top: 0px;
+}
+#status_text_area {
+	width: 194px;
+	height: 70px;
+	margin-bottom: 5px;
+}
+.col {
+	float: left;
+	margin: 0px 15px;
+}
+.panel {
+	margin: 15px 0px;
+}

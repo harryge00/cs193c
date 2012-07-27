@@ -1,0 +1,99 @@
+#main {
+	font-family: sans-serif;
+}
+
+h1 {
+	margin: 15px;
+}
+
+table {
+	border-collapse: collapse;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000;
+	font-family: sans-serif;
+}
+
+th {
+	font-size: 18px;
+	font-weight: normal;
+	background-color: #555;
+	color: #fff;
+	padding: 5px;
+	border-right: 1px #fff solid;
+}	
+
+th.last_header {
+	border-right: 1px #000 solid;
+}
+
+td {
+	border-right: 1px #000 solid;
+	border-left: 1px #000 solid;
+	padding: 3px;
+}
+
+.odd {
+	background: #EEE;
+}
+
+.even {
+	background: #fff;
+}
+
+h3 {
+font-size: 18px;
+font-weight: normal;
+text-align: center;
+background-color: #555;
+color: white;
+margin: 0px;
+padding: 5px;
+}
+
+.col {
+float:left;
+margin:15px;
+}
+
+.box {
+	border: 1px black solid;
+	width: 260px;
+	margin-bottom: 30px;
+}
+
+#info_box {
+	width: 200px;
+}
+
+.box_content {
+	margin: 5px;
+}
+
+.subcript_text {
+	font-size: 12px;
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+
+input[type="text"] {
+	float: right;
+	width: 90px;
+}
+
+input[type="checkbox"] {
+	float: right;
+	margin-right: 10px;
+}
+
+.row {
+	margin-top: 10px;
+}
+
+#left_col {
+	width: 850px;
+}
+
+#right_col {
+	width: 150px;
+}

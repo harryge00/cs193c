@@ -1,0 +1,49 @@
+#main {
+	width:800px;
+	font-family: sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+}
+.col {
+	float:left;
+	width:380px;
+	margin:5px;
+}
+.box {
+	border: 2px black solid;
+	padding: 5px;
+	margin: 5px;
+}
+ul {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+form {
+	padding: 10px;
+}
+h1 {
+	margin: 0px;
+}
+h3 {
+	font-size: 20px;
+	font-weight: normal;
+	background-color: gray;
+	color: white;
+	padding: 5px;
+	margin: 0px;
+}
+.price  {
+	float: right;
+}
+img {
+	display: block;
+}
+#color {
+	float: left;
+}
+#photo {
+	float: right;
+}
+.end_panel_div {
+	clear: both;
+}

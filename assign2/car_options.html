@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="car_options.css" />
+<title>Configure Your GT Super Sportscar</title>
+</head>
+<body>
+	<div id="main">
+		<h1>Configure Your GT Super Sportscar</h1>
+		<div class="col" id="left_col">
+			<div class="box">
+				<h3>Configuration</h3>
+				<form id="configuration">
+					<label><input type="radio" name="configSelect" value="GT Manual" />GT Manual<span class="price">$17,790.00</span></label><br />
+					<label><input type="radio" name="configSelect" value="GT Automatic" />GT Automatic<span class="price">$18,590.00</span></label><br />
+					<label><input type="radio" name="configSelect" value="GT-S Manual" />GT-S Manual<span class="price">$22,455.00</span></label><br />
+					<label><input type="radio" name="configSelect" value="GT Automatic" />GT-S Sportshift<span class="price">$23,155.00</span></label><br />
+				</form>
+			</div>
+			<div class="box">
+				<h3>Factory Options</h3>
+				<form id="factory">
+					<label><input type="radio" name="factorySelect" value="combo_1" />Option Combo #1<span class="price">$1,235.00</span></label><br />
+					<ul>
+						<li>Power Windows, Doors, Cruise Control</li>
+					</ul>
+					<label><input type="radio" name="factorySelect" value="combo_2" />Option Combo #2<span class="price">$3,354.00</span></label><br />
+					<ul>
+						<li>Rear Spoiler and Fog Lamps</li>
+						<li>Keyless Entry</li>
+						<li>Power Tilt & Slide Moonroof</li>
+						<li>Power Windows, Doors, Cruise Control</li>
+					</ul>
+					<label><input type="radio" name="factorySelect" value="no_combo" />No Combo<span class="price">$0</span></label><br />
+				</form>
+			</div>
+			<div class="box">
+				<h3>Dealer Options</h3>
+				<form id="dealer">
+					<label><input type="checkbox" name="dealerSelect" value="upraded_stereo_system" />Upgraded Stereo System<span class="price">$550.00</span></label><br />
+					<label><input type="checkbox" name="dealerSelect" value="vip_security_system" />VIP Security System<span class="price">$399.00</span></label><br />
+					<label><input type="checkbox" name="dealerSelect" value="auto_dimming_mirror" />Auto-Dimming Mirror<span class="price">$295.00</span></label><br />
+				</form>
+			</div>
+			<div class="box">
+				<h3>Total Price</h3>
+				<form id="total_price">
+					<label><input type="text" name="total" /></label>
+					<label><input type="button" value="Calculate Total" onclick="calculateTotal();" /></label><br />
+				</form>
+			</div>
+		</div>
+		<div class="col" id="right_col">
+			<div class="box">
+				<h3>Choose A Color</h3>
+				<form id="color">
+					<select name="colorSelect" size="5" onchange="changePhoto();">
+						<option value="Red" selected="selected">Red</option>
+						<option value="Blue">Blue</option>
+						<option value="Silver">Silver</option>
+						<option value="White">White</option>
+						<option value="Black">Black</option>
+					</select>
+				</form>
+				<img id="photo" src="red.jpg" alt="Car Photo" />
+				<div class="end_panel_div"></div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function calculateTotal() {
+			var total = 0;
+			if (document.getElementById("configuration").configSelect[0].checked)
+				total += 17790;
+			else if (document.getElementById("configuration").configSelect[1].checked)
+				total += 18590;
+			else if (document.getElementById("configuration").configSelect[2].checked)
+				total += 22455;
+			else if (document.getElementById("configuration").configSelect[3].checked)
+				total += 23155;
+
+			if (document.getElementById("factory").factorySelect[0].checked)
+				total += 1235;
+			else if (document.getElementById("factory").factorySelect[1].checked)
+				total += 3354;
+			else if (document.getElementById("factory").factorySelect[2].checked)
+				total += 0;
+			
+
+			if (document.getElementById("dealer").dealerSelect[0].checked)
+				total += 550;
+			if (document.getElementById("dealer").dealerSelect[1].checked)
+				total += 399;
+			if (document.getElementById("dealer").dealerSelect[2].checked)
+				total += 295;
+
+			document.getElementById("total_price").total.value = "$" + Math.floor(total/1000) + "," + (total%1000) +".00";
+		}
+
+		function changePhoto() {
+			var index = document.getElementById("color").colorSelect.selectedIndex;
+   		    switch (index) {
+   		    	case 0: document.getElementById("photo").src = "red.jpg";
+   		    			break;
+   		    	case 1: document.getElementById("photo").src = "blue.jpg";
+   		    			break;
+   		    	case 2: document.getElementById("photo").src = "silver.jpg";	
+   		    			break;
+   		    	case 3: document.getElementById("photo").src = "white.jpg";
+   		    			break;
+   		    	case 4: document.getElementById("photo").src = "black.jpg";
+   		    			break;
+   		    }  
+		}
+	</script>
+</body>
+</html>

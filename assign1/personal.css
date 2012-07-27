@@ -1,0 +1,30 @@
+#Mugshot {
+	float: left;
+	margin: 25px;
+	padding: 0px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #000;
+}
+
+img {
+	display: block;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+a:hover {
+	color: #c00;
+}
+
+.Stanford {
+	color: red;
+	font-weight: bold;
+}
+

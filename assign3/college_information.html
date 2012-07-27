@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="college_information.css" />
+<meta charset="UTF-8" />
+<title>Bay Area Colleges and Universities</title>
+</head>
+<body onload="generateTable()">
+	<div id="main">
+		<h1>Bay Area Colleges and Universities</h1>
+		<div class="col" id="left_col">
+		</div>
+		<div class="col" id="right_col">
+			<div class="box" id="search_box">
+				<h3>Search Criteria</h3>
+				<div class="box_content">
+					<form id="search_criteria">
+						<div class="row">
+							<label><input type="radio" name="publicSelect" value="Public" />Public</label>
+							<label><input type="radio" name="publicSelect" value="Private" />Private</label>
+							<label><input type="radio" name="publicSelect" value="Don't Care" />Don't Care</label>
+						</div>
+						<div class="row">
+							<label>Maximum Tuition<input type="text" name="max_tuition" /></label>
+							<p class="subcript_text">leave blank for don't care</p>
+						</div>
+						<div class="row">
+							<label>Maximum High SAT<input type="text" name="max_high_sat" /></label>
+							<p class="subcript_text">leave blank for don't care</p>
+						</div>
+						<div class="row">
+							<label>Minimum Low SAT<input type="text" name="min_low_sat" /></label>
+							<p class="subcript_text">leave blank for don't care</p>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+			<div class="box" id="info_box">
+				<h3>Information to Display</h3>
+				<div class="box_content">
+					<form id="information_to_display">
+						<div class="row">
+							<label><input type="radio" name="nameSelect" value="Fullname" />Fullname</label>
+							<label><input type="radio" name="nameSelect" value="Nickname" />Nickname</label><br />
+						</div>
+						<div class ="row">
+							<label>SAT Information</label><input type="checkbox" name="satInformation" value="SAT Information" /><br />
+						</div>
+						<div class ="row">
+							<label>Tuition Information</label><input type="checkbox" name="tuitionInformation" value="Tuition Information" /><br />
+						</div>
+						<div class ="row">
+							<label>System</label><input type="checkbox" name="systemInformation" value="System" /><br />
+						</div>
+					</form>
+				</div>
+			</div>
+			<input type="button" name="update" value="Update" onclick="generateTable();"/>
+		</div>
+	</div>
+
+	<script type="text/javascript">		
+		var univArray = new Array(
+		{name: "Stanford University", nick: "Stanford", ownership: "private", sys: "n/a", SATh: 1550, SATl: 1360, tuition: 27204, room: 8680},
+		{name: "University of California, Berkeley", nick: "UC Berkeley", ownership: "public", sys: "University of California", SATh: 1440, SATl: 1170, tuition: 4200, room: 10608},
+		{name: "University of California, Santa Cruz", nick: "UC Santa Cruz", ownership: "public", sys: "University of California", SATh: 1270, SATl: 1030, tuition: 4384, room: 9708},
+		{name: "San Francisco State University", nick: "SFSU", ownership: "public", sys: "CalState", SATh: 1120, SATl: 850, tuition: 1826, room: 6736},
+		{name: "San Jose State University", nick: "SJSU", ownership: "public", sys: "CalState", SATh: 1140, SATl: 860, tuition: 1912, room: 7395},
+		{name: "Sonoma State University", nick: "Sonoma State", ownership: "public", sys: "CalState", SATh: 1140, SATl: 930, tuition: 2226, room: 9606},
+		{name: "California State University, Hayward", nick: "CalState Hayward", ownership: "public", sys: "CalState", SATh: 1050, SATl: 810, tuition: 1800, room: 6435},
+		{name: "University of San Francisco", nick: "USF", ownership: "private", sys: "Roman Catholic", SATh: 1240, SATl: 1030, tuition: 21780, room: 9080},
+		{name: "Santa Clara University", nick: "SCU", ownership: "private", sys: "Roman Catholic", SATh: 1300, SATl: 1110, tuition: 23445, room: 8904},
+		{name: "Mills College", nick: "Mills College", ownership: "private", sys: "n/a", SATh: 1130, SATl: 920, tuition: 19482, room: 7832}
+		);
+
+		function clearTable() {
+			var tableNode = document.getElementsByTagName("table")[0];
+			if(tableNode != undefined) {
+				tableNode.parentNode.removeChild(tableNode);
+			}
+		}
+
+		function generateTable() {
+	
+			clearTable();
+
+			var left_col = document.getElementById("left_col");
+			var table = document.createElement('TABLE');
+			var tbody = document.createElement('TBODY');
+			table.appendChild(tbody);
+
+			//Create table headers
+			var tr = document.createElement('TR');
+			tbody.appendChild(tr);
+
+			//name
+			var th = document.createElement('TH');
+			if (document.getElementById("information_to_display").nameSelect[1].checked) {
+				th.appendChild(document.createTextNode("Nickname"));
+				tr.appendChild(th);
+			} else {
+				th.appendChild(document.createTextNode("Name"));
+				tr.appendChild(th);
+			}
+	
+
+			//SAT
+			
+			if (document.getElementById("information_to_display").satInformation.checked) {
+				var th = document.createElement('TH');
+				th.appendChild(document.createTextNode("SAT High"));
+				tr.appendChild(th);
+
+				var th = document.createElement('TH');
+				th.appendChild(document.createTextNode("SAT Low"));
+				tr.appendChild(th);
+			} 
+
+			//Tuition
+			
+			if (document.getElementById("information_to_display").tuitionInformation.checked) {
+				var th = document.createElement('TH');
+				th.appendChild(document.createTextNode("Tuition"));
+				tr.appendChild(th);
+
+				var th = document.createElement('TH');
+				th.appendChild(document.createTextNode("Room and Board"));
+				tr.appendChild(th);
+			} 
+
+			//System
+			
+			if (document.getElementById("information_to_display").systemInformation.checked) {
+				var th = document.createElement('TH');
+				th.appendChild(document.createTextNode("System"));
+				tr.appendChild(th);
+			}
+
+			tr.lastChild.setAttribute("class","last_header");
+			
+			//Create table rows
+			var filteredUnivArray = univArray.slice(0);
+			filterArray(filteredUnivArray);
+
+			for (var i=0; i < filteredUnivArray.length; i++) {
+				var tr = document.createElement('TR');
+				tbody.appendChild(tr);
+
+				//name
+				var td = document.createElement('TD');
+				if (document.getElementById("information_to_display").nameSelect[1].checked) {
+					td.appendChild(document.createTextNode(filteredUnivArray[i].nick));
+					tr.appendChild(td);
+				} else {
+					td.appendChild(document.createTextNode(filteredUnivArray[i].name));
+					tr.appendChild(td);
+				}
+		
+
+				//SAT
+				
+				if (document.getElementById("information_to_display").satInformation.checked) {
+					var td = document.createElement('TD');
+					td.appendChild(document.createTextNode(filteredUnivArray[i].SATh));
+					tr.appendChild(td);
+
+					var td = document.createElement('TD');
+					td.appendChild(document.createTextNode(filteredUnivArray[i].SATl));
+					tr.appendChild(td);
+				} 
+
+				//Tuition
+				
+				if (document.getElementById("information_to_display").tuitionInformation.checked) {
+					var td = document.createElement('TD');
+					td.appendChild(document.createTextNode(filteredUnivArray[i].tuition));
+					tr.appendChild(td);
+
+					var td = document.createElement('TD');
+					td.appendChild(document.createTextNode(filteredUnivArray[i].room));
+					tr.appendChild(td);
+				} 
+
+				//System
+				
+				if (document.getElementById("information_to_display").systemInformation.checked) {
+					var td = document.createElement('TD');
+					td.appendChild(document.createTextNode(filteredUnivArray[i].sys));
+					tr.appendChild(td);
+				} 
+
+				if ((i%2) == 0) {
+					tr.className = "even";
+				} else {
+					tr.className = "odd";
+				}
+			}
+			left_col.appendChild(table);
+		}
+
+		function removeByIndex(array, index) {
+			array.splice(index, 1);
+		}
+
+		function filterPublicPrivate(array){
+			if (document.getElementById("search_criteria").publicSelect[0].checked) {
+				for (var i=0; i < array.length; i++) {
+					if(array[i].ownership == "private") {
+						removeByIndex(array, i);
+						i--;
+					}
+				}
+			} else if (document.getElementById("search_criteria").publicSelect[1].checked) {
+				for (var i=0; i < array.length; i++) {
+					if(array[i].ownership == "public") {
+						removeByIndex(array, i);
+						i--;
+					}
+				}
+			} 
+		}
+
+		function filterMaxTuition(array) {
+			var maxTuition = document.getElementById("search_criteria").max_tuition.value;
+			if (maxTuition != "") {
+				for (var i=0; i < array.length; i++) {
+					if (array[i].tuition > maxTuition) {
+						removeByIndex(array, i);
+						i--;
+					}
+				}
+			}
+		}
+
+		function filterHighSAT(array) {
+			var maxHighSAT = document.getElementById("search_criteria").max_high_sat.value;
+			if (maxHighSAT != "") {
+				for (var i=0; i < array.length; i++) {
+					if(array[i].SATh > maxHighSAT) {
+						removeByIndex(array, i);
+						i--;
+					}
+				}
+			}
+		}
+
+		function filterLowSAT(array) {
+			var minLowSAT = document.getElementById("search_criteria").min_low_sat.value;
+			if (minLowSAT != "") {
+				for (var i=0; i < array.length; i++) {
+					if(array[i].SATl < minLowSAT) {
+						removeByIndex(array, i);
+						i--;
+					}
+				}
+			}
+		}
+
+		function filterArray(array) {
+			filterPublicPrivate(array);
+			filterMaxTuition(array);
+			filterHighSAT(array);
+			filterLowSAT(array);
+		}
+
+	</script>
+</body>
+</html>

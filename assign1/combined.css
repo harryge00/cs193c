@@ -1,0 +1,29 @@
+#main {
+	width: 880px;
+	margin: auto;
+}
+
+#first_panel {
+	width: 880px;
+	font-family: serif;
+	clear: both;
+}
+
+#second_panel {
+	width: 880px;
+	font-family: sans-serif;
+	clear: both;
+}
+
+.col_p1 {
+	width: 400px;
+	margin: 15px;
+	float: left;
+}
+
+.col_p2 {
+	width: 200px;
+	margin: 10px;
+	float: left;
+	font-size: 19px;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="offices_at_tressider_union.css" />
+<meta charset="UTF-8" />
+<title>Offices in Tressider Union</title>
+</head>
+<body>
+	<div id="main">
+		<img id="banner" class="center" src="offices-bnr.gif" alt="Offices at Tressider Union" />
+		<img id="seal" src="seal.gif" alt="Stanford Seal" />
+		<p>
+			Tresidder Union houses a number of University Offices. Most of these offices are part of the Vice-Provost Student Affairs (VPSA) organization.
+		</p>
+		<p>
+			To learn more about an individual office in Tresidder, select the name of the office from the pulldown menu below:
+		</p>
+		<form id="office">
+			<select name="officeSelect" onchange="generatePopup();">
+				<option value="Choose an Office">Choose an Office</option>
+				<option value="Residential Education (ResEd)">Residential Education (ResEd)</option>
+				<option value="Dean of Students">Dean of Students</option>
+				<option value="Office of Student Activities (OSA)">Office of Student Activities (OSA)</option>
+				<option value="Vice-Provost of Student Affairs">Vice-Provost of Student Affairs</option>
+			</select>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var officeArray = [{office: "Residential Education (ResEd)", phone_number: "725-2800", description: "The Office of Residential Education is responsible for developing the policies, programs, and staffing which support the intellectual, educational, and community-building activities in student residences.  Second Floor.", source: "resed.jpg", alternate: "Residential Education Logo"}, {office: "Dean of Students", phone_number: "723-7833", description: "The Dean of Students office is composed of 13 individual administrative units that are concerned with the general welfare of both undergraduate and graduate students, in and out of the classroom.  Second floor.", source: "seal-small.gif", alternate: "Stanford Seal"}, {office: "Office of Student Activities (OSA)", phone_number: "723-2733", description: "Services for student organizations, student-initiated major events and programs, and fraternities and sororities.  Second floor.", source: "seal-small.gif", alternate: "Stanford Seal"}, {office: "Vice-Provost of Student Affairs", phone_number: "725-0911", description: "The Vice Provost for Student Affairs is responsible to the Provost for providing services and programs to undergraduate and graduate students in support of the academic mission of the University.  Second floor.", source: "seal-small.gif", alternate: "Stanford Seal"}]
+
+		function generatePopup() {
+			var index = document.getElementById("office").officeSelect.selectedIndex;
+			if (index != 0) {
+				var popup = window.open('', 'newWindow', 'width=450px,height=300px');
+				popup.focus();
+
+				popup.document.open();
+				popup.document.writeln("<style> img {float: right} </style>");
+				popup.document.writeln("<h1>" + officeArray[index-1].office + "</h1>");
+				popup.document.writeln('<img src="' + officeArray[index-1].source + '" alt="' + officeArray[index-1].alternate + '" />');
+				popup.document.writeln("<h3>" + officeArray[index-1].phone_number + "</h3>");
+				popup.document.writeln("<p>" + officeArray[index-1].description + "</p>");
+				popup.document.close();
+			}
+		}
+	</script>
+</body>
+</html>

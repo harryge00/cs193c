@@ -1,0 +1,10 @@
+.main {
+	width: 880px;
+	font-family: sans-serif;
+}
+
+.col {
+	width: 200px;
+	margin: 10px;
+	float: left;
+}
