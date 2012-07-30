@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	.row {
+		clear: both;
+	}
+
+	.quarterBox {
+		width: 200px;
+		height:	250px;
+		border: 1px black solid;
+		float: left;
+	}
+</style>
+<meta charset="UTF-8" />
+<title>EE Planner</title>
+</head>
+<body>
+	<div id="main">
+		<form id="input">
+			<input type="text" name="text_input" />
+			<input type="button" name="create_form" onclick="createPlan();" />
+		</form>
+		<div class="row" id="row_1">
+			<div class="quarterBox" id="quarter_1">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_2">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_3">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_4">
+				<p class="empty"></p>
+			</div>
+		</div>
+		<div class="row" id="row_2">
+			<div class="quarterBox" id="quarter_5">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_6">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_7">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_8">
+				<p class="empty"></p>
+			</div>
+		</div>
+		<div class="row" id="row_3">
+			<div class="quarterBox" id="quarter_9">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_10">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_11">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_12">
+				<p class="empty"></p>
+			</div>
+		</div>
+		<div class="row" id="row_4">
+			<div class="quarterBox" id="quarter_13">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_14">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_15">
+				<p class="empty"></p>
+			</div>
+			<div class="quarterBox" id="quarter_16">
+				<p class="empty"></p>
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+
+		var subjectAbbreviationsText = (<r><![CDATA[ 
+     
+			Explore Courses Logo
+		About | Explore Degrees | Exam Schedule
+		2007-2008 	2008-2009 	2009-2010 	2010-2011 	2011-2012
+		Browse by Subject
+		Graduate School of Business
+		    Accounting (ACCT)
+		    Economic Analysis & Policy (MGTECON)
+		    Finance (FINANCE)
+		    GSB General & Interdisciplinary (GSBGEN)
+		    Human Resource Management (HRMGT)
+		    
+		    Marketing (MKTG)
+		    Operations Information & Technology (OIT)
+		    Organizational Behavior (OB)
+		    Political Economics (POLECON)
+		    Strategic Management (STRAMGT)
+
+		School of Earth Sciences
+
+		    Earth Science (EARTHSCI)
+		    Earth Systems (EARTHSYS)
+		    Earth, Energy, & Environmental Sciences (EEES)
+		    Energy Resources Engineering (ENERGY)
+		    Environment and Resources (ENVRES)
+
+		    Environmental Earth System Science (EESS)
+		    Geological & Environmental Sciences (GES)
+		    Geophysics (GEOPHYS)
+		    Woods Institute for the Environment (ENVRINST)
+
+		School of Education
+
+		    Education (EDUC)
+
+		School of Engineering
+
+		    Aeronautics & Astronautics (AA)
+		    Bioengineering (BIOE)
+		    Chemical Engineering (CHEMENG)
+		    Civil & Environmental Engineering (CEE)
+		    Computational & Mathematical Engineering (CME)
+		    Computer Science (CS)
+
+		    Electrical Engineering (EE)
+		    Engineering (ENGR)
+		    Management Science & Engineering (MS&E)
+		    Materials Science & Engineer (MATSCI)
+		    Mechanical Engineering (ME)
+		    Scientific Computing & Computl Math (SCCM)
+
+		School of Humanities & Sciences
+
+		    African & African American Studies (AFRICAAM)
+		    African & Middle Eastern Languages (AMELANG)
+		    African Studies (AFRICAST)
+		    American Studies (AMSTUD)
+		    Anthropology (ANTHRO)
+		    Applied Physics (APPPHYS)
+		    Archaeology (ARCHLGY)
+		    Art History (ARTHIST)
+		    Art Studio (ARTSTUDI)
+		    Asian American Studies (ASNAMST)
+		    Asian Languages (ASNLANG)
+		    Astronomy (ASTRNMY)
+		    Athletics, Physical Education, Recreation (ATHLETIC)
+		    Biology (BIO)
+		    Biology/Hopkins Marine (BIOHOPK)
+		    Biophysics (BIOPHYS)
+		    Catalan Language Courses (CATLANG)
+		    Chemistry (CHEM)
+		    Chicana/o Studies (CHICANST)
+		    Chinese General (CHINGEN)
+		    Chinese Language (CHINLANG)
+		    Chinese Literature (CHINLIT)
+		    Classics Art/Archaeology (CLASSART)
+		    Classics General (CLASSGEN)
+		    Classics Greek (CLASSGRK)
+		    Classics History (CLASSHIS)
+		    Classics Latin (CLASSLAT)
+		    Communication (COMM)
+		    Comparative Literature (COMPLIT)
+		    Comparative Studies in Race & Ethnicity (CSRE)
+		    Dance (DANCE)
+		    Division of Literatures, Cultures, & Languages (DLCL)
+		    Drama (DRAMA)
+		    East Asian Studies (EASTASN)
+		    Economics (ECON)
+		    English (ENGLISH)
+		    English for Foreign Students (EFSLANG)
+		    Ethics in Society (ETHICSOC)
+		    Feminist Studies (FEMST)
+		    Film Production (FILMPROD)
+		    Film Studies (FILMSTUD)
+		    French General (FRENGEN)
+		    French Language (FRENLANG)
+		    French Literature (FRENLIT)
+		    German General (GERGEN)
+		    German Language (GERLANG)
+		    German Literature (GERLIT)
+		    History (HISTORY)
+
+		    History & Philosophy of Science (HPS)
+		    Human Biology (HUMBIO)
+		    Humanities & Sciences (HUMSCI)
+		    Iberian & Latin American Cultures (ILAC)
+		    Iberian Languages (IBERLANG)
+		    Institute for International Studies (FSI) (IIS)
+		    Interdisciplinary Studies in the Humanities (HUMNTIES)
+		    International Policy Studies (IPS)
+		    International Relations (INTNLREL)
+		    Italian General (ITALGEN)
+		    Italian Language (ITALLANG)
+		    Italian Literature (ITALLIT)
+		    Japanese General (JAPANGEN)
+		    Japanese Language (JAPANLNG)
+		    Japanese Literature (JAPANLIT)
+		    Jewish Studies (JEWISHST)
+		    Korean General (KORGEN)
+		    Korean Language (KORLANG)
+		    Latin American Studies (LATINAM)
+		    Linguistics (LINGUIST)
+		    Mathematical & Computational Science (MCS)
+		    Mathematics (MATH)
+		    Medieval Studies (MEDVLST)
+		    Modern Thought & Literature (MTL)
+		    Music (MUSIC)
+		    Native American Studies (NATIVEAM)
+		    Philosophy (PHIL)
+		    Physics (PHYSICS)
+		    Political Science (POLISCI)
+		    Portuguese Language (PORTLANG)
+		    Psychology (PSYCH)
+		    Public Policy (PUBLPOL)
+		    Religious Studies (RELIGST)
+		    Russian, East European, & Eurasian Studies (REES)
+		    Science, Technology, & Society (STS)
+		    Slavic General (SLAVGEN)
+		    Slavic Language (SLAVLANG)
+		    Slavic Literature (SLAVLIT)
+		    Sociology (SOC)
+		    Spanish Language (SPANLANG)
+		    Spanish, Portuguese, & Catalan Literature (ILAC)
+		    Special Language Program (SPECLANG)
+		    Stanford in Washington (SIW)
+		    Statistics (STATS)
+		    Symbolic Systems (SYMSYS)
+		    Tibetan Language (TIBETLNG)
+		    Urban Studies (URBANST)
+
+		Law School
+
+		    Law (LAW)
+
+		    Law, Nonprofessional (LAWGEN)
+
+		School of Medicine
+
+		    Anesthesia (ANES)
+		    Biochemistry (BIOC)
+		    Biomedical Informatics (BIOMEDIN)
+		    Cancer Biology (CBIO)
+		    Cardiothoracic Surgery (CTS)
+		    Chemical & Systems Biology (CSB)
+		    Comparative Medicine (COMPMED)
+		    Dermatology (DERM)
+		    Developmental Biology (DBIO)
+		    Family and Community Medicine (FAMMED)
+		    Genetics (GENE)
+		    Health Research & Policy (HRP)
+		    Immunology (IMMUNOL)
+		    Medicine (MED)
+		    Medicine Interdisciplinary (INDE)
+		    Microbiology & Immunology (MI)
+		    Molecular & Cellular Physiology (MCP)
+
+		    Neurobiology (NBIO)
+		    Neurology & Neurological Sciences (NENS)
+		    Neurosciences Program (NEPR)
+		    Neurosurgery (NSUR)
+		    Obstetrics & Gynecology (OBGYN)
+		    Ophthalmology (OPHT)
+		    Orthopedic Surgery (ORTHO)
+		    Otolaryngology (OTOHNS)
+		    Pathology (PATH)
+		    Pediatrics (PEDS)
+		    Psychiatry (PSYC)
+		    Radiation Oncology (RADO)
+		    Radiology (RAD)
+		    Stem Cell Biology and Regenerative Medicine (STEMREM)
+		    Structural Biology (SBIO)
+		    Surgery (SURG)
+		    Urology (UROL)
+
+		Office of Vice Provost for Undergraduate Education
+
+		    Center for Teaching & Learning (CTL)
+		    Introduction to the Humanities (IHUM)
+		    Overseas Studies General (OSPGEN)
+		    Overseas Studies in Australia (OSPAUSTL)
+		    Overseas Studies in Barcelona (CASB) (OSPBARCL)
+		    Overseas Studies in Beijing (OSPBEIJ)
+		    Overseas Studies in Berlin (OSPBER)
+		    Overseas Studies in Cape Town (OSPCPTWN)
+		    Overseas Studies in Florence (OSPFLOR)
+		    Overseas Studies in Kyoto (OSPKYOTO)
+
+		    Overseas Studies in Kyoto (KCJS) (OSPKYOCT)
+		    Overseas Studies in Madrid (OSPMADRD)
+		    Overseas Studies in Moscow (OSPMOSC)
+		    Overseas Studies in Oxford (OSPOXFRD)
+		    Overseas Studies in Paris (OSPPARIS)
+		    Overseas Studies in Santiago (OSPSANTG)
+		    Structured Liberal Education (SLE)
+		    Undergraduate Advising and Research (UAR)
+		    Writing & Rhetoric, Program in (PWR)
+
+		Stanford Continuing Studies
+
+		    Master of Liberal Arts (MLA)
+     
+    	]]></r>).toString().toLowerCase(); 
+
+		function Course(subject, number, quarter, units, grade) {
+			this.subject = subject;
+			this.number = number;
+			this.quarter = quarter;
+			this.units = units;
+			this.grade = grade;
+		}
+		var lineArray = [];
+
+		var string = "This \n Is \n A \n String.";
+
+		lineArray = string.split('\n');
+		//Now you need to iterate through the string and create courseArray
+		/*var quarterNumber = 0;
+		for (var i = 0; i < lineArray.length; i++) {
+			if(lineArray[i] == "DPT NUM Title Units Grade") {
+				i++;
+				quarterNumber++;
+				tokenArray = lineArray[i].split(' ');
+				//if the fields are separated by /t, this will be much easier. Otherwise, I will need to find a 
+				//way to determine which fields are which. Especially for the units. Regular expressions may be the 
+				//best way to do this.
+				var currentCourse = new Course(tokenArray[0], tokenArray[1], tokenArray[2], tokenArray[3]);
+				courseArray.add(currentCourse);
+			}
+		}*/
+
+ 		var subjectAbbreviationsArray = subjectAbbreviationsText.match(/\((.*?)\)/g);
+ 		for (var i=0; i<subjectAbbreviationsArray.length; i++) {
+ 			var string = subjectAbbreviationsArray[i];
+ 			subjectAbbreviationsArray[i] = string.substr(1,string.length-2);
+ 		}
+ 		//alert(subjectAbbreviationsArray);
+
+ 		function firstYear(array) {
+ 			for (var i=0; i<array.length; i++) {
+ 				if (array[i].match(/([0-9]{4}-[0-9]{4})/g) != null) {
+ 					return getYear(array[i]);
+ 				}
+ 			}
+ 		}
+ 		
+ 		function getYear(yearString) {
+ 			return parseInt(yearString.substr(0,4));
+ 		}
+
+ 		//Need to finish this function
+ 		function getQuarter(array, index, first_year) {
+ 			var currentQuarter;
+ 			switch (array[index]) {
+ 				case "autumn":
+ 					return (1 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "winter":
+ 					return (2 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "spring":
+ 					return (3 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "summer":
+ 					return (4 + 4*(getYear(array[index + 1]) - first_year)); 
+ 			}
+ 		}
+ 		//alert(courserankArray.indexOf("physics"));
+ 		//alert(subjectAbbreviationsArray.indexOf(courserankArray[50]));
+ 		//alert(courserankArray);
+
+ 		function parseCoursesArray(courserank_array, course_array) {
+ 			var first_year = firstYear(courserank_array);
+ 			var quarter;
+ 			var unitsQuarterCounter = 0;
+ 			for (var i=0; i<courserank_array.length; i++) {
+ 				if ((courserank_array[i] == "autumn") || (courserank_array[i] == "winter") || (courserank_array[i] == "spring") || (courserank_array[i] == "summer")) {
+ 					quarter = getQuarter(courserank_array, i, first_year);
+ 				}
+ 				if (isSubject(courserank_array[i], subjectAbbreviationsArray) && isCourseNumber(courserank_array[i + 1])) {
+ 					var currentCourse = new Course(courserank_array[i], courserank_array[i+1], quarter);
+ 					course_array.push(currentCourse);
+ 				}
+ 			}
+ 			for (var i=0; i<courserank_array.length; i++) {
+ 				if (isUnits(courserank_array[i]) && isGrade(courserank_array[i+1])) {
+ 					course_array[unitsQuarterCounter].units = courserank_array[i];
+ 					course_array[unitsQuarterCounter].grade = courserank_array[i + 1];
+ 					unitsQuarterCounter++;
+ 				}
+ 			}
+ 		}
+
+ 		function isSubject(string) {
+ 			return (subjectAbbreviationsArray.indexOf(string) != -1);
+ 		}
+
+ 		function isCourseNumber(string) {
+ 			return (string.match(/[0-9]+/g) != null);
+ 		}
+
+ 		function isUnits(string) {
+ 			return (string.match(/[0-9]\.[0-9]/g) != null);
+ 		}
+
+ 		function isGrade(string) {
+ 			//Why must formatting be strict in javascript. -__-
+ 			switch (string) {
+ 				case "a+":
+ 					return true;
+ 				case "a":
+ 					return true;
+ 				case "a-":
+ 					return true;
+ 				case "b+":
+ 					return true;
+ 				case "b":
+ 					return true;
+ 				case "b-":
+ 					return true;
+ 				case "c+":
+ 					return true;
+ 				case "c":
+ 					return true;
+ 				case "c-":
+ 					return true;
+ 				case "d+":
+ 					return true;
+ 				case "d":
+ 					return true;
+ 				case "d-":
+ 					return true;
+ 				case "cr":
+ 					return true;
+ 				case "i":
+ 					return true;
+ 				case "l":
+ 					return true;
+ 				case "n":
+ 					return true;
+ 				case "n-":
+ 					return true;
+ 				case "nc":
+ 					return true;
+ 				case "np":
+ 					return true;
+ 				case "rp":
+ 					return true;
+ 				case "s":
+ 					return true;
+ 				case "w":
+ 					return true;
+ 				case "*":
+ 					return true;
+ 				case "gnr":
+ 					return true;
+ 				default:
+ 					return false;
+ 			}
+ 		}
+
+ 		function isLetterGrade(string) {
+ 			//Why must formatting be strict in javascript. -__-
+ 			switch (string) {
+ 				case "a+":
+ 					return true;
+ 				case "a":
+ 					return true;
+ 				case "a-":
+ 					return true;
+ 				case "b+":
+ 					return true;
+ 				case "b":
+ 					return true;
+ 				case "b-":
+ 					return true;
+ 				case "c+":
+ 					return true;
+ 				case "c":
+ 					return true;
+ 				case "c-":
+ 					return true;
+ 				case "d+":
+ 					return true;
+ 				case "d":
+ 					return true;
+ 				case "d-":
+ 					return true;
+ 				default:
+ 					return false;
+ 			}
+ 		}
+
+ 		function writePlan(array) {
+			for (var i = 0; i < array.length; i++) {
+				var box = document.getElementById("quarter_" + array[i].quarter);
+				var p = document.createElement('P');
+				p.appendChild(document.createTextNode(array[i].subject + " " + array[i].number + " " + array[i].units + " " + array[i].grade));
+				box.appendChild(p);
+			}
+		}
+
+		function createPlan() {
+			var courserankText = document.getElementById("input").text_input.value.toLowerCase();
+	 		var courserankArray = courserankText.match(/([\w,.&\-+]*)/g);
+	 		for (var i=0; i<courserankArray.length; i++) {
+	 			if(courserankArray[i] == "") {
+	 				courserankArray.splice(i,1);
+	 				i--;
+	 			}
+	 		}
+	 		clearPlan();
+	 		var courseArray = [];
+	 		parseCoursesArray(courserankArray, courseArray);
+	 		checkPlan(courseArray);
+	 		writePlan(courseArray);
+	 	}
+
+	 	function clearPlan() {
+	 		var pArray = document.getElementsByTagName("p");
+	 		for(var i = 0; i < pArray.length; i++) {
+	 			if (pArray[i].class != "empty") {
+	 				pArray[i].parentNode.removeChild(pArray[i]);
+	 				i--;
+	 			}
+	 		}
+	 	}
+
+	 	//Array of all courses that fulfill the SOE math requirement
+	 	var mathArray = ["math19","math20", "math21", "math41", "math42", "math51", "math51m", "math52", "math53", "math51h", "math52h", "math53h", "math104", "math106", "math109", "math113", "math115", "math120", "math121", "math131p", "math132", "cme100", "cme102", "cme104", "cme108", "cs103", "cs109", "cee101d", "cee201d", "cee203", "engr62", "engr154", "engr155a", "engr155b", "engr155c", "ms&e121", "ms&e120", "stats60", "stats110", "stats116", "ee178"];
+
+	 	//Array of all courses that fulfill the SOE science requirement
+	 	var scienceArray = ["bio41", "bio42", "bio43", "cee63", "cee64", "cee70", "chem31a", "chem31b", "chem31x", "chem33", "chem35", "chem36", "chem131", "chem135", "earthsys10", "engr31", "ges1a", "ges1b", "ges1c", "physics21", "physics23", "physics25", "physics41", "physics43", "physics45", "physics42", "physics44", "physics46", "physics61", "physics63", "physics65", "physics62", "physics64", "physics67"];
+
+	 	//Array of all courses that fulfill the SOE Technology in Society requirement
+	 	var tisArray = ["sts101", "sts201", "engr130", "sts101q", "sts110", "sts112", "sts115", "bioe131", "cs181", "cs181w", "engr145", "humbio174", "ms&e181", "ms&e193", "polisci114s", "publpol194"];
+
+	 	//Array of all courses that fulfill the SOE Engineering Fundamentals requirement
+	 	var fundamentalsArray = ["engr10", "engr14", "engr15", "engr20", "cheme20", "engr25b", "cheme25b", "engr25e", "cheme25e", "engr30", "engr40", "engr40n", "engr40p", "engr50", "engr50e", "engr50m", "engr60", "engr62", "ms&e111","engr70b", "cs106b", "engr70x", "cs106x", "engr80", "engr90", "cee70"];
+
+	 	//Array of all EE cognate courses (from MS degree website + cs193 classes)
+	 	var cognateArray = ["aa244", "aa251", "aa272c", "appphys202", "appphys203", "appphys207", "appphys208", "appphys227", "appphys272", "appphys273", "appphys304", "appphys305", "appphys387", "bioe334", "cs107", "cs108", "cs110", "cs140", "cs143", "cs144", "cs148", "cs193c", "cs193d", "cs193g", "cs193p", "cs193s", "cs194", "cs205a", "cs221", "cs231a", "cs228", "cs229", "cs229a", "cs240", "cs242", "cs243", "cs244", "cs244e", "cs245", "cs248", "cs255", "cs315a", "cs315b", "cs321", "cs343", "cs344", "cs347", "cs348a", "cs348b", "cs448b", "engr105", "engr205", "engr206", "engr207a", "engr207b", "engr209a", "engr210b", "engr240", "engr341", "geophys265", "matsci199", "matsci209", "matsci316", "matsci323", "matsci343", "matsci347", "me358", "ms&e237", "ms&e251", "ms&e310", "ms&e311", "ms&e313", "ms&e321", "ms&e322", "ms&e336", "ms&e338", "ms&e339", "ms&e351", "music420a", "music421a", "music422", "music424", "psych221", "rad226", "stats315a", "stats315b", "stats375"];
+
+	 	function checkPlan(course_array) {
+	 		alert(meetsMathScience(course_array));
+	 	}
+
+	 	function meetsMathScience(course_array) {
+	 		/*if (!(courseGraded(course_array, "math41") && courseGraded(course_array,"math42"))) {
+	 			return false;
+	 		}*/
+	 		if (!((courseGraded(course_array, "math51") && courseGraded(course_array, "math52")) || (courseGraded(course_array, "cme100") && (courseGraded(course_array, "cme104") || courseGraded(course_array, "engr155b"))))) {
+	 			return false;
+	 		}
+	 		/*if (!(courseGraded(course_array, "math53") || (courseGraded(course_array, "cme102") || courseGraded(course_array, "engr155a")))) {
+	 			return false;
+	 		}
+	 		if (!(courseGraded(course_array, "ee178") || courseGraded(course_array, "stats116") || courseGraded(course_array, "math151") || (courseGraded(course_array, "cme106") || courseGraded(course_array, "engr155c")) || courseGraded(course_array, "cs109"))) {
+	 			return false;
+	 		}*/
+	 		return true;
+	 	}
+
+	 	//Determines if course is contained in the courseArray
+	 	function courseTaken(course_array, course) {
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if ((course_array.subject + course_array.number) == course) {
+	 				return true;
+	 			}
+	 		}
+	 		return false;
+	 	}
+
+	 	//Determines if course is contained in the courseArray and was taken for a letter grade
+	 	function courseGraded(course_array, course) {
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if (((course_array[i].subject + course_array[i].number) == course) && (isLetterGrade(course_array[i].grade))) {
+	 				return true;
+	 			}
+	 		}
+	 		return false;
+	 	}
+
+	</script>
+</body>
+</html>
