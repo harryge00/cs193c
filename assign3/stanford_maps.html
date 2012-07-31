@@ -85,9 +85,16 @@
 				<div class="scroll_buttons" id="up_button"><input  type="button" name="scroll_up" value="^" onclick="scrollUp();"/></div>
 				<div class="scroll_buttons" id="left_button"><input  type="button" name="scroll_left" value="<" onclick="scrollLeft();"/></div>
 				<div class="scroll_buttons" id="right_button"><input  type="button" name="scroll_right" value=">" onclick="scrollRight();"/></div>
-				<div class="scroll_buttons" id="down_button"><input  type="button" name="scroll_down" value="v" onclick="scrollDown();"/></div>
+				<div class="scroll_buttons" id="down_button"><input type="button" name="scroll_down" value="v" onclick="scrollDown();"/></div>
 			</form>
 		</div>
 	</div>
+	
+	<script type="text/javascript">	
+		function zoomIn() {
+			var x = document.getElementById("map_frame");
+			x.style.width = "100px";
+		}
+	</script>
 </body>
 </html>
