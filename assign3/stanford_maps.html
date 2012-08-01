@@ -2,8 +2,12 @@
 <html>
 <head>	
 <style>
+	body {
+		margin: 0px;
+	}
 	#main {
 		font-family: sans-serif;
+		margin:	0px;
 	}
 
 	#navigation_panel {
@@ -14,7 +18,7 @@
 	#map_frame {
 		border: 20px black solid;
 		float: left;
-		margin: 20px;
+		margin: 30px;
 		overflow: hidden;
 	}
 
@@ -60,7 +64,6 @@
 
 	#map_image {
 		position: relative;
-		z-index: -1;
 	}
 
 </style>
@@ -88,9 +91,14 @@
 	</div>
 	
 	<script type="text/javascript">	
+		// "Global constants"
+		// Note: These values must be updated manually to reflect the CSS on the map_frame div.
+		var border_width = 20;
+		var margin_width = 30;
 		// Array of imageObj types, used to store relevant information about all map images.
 		var imageArray = [];
 
+		document.ondblclick = recenterMap;
 		window.onresize = resizeMapFrame;
 
 		function init() {
@@ -113,6 +121,23 @@
 			image_xl.src = "map-xl.gif";
 
 			imageArray = [image_s, image_m, image_l, image_xl];
+		}
+
+		function recenterMap(evt) {
+			evt = (evt) ? evt : ((event) ? event : null);
+			var frame = document.getElementById("map_frame");
+			mouseX = evt.clientX;
+			mouseY = evt.clientY;
+
+			var map_image = document.getElementById("map_image");
+			var frame_width = parseInt(frame.style.width);
+			var frame_height = parseInt(frame.style.height);
+			var map_left = parseInt(map_image.style.left);
+			var map_top = parseInt(map_image.style.top);
+			var new_map_left = map_left + 0.5*frame_width - convertX(mouseX);
+			var new_map_top = map_top + 0.5*frame_height - convertY(mouseY);
+			map_image.style.left = new_map_left + "px";
+			map_image.style.top = new_map_top + "px";
 		}
 
 		function resizeMapFrame() {
@@ -260,6 +285,17 @@
 
 		function getImageIndex(image_object) {
 			return imageArray.indexOf(image_object);
+		}
+
+		// Helper functions for to calculate positions for doubleclick centering
+		function convertX(mouseX) {
+			var x = mouseX - border_width - margin_width;
+			return x;
+		}
+
+		function convertY(mouseY) {
+			var y = mouseY - border_width - margin_width;
+			return y;
 		}
 
 	</script>
