@@ -154,6 +154,18 @@
 			if(new_index < imageArray.length) {
 				var new_image = imageArray[new_index];
 				map_image.src = new_image.source;
+
+				// Adjust position to keep center point constant.
+				var old_left = parseInt(map_image.style.left);
+				var old_top = parseInt(map_image.style.top);
+				var old_x = getX(old_left);
+				var old_y = getY(old_top);
+				var new_x = scaleX(old_image, new_image, old_x);
+				var new_y = scaleY(old_image, new_image, old_y);
+				var new_left = getLeft(new_x);
+				var new_top = getTop(new_y);
+				map_image.style.left = new_left + "px";
+				map_image.style.top = new_top + "px";
 			}
 		}
 
@@ -167,6 +179,18 @@
 			if(new_index >= 0) {
 				var new_image = imageArray[new_index];
 				map_image.src = new_image.source;
+
+				// Adjust position to keep center point constant.
+				var old_left = parseInt(map_image.style.left);
+				var old_top = parseInt(map_image.style.top);
+				var old_x = getX(old_left);
+				var old_y = getY(old_top);
+				var new_x = scaleX(old_image, new_image, old_x);
+				var new_y = scaleY(old_image, new_image, old_y);
+				var new_left = getLeft(new_x);
+				var new_top = getTop(new_y);
+				map_image.style.left = new_left + "px";
+				map_image.style.top = new_top + "px";
 			}
 		}
 
@@ -197,9 +221,19 @@
 
 		function getTop(y) {
 			var frame = document.getElementById("map_frame");
-			var frame_width = parseInt(frame.style.height);
-			var topt = 0.5*frame_height - y;
+			var frame_height = parseInt(frame.style.height);
+			var top = 0.5*frame_height - y;
 			return top;
+		}
+
+		function scaleX(old_image, new_image, old_x) {
+			var new_x = old_x * new_image.width / old_image.width;
+			return new_x;
+		}
+
+		function scaleY(old_image, new_image, old_y) {
+			var new_y = old_y * new_image.height / old_image.height;
+			return new_y;
 		}
 
 		//Helper functions to access imageArray
