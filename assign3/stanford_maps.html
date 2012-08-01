@@ -93,8 +93,9 @@
 	<script type="text/javascript">	
 		// "Global constants"
 		// Note: These values must be updated manually to reflect the CSS on the map_frame div.
-		var border_width = 20;
-		var margin_width = 30;
+		var BORDER_WIDTH = 20;
+		var MARGIN_WIDTH = 30;
+		var SCROLL_STEP_SIZE = 1;
 		// Array of imageObj types, used to store relevant information about all map images.
 		var imageArray = [];
 
@@ -129,15 +130,17 @@
 			mouseX = evt.clientX;
 			mouseY = evt.clientY;
 
-			var map_image = document.getElementById("map_image");
-			var frame_width = parseInt(frame.style.width);
-			var frame_height = parseInt(frame.style.height);
-			var map_left = parseInt(map_image.style.left);
-			var map_top = parseInt(map_image.style.top);
-			var new_map_left = map_left + 0.5*frame_width - convertX(mouseX);
-			var new_map_top = map_top + 0.5*frame_height - convertY(mouseY);
-			map_image.style.left = new_map_left + "px";
-			map_image.style.top = new_map_top + "px";
+			if (insideMapFrame(mouseX, mouseY)) {
+				// Recenter map image
+				var map_image = document.getElementById("map_image");
+				var frame_width = parseInt(frame.style.width);
+				var frame_height = parseInt(frame.style.height);
+				var map_left = parseInt(map_image.style.left);
+				var map_top = parseInt(map_image.style.top);
+				var new_map_left = map_left + 0.5*frame_width - convertX(mouseX);
+				var new_map_top = map_top + 0.5*frame_height - convertY(mouseY);
+				smoothScroll(map_image, SCROLL_STEP_SIZE, new_map_left, new_map_top);
+			}
 		}
 
 		function resizeMapFrame() {
@@ -154,7 +157,7 @@
 			var frame_width = parseInt(frame.style.width);
 			var map_left = parseInt(map_image.style.left);
 			var new_map_left = map_left + 0.5*frame_width;
-			map_image.style.left = new_map_left + "px";
+			smoothScroll(map_image, SCROLL_STEP_SIZE, new_map_left, parseInt(map_image.style.top));
 		}
 
 		function moveLeft() {
@@ -163,7 +166,8 @@
 			var frame_width = parseInt(frame.style.width);
 			var map_left = parseInt(map_image.style.left);
 			var new_map_left = map_left - 0.5*frame_width;
-			map_image.style.left = new_map_left + "px";
+			smoothScroll(map_image, SCROLL_STEP_SIZE, new_map_left, parseInt(map_image.style.top));
+
 		}
 
 		function moveUp() {
@@ -172,7 +176,7 @@
 			var frame_height = parseInt(frame.style.height);
 			var map_top = parseInt(map_image.style.top);
 			var new_map_top = map_top - 0.5*frame_height;
-			map_image.style.top = new_map_top + "px";
+			smoothScroll(map_image, SCROLL_STEP_SIZE, parseInt(map_image.style.left), new_map_top);
 		}
 
 		function moveDown() {
@@ -181,7 +185,7 @@
 			var frame_height = parseInt(frame.style.height);
 			var map_top = parseInt(map_image.style.top);
 			var new_map_top = map_top + 0.5*frame_height;
-			map_image.style.top = new_map_top + "px";
+			smoothScroll(map_image, SCROLL_STEP_SIZE, parseInt(map_image.style.left), new_map_top);
 		}
 
 		function zoomIn() {
@@ -230,6 +234,35 @@
 				map_image.style.left = new_left + "px";
 				map_image.style.top = new_top + "px";
 			}
+		}
+
+		// Helper function to allow smooth scrolling
+		function smoothScroll(target, step_size, new_left, new_top) {
+			var interval_horizontal = setInterval( function() {
+				if(Math.abs(parseInt(target.style.left) - new_left) <= step_size) {
+					clearInterval(interval_horizontal);
+					return;
+				}
+				target_left = parseInt(target.style.left);
+				if(parseInt(target.style.left) > new_left) {
+					target.style.left = (target_left - step_size) + "px";
+				} else {
+					target.style.left = (target_left + step_size) + "px";
+				}
+			}, 1);
+
+			var interval_vertical = setInterval( function() {
+			if(Math.abs(parseInt(target.style.top) - new_top) <= step_size) {
+					clearInterval(interval_vertical);
+					return;
+			}
+			target_top = parseInt(target.style.top);	
+			if(parseInt(target.style.top) > new_top) {
+				target.style.top = (target_top - step_size) + "px";
+			} else {
+				target.style.top = (target_top + step_size) + "px";
+			}
+			}, 1);
 		}
 
 		// Helper functions to calculate positions for zooming
@@ -288,13 +321,27 @@
 		}
 
 		// Helper functions for to calculate positions for doubleclick centering
+		function insideMapFrame(mouseX, mouseY) {
+			var frame = document.getElementById("map_frame");
+			var frame_width = parseInt(frame.style.width); 
+			var frame_height = parseInt(frame.style.height);
+			var frame_x_min = BORDER_WIDTH + MARGIN_WIDTH;
+			var frame_y_min = BORDER_WIDTH + MARGIN_WIDTH;
+			var frame_x_max = frame_x_min + frame_width;
+			var frame_y_max = frame_y_min + frame_height;
+
+			if ((mouseX >= frame_x_min) && (mouseX <= frame_x_max) && (mouseY >= frame_y_min) && (mouseY <= frame_y_max)) {
+				return true;
+			}
+			return false;
+		}
 		function convertX(mouseX) {
-			var x = mouseX - border_width - margin_width;
+			var x = mouseX - BORDER_WIDTH - MARGIN_WIDTH;
 			return x;
 		}
 
 		function convertY(mouseY) {
-			var y = mouseY - border_width - margin_width;
+			var y = mouseY - BORDER_WIDTH - MARGIN_WIDTH;
 			return y;
 		}
 
