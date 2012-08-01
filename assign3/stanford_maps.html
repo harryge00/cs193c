@@ -70,7 +70,7 @@
 <body onload="init();">
 	<div id="main">
 		<div id="map_frame">
-			<img id="map_image" src="map-xl.gif" alt="Stanford Map" />
+			<img id="map_image" src="map-s.gif" alt="Stanford Map" />
 		</div>
 		<div id="navigation_panel">
 			<form id="navigation_buttons">
@@ -88,7 +88,8 @@
 	</div>
 	
 	<script type="text/javascript">	
-		var imgArray = [{source: "map-s.gif", width: 1283, height: 997}, {source: "map-m.gif", width: 2047, height: 1589}, {source: "map-l.gif", width: 3063, height: 2373}, {source: "map-s.gif", width: 4084, height: 3164}];
+		// Array of imageObj types, used to store relevant information about all map images.
+		var imageArray = [{source: "map-s.gif", width: 1283, height: 997}, {source: "map-m.gif", width: 2047, height: 1589}, {source: "map-l.gif", width: 3063, height: 2373}, {source: "map-xl.gif", width: 4084, height: 3164}];
 
 		window.onresize = resizeMapFrame;
 
@@ -101,8 +102,18 @@
 
 		function resizeMapFrame() {
 			var frame = document.getElementById("map_frame");
-			frame.style.width = (0.7*window.innerWidth) + "px";
-			frame.style.height = (0.8*window.innerHeight) + "px";
+			var new_width = 0.7*window.innerWidth;
+			var new_height = 0.8*window.innerHeight;
+			var map_image = document.getElementById("map_image");
+			var map = getImageObj(getSourceFromPath(map_image.src));
+			var image_width = map.width;
+			var image_height = map.height;
+			if (new_width <= image_width) {
+				frame.style.width = 0.7*window.innerWidth + "px";
+			}
+			if (new_height <= image_height) {
+				frame.style.height = new_height + "px";
+			}
 		}
 
 		function moveRight() {
@@ -110,7 +121,7 @@
 			var map_image = document.getElementById("map_image");
 			var frame_width = parseInt(frame.style.width);
 			var map_left = parseInt(map_image.style.left);
-			var new_map_left = map_left + frame_width/2;
+			var new_map_left = map_left + 0.5*frame_width;
 			map_image.style.left = new_map_left + "px";
 		}
 
@@ -119,7 +130,7 @@
 			var map_image = document.getElementById("map_image");
 			var frame_width = parseInt(frame.style.width);
 			var map_left = parseInt(map_image.style.left);
-			var new_map_left = map_left - frame_width/2;
+			var new_map_left = map_left - 0.5*frame_width;
 			map_image.style.left = new_map_left + "px";
 		}
 
@@ -128,7 +139,7 @@
 			var map_image = document.getElementById("map_image");
 			var frame_height = parseInt(frame.style.height);
 			var map_top = parseInt(map_image.style.top);
-			var new_map_top = map_top - frame_height/2;
+			var new_map_top = map_top - 0.5*frame_height;
 			map_image.style.top = new_map_top + "px";
 		}
 
@@ -137,8 +148,83 @@
 			var map_image = document.getElementById("map_image");
 			var frame_height = parseInt(frame.style.height);
 			var map_top = parseInt(map_image.style.top);
-			var new_map_top = map_top + frame_height/2;
+			var new_map_top = map_top + 0.5*frame_height;
 			map_image.style.top = new_map_top + "px";
+		}
+
+		function zoomIn() {
+			var map_image = document.getElementById("map_image");
+			var old_source = getSourceFromPath(map_image.src);
+			var old_image = getImageObj(old_source);
+			var old_index = getImageIndex(old_image);
+			var new_index = old_index + 1;
+
+			if(new_index < imageArray.length) {
+				var new_image = imageArray[new_index];
+				map_image.src = new_image.source;
+			}
+		}
+
+		function zoomOut() {
+			var map_image = document.getElementById("map_image");
+			var old_source = getSourceFromPath(map_image.src);
+			var old_image = getImageObj(old_source);
+			var old_index = getImageIndex(old_image);
+			var new_index = old_index - 1;
+
+			if(new_index >= 0) {
+				var new_image = imageArray[new_index];
+				map_image.src = new_image.source;
+			}
+		}
+
+		// Helper functions to calculate positions for zooming
+
+		// x and y represent the position of the frame-centered point of the image relative to the
+		// image origin (0,0) => top left corner.
+		function getX(left) {
+			var frame = document.getElementById("map_frame");
+			var frame_width = parseInt(frame.style.width);
+			var x = 0.5*frame_width - left;
+			return x;
+		}
+
+		function getY(top) {
+			var frame = document.getElementById("map_frame");
+			var frame_height = parseInt(frame.style.height);
+			var y = 0.5*frame_height - top;
+			return y;
+		}
+
+		function getLeft(x) {
+			var frame = document.getElementById("map_frame");
+			var frame_width = parseInt(frame.style.width);
+			var left = 0.5*frame_width - x;
+			return left;
+		}
+
+		function getTop(y) {
+			var frame = document.getElementById("map_frame");
+			var frame_width = parseInt(frame.style.height);
+			var topt = 0.5*frame_height - y;
+			return top;
+		}
+
+		//Helper functions to access imageArray
+		function getImageObj(source) {
+			for (var i = 0; i < imageArray.length; i++) {
+				if(imageArray[i].source == source) {
+					return imageArray[i];
+				}
+			}
+		}
+
+		function getImageIndex(image_object) {
+			return imageArray.indexOf(image_object);
+		}
+
+		function getSourceFromPath(full_path) {
+			return full_path.substring(full_path.lastIndexOf("/") + 1, full_path.length);
 		}
 
 	</script>
