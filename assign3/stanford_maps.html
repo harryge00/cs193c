@@ -104,16 +104,8 @@
 			var frame = document.getElementById("map_frame");
 			var new_width = 0.7*window.innerWidth;
 			var new_height = 0.8*window.innerHeight;
-			var map_image = document.getElementById("map_image");
-			var map = getImageObj(getSourceFromPath(map_image.src));
-			var image_width = map.width;
-			var image_height = map.height;
-			if (new_width <= image_width) {
-				frame.style.width = 0.7*window.innerWidth + "px";
-			}
-			if (new_height <= image_height) {
-				frame.style.height = new_height + "px";
-			}
+			frame.style.width = 0.7*window.innerWidth + "px";
+			frame.style.height = new_height + "px";
 		}
 
 		function moveRight() {
