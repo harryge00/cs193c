@@ -89,7 +89,7 @@
 	
 	<script type="text/javascript">	
 		// Array of imageObj types, used to store relevant information about all map images.
-		var imageArray = [{source: "map-s.gif", width: 1283, height: 997}, {source: "map-m.gif", width: 2047, height: 1589}, {source: "map-l.gif", width: 3063, height: 2373}, {source: "map-xl.gif", width: 4084, height: 3164}];
+		var imageArray = [];
 
 		window.onresize = resizeMapFrame;
 
@@ -98,6 +98,21 @@
 			var map_image = document.getElementById("map_image");
 			map_image.style.left = "0px";
 			map_image.style.top = "0px";
+			preload();
+		}
+
+		function preload() {
+			image_s = new Image();
+			image_m = new Image();
+			image_l = new Image();
+			image_xl = new Image();
+
+			image_s.src = "map-s.gif";
+			image_m.src = "map-m.gif";
+			image_l.src = "map-l.gif";
+			image_xl.src = "map-xl.gif";
+
+			imageArray = [image_s, image_m, image_l, image_xl];
 		}
 
 		function resizeMapFrame() {
@@ -146,14 +161,13 @@
 
 		function zoomIn() {
 			var map_image = document.getElementById("map_image");
-			var old_source = getSourceFromPath(map_image.src);
-			var old_image = getImageObj(old_source);
+			var old_image = getImageObj(map_image.src);
 			var old_index = getImageIndex(old_image);
 			var new_index = old_index + 1;
 
 			if(new_index < imageArray.length) {
 				var new_image = imageArray[new_index];
-				map_image.src = new_image.source;
+				map_image.src = new_image.src;
 
 				// Adjust position to keep center point constant.
 				var old_left = parseInt(map_image.style.left);
@@ -171,14 +185,13 @@
 
 		function zoomOut() {
 			var map_image = document.getElementById("map_image");
-			var old_source = getSourceFromPath(map_image.src);
-			var old_image = getImageObj(old_source);
+			var old_image = getImageObj(map_image.src);
 			var old_index = getImageIndex(old_image);
 			var new_index = old_index - 1;
 
 			if(new_index >= 0) {
 				var new_image = imageArray[new_index];
-				map_image.src = new_image.source;
+				map_image.src = new_image.src;
 
 				// Adjust position to keep center point constant.
 				var old_left = parseInt(map_image.style.left);
@@ -239,7 +252,7 @@
 		//Helper functions to access imageArray
 		function getImageObj(source) {
 			for (var i = 0; i < imageArray.length; i++) {
-				if(imageArray[i].source == source) {
+				if(imageArray[i].src == source) {
 					return imageArray[i];
 				}
 			}
@@ -247,10 +260,6 @@
 
 		function getImageIndex(image_object) {
 			return imageArray.indexOf(image_object);
-		}
-
-		function getSourceFromPath(full_path) {
-			return full_path.substring(full_path.lastIndexOf("/") + 1, full_path.length);
 		}
 
 	</script>
