@@ -96,9 +96,17 @@
 		var BORDER_WIDTH = 20;
 		var MARGIN_WIDTH = 30;
 		var SCROLL_STEP_SIZE = 1;
+
+		// Global variables
 		// Array of imageObj types, used to store relevant information about all map images.
 		var imageArray = [];
+		var isDragging = false;
+		var mapMouseDownOffsetX;
+		var mapMouseDownOffsetY;
 
+		document.onmousemove = handleMouseMove;
+		document.onmousedown = handleMouseDown;
+		document.onmouseup = handleMouseUp;
 		document.ondblclick = recenterMap;
 		window.onresize = resizeMapFrame;
 
@@ -233,6 +241,44 @@
 				var new_top = getTop(new_y);
 				map_image.style.left = new_left + "px";
 				map_image.style.top = new_top + "px";
+			}
+		}
+
+		// Functions to support map dragging
+
+		function handleMouseDown(evt) {
+			evt = (evt) ? evt : ((event) ? event : null);
+			
+			if (insideMapFrame(evt.clientX, evt.clientY)) {
+				isDragging = true;
+
+				var map_image = document.getElementById("map_image");
+				document.body.style.cursor = "move";
+				mapMouseDownOffsetX = parseInt(map_image.style.left) - evt.clientX;
+				mapMouseDownOffsetY = parseInt(map_image.style.top) - evt.clientY;
+				return false;	//for Firefox
+			}
+		}
+
+		function handleMouseUp(evt) {
+			evt = (evt) ? evt : ((event) ? event : null);
+			
+			if (isDragging) {
+				var map_image = document.getElementById("map_image");
+				document.body.style.cursor = "default";
+				isDragging = false;		
+			}
+		}
+
+		function handleMouseMove(evt) {
+			evt = (evt) ? evt : ((event) ? event : null);
+			
+			if (isDragging) {
+				var map_image = document.getElementById("map_image");
+				map_image.style.left = (evt.clientX + mapMouseDownOffsetX) + "px";
+				map_image.style.top = (evt.clientY + mapMouseDownOffsetY) + "px";
+				
+				return false;  // for Firefox
 			}
 		}
 
