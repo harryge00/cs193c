@@ -110,6 +110,7 @@
 		document.ondblclick = recenterMap;
 		window.onresize = resizeMapFrame;
 
+
 		function init() {
 			resizeMapFrame();
 			var map_image = document.getElementById("map_image");
@@ -248,12 +249,11 @@
 
 		function handleMouseDown(evt) {
 			evt = (evt) ? evt : ((event) ? event : null);
+			cursorMove();
 			
 			if (insideMapFrame(evt.clientX, evt.clientY)) {
 				isDragging = true;
-
 				var map_image = document.getElementById("map_image");
-				document.body.style.cursor = "move";
 				mapMouseDownOffsetX = parseInt(map_image.style.left) - evt.clientX;
 				mapMouseDownOffsetY = parseInt(map_image.style.top) - evt.clientY;
 				return false;	//for Firefox
@@ -262,11 +262,11 @@
 
 		function handleMouseUp(evt) {
 			evt = (evt) ? evt : ((event) ? event : null);
-			
+			cursorClear();
 			if (isDragging) {
 				var map_image = document.getElementById("map_image");
-				document.body.style.cursor = "default";
 				isDragging = false;		
+				return false;	//for Firefox
 			}
 		}
 
@@ -280,6 +280,14 @@
 				
 				return false;  // for Firefox
 			}
+		}
+
+		function cursorClear() {
+			document.body.style.cursor = "default";
+		}
+
+		function cursorMove() {
+			document.body.style.cursor = "move";
 		}
 
 		// Helper function to allow smooth scrolling
