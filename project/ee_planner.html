@@ -2,16 +2,52 @@
 <html>
 <head>
 <style>
+	
+	#main {
+		font-size: 14px;
+		font-family: sans-serif;
+	}
+
 	.row {
 		clear: both;
 	}
 
-	.quarterBox {
-		width: 200px;
-		height:	250px;
-		border: 1px black solid;
+	.col_heading_box {
+		width: 150px;
+		margin: 5px;
 		float: left;
 		overflow: auto;
+	}
+
+	.col_heading {
+		font-size: 16px;
+		text-align: center;
+	}
+
+	.quarter_box {
+		width: 140px;
+		height:	140px;
+		border: 1px black solid;
+		padding: 5px;
+		margin: 5px;
+		float: left;
+		overflow: auto;
+	}
+
+	.col {
+		float: left;
+	}
+
+	#left_col {
+		width: 700px;
+	}
+
+	#right_col {
+		width: 200px;
+	}
+
+	p {
+		margin: 2px;
 	}
 </style>
 <meta charset="UTF-8" />
@@ -19,65 +55,92 @@
 </head>
 <body>
 	<div id="main">
-		<form id="input">
-			<input id="text_box" type="text" name="text_input" />
-			<input type="button" name="create_form" onclick="createPlan();" />
-		</form>
-		<div class="row" id="row_1">
-			<div class="quarterBox" id="quarter_1">
-				<p class="empty"></p>
+		<div class="col" id="left_col">
+			<div class="row" id="row_0">
+				<div class="col_heading_box">
+					<p class="col_heading">Autumn</p>
+				</div>
+				<div class="col_heading_box">
+					<p class="col_heading">Winter</p>
+				</div>
+				<div class="col_heading_box">
+					<p class="col_heading">Spring</p>
+				</div>
+				<div class="col_heading_box">
+					<p class="col_heading">Summer</p>
+				</div>
 			</div>
-			<div class="quarterBox" id="quarter_2">
-				<p class="empty"></p>
+			<div class="row" id="row_1">
+				<div class="quarter_box" id="quarter_1">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_2">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_3">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_4">
+					<p class="empty"></p>
+				</div>
 			</div>
-			<div class="quarterBox" id="quarter_3">
-				<p class="empty"></p>
+			<div class="row" id="row_2">
+				<div class="quarter_box" id="quarter_5">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_6">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_7">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_8">
+					<p class="empty"></p>
+				</div>
 			</div>
-			<div class="quarterBox" id="quarter_4">
-				<p class="empty"></p>
+			<div class="row" id="row_3">
+				<div class="quarter_box" id="quarter_9">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_10">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_11">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_12">
+					<p class="empty"></p>
+				</div>
+			</div>
+			<div class="row" id="row_4">
+				<div class="quarter_box" id="quarter_13">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_14">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_15">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_16">
+					<p class="empty"></p>
+				</div>
 			</div>
 		</div>
-		<div class="row" id="row_2">
-			<div class="quarterBox" id="quarter_5">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_6">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_7">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_8">
-				<p class="empty"></p>
-			</div>
-		</div>
-		<div class="row" id="row_3">
-			<div class="quarterBox" id="quarter_9">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_10">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_11">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_12">
-				<p class="empty"></p>
-			</div>
-		</div>
-		<div class="row" id="row_4">
-			<div class="quarterBox" id="quarter_13">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_14">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_15">
-				<p class="empty"></p>
-			</div>
-			<div class="quarterBox" id="quarter_16">
-				<p class="empty"></p>
-			</div>
+		<div class="col" id="right_col">
+			<form id="input">
+				<input id="text_box" type="text" name="text_input" />
+				<input type="button" name="create_form" onclick="createPlan();" />
+				<p id="math_science">Math/Science</p>
+				<p id="tis">TIS</p>
+				<p id="wim">WIM</p>
+				<p id="fundamentals">Engineering Fundamentals</p>
+				<p id="ee_core">EE Core</p>
+				<p id="ee_physics">Physics in EE</p>
+				<p id="ee_specialty">EE Specialty Sequence</p>
+				<p id="ee_capstone">EE Capstone</p>
+				<p id="ee_topics">EE Topics</p>
+			</form>
 		</div>
 
 	</div>
@@ -293,7 +356,8 @@
 			for (var i = 0; i < array.length; i++) {
 				var box = document.getElementById("quarter_" + array[i].quarter);
 				var p = document.createElement('P');
-				p.appendChild(document.createTextNode(array[i].subject + " " + array[i].number + " " + array[i].units + " " + array[i].grade));
+				p.className = "course";
+				p.appendChild(document.createTextNode(array[i].subject.toUpperCase() + " " + array[i].number.toUpperCase() + " " + array[i].grade.toUpperCase()));
 				box.appendChild(p);
 			}
 		}
@@ -309,7 +373,7 @@
 	 	function clearPlan() {
 	 		var pArray = document.getElementsByTagName("p");
 	 		for(var i = 0; i < pArray.length; i++) {
-	 			if (pArray[i].class != "empty") {
+	 			if (pArray[i].className == "course") {
 	 				pArray[i].parentNode.removeChild(pArray[i]);
 	 				i--;
 	 			}
@@ -362,7 +426,17 @@
 	 	var ee191Array = ["ee191", "ee191w"];
 
 	 	function checkPlan(course_array) {
-	 		alert("Math/Science: " + meetsMathScience(course_array));
+	 		document.getElementById("math_science").style.color = meetsMathScience(course_array) ? "green" : "red";
+	 		document.getElementById("tis").style.color = meetsTIS(course_array) ? "green" : "red";
+	 		document.getElementById("wim").style.color = meetsWIM(course_array) ? "green" : "red";
+	 		document.getElementById("fundamentals").style.color = meetsFundamentals(course_array) ? "green" : "red";
+	 		document.getElementById("ee_core").style.color = meetsCore(course_array) ? "green" : "red";
+	 		document.getElementById("ee_physics").style.color = meetsPhysics(course_array) ? "green" : "red";
+	 		document.getElementById("ee_specialty").style.color = meetsSpecialty(course_array) ? "green" : "red";
+	 		document.getElementById("ee_capstone").style.color = meetsCapstone(course_array) ? "green" : "red";
+	 		document.getElementById("ee_topics").style.color = meetsTopics(course_array) ? "green" : "red";
+	 		
+	 		/*alert("Math/Science: " + meetsMathScience(course_array));
 	 		alert("TIS: " + meetsTIS(course_array));
 	 		alert("WIM: " + meetsWIM(course_array));
 	 		alert("Fundamentals: " + meetsFundamentals(course_array));
@@ -370,7 +444,7 @@
 	 		alert("EE Physics: " + meetsPhysics(course_array));
 	 		alert("EE Specialty: " + meetsSpecialty(course_array));
 	 		alert("EE Capstone: " + meetsCapstone(course_array));
-	 		alert("EE Topics: " + meetsTopics(course_array));
+	 		alert("EE Topics: " + meetsTopics(course_array));*/
 	 	}
 
 	 	function meetsMathScience(course_array) {
@@ -520,7 +594,6 @@
 	 		var gradedUnitsFundamentals = countGradedUnits(course_array, fundamentalsArray);
 	 		var gradedUnitsEE = countGradedEETopicsUnits(course_array);
 	 		var topicsUnits = gradedUnitsCognates + gradedUnitsFundamentals + gradedUnitsEE - extraUnitsEE191(course_array) - extraUnitsFundamentals(course_array);
-	 		alert(topicsUnits);
 	 		if (topicsUnits >= TOPICS_UNITS_REQUIREMENT) {
 	 			return true;
 	 		} else {
