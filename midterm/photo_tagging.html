@@ -1,48 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-	#main {
-		font-family: serif;
-		margin: 0px;
-	}
-
-	img {
-		float: left;
-		margin: 10px;
-	}
-
-	.tag {
-		position: absolute;
-		width: 100px;
-		height: 100px;
-		left: 100px;
-		top: 100px;
-		border:	5px solid blue;
-		display: inline;
-	}
-
-	.tag_text {
-		color: white;
-		position: relative;
-		margin: 0px;
-		left: 0px;
-		top: 0px;
-	}
-
-	.col {
-		float: left;
-	}
-
-</style>
+<link rel="stylesheet" type="text/css" href="photo_tagging.css" />
 <meta charset="UTF-8" />
 <title>Photo Tagging</title>
 </head>
 <body>
 	<div id="main">
 		<img src="photo.jpg" alt="Awesome Photo" />
-		<div id="the_tag" class="tag">
-			<p class="tag_text">Patrick</p>
+		<div id="tag_div">
 		</div>
 		<div class="col">
 			<h2>Tag Entry</h2>
@@ -52,9 +18,10 @@
 			</form>
 			<h2>Display Options</h2>
 			<form id="display_options">
-				<label>Show Tags<input type="radio" name="tagDisplay" value="Show Tags" /></label>
-				<label>Hide Tags<input type="radio" name="tagDisplay" value="Hide Tags" /></label>
-			</form>
+				<label>Show Tags<input type="radio" name="tagDisplay" value="Show Tags" onChange="showTags();"/></label>
+				<label>Hide Tags<input type="radio" name="tagDisplay" value="Hide Tags" onChange="hideTags();"/></label>
+			</form>		
+			<p>Grade me in Firefox please</p>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -84,7 +51,6 @@
 	function handleClick(evt) {
 		evt = (evt) ? evt : ((event) ? event : null);
 		if (addingTag) {
-			alert(clickNumber);
 			switch (clickNumber) {
 				case 1: 
 					currentTag.x1 = evt.clientX;
@@ -92,7 +58,6 @@
 					clickNumber++;
 					break;
 				case 2:
-					alert("2");
 					currentTag.x2 = evt.clientX;
 					currentTag.y2 = evt.clientY;
 					drawTag(currentTag);
@@ -110,19 +75,28 @@
 	}
 
 	function drawTag(tag) {
-		var x = document.getElementById("the_tag");
-		x.style.width = getWidth(currentTag);
-		x.style.height = getHeight(currentTag);
-		x.style.left = getLeft(currentTag);
-		x.style.top = getTop(currentTag);
+		var tagDiv = document.getElementById("tag_div");
+		var div = document.createElement('DIV');
+		var p = document.createElement('P');
+		var tagText = document.createTextNode(currentTag.name);
+		p.appendChild(tagText);
+		div.appendChild(tagText);
+		div.className = "tag";
+		div.style.width = getWidth(currentTag);
+		div.style.height = getHeight(currentTag);
+		div.style.left = getLeft(currentTag);
+		div.style.top = getTop(currentTag);
+		tagDiv.appendChild(div);
 	}
 
 	function getWidth(tag) {
-		return (tag.x2 - tag.x1) + "px";
+		// must also subtract 2 times the border-width (5px)
+		return (tag.x2 - tag.x1 - 10) + "px";
 	}
 
 	function getHeight(tag) {
-		return (tag.y2 - tag.y1) + "px";
+		// must also subtract 2 times the border-width (5px)
+		return (tag.y2 - tag.y1 - 10) + "px";
 	}
 
 	function getLeft(tag) {
@@ -133,8 +107,23 @@
 		return tag.y1 + "px";
 	}
 
+	function showTags() {
+		var divArray = document.getElementsByTagName("div");
+		for (var i = 0; i < divArray.length; i++) {
+			if (divArray[i].className == "tag") {
+				divArray[i].style.display = "inline";
+			}
+		}
+	}
 
-
+	function hideTags() {
+		var divArray = document.getElementsByTagName("div");
+		for (var i = 0; i < divArray.length; i++) {
+			if (divArray[i].className == "tag") {
+				divArray[i].style.display = "none";
+			}
+		}
+	}
 	</script>
 </body>
 </html>

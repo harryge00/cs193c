@@ -1,0 +1,24 @@
+#main {
+	font-family: serif;
+	margin: 0px;
+}
+
+img {
+	float: left;
+	margin: 10px;
+}
+
+.tag {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	left: 100px;
+	top: 100px;
+	border:	5px solid blue;
+	display: inline;
+	color: white;
+}
+
+.col {
+	float: left;
+}
