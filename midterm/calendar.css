@@ -1,0 +1,29 @@
+#main {
+	font-family: sans-serif;
+}
+
+.day {
+	width: 150px;
+	height: 300px;
+	margin: 0px;
+	padding: 3px;
+	border: 1px solid black;
+	float: left;
+	overflow: auto;
+}
+
+.col {
+	float: left;
+}
+
+#left_col {
+	width: 800px;
+}
+
+h2 {
+	background: black;
+	color: white;
+	margin: 0px;
+	padding: 5px;
+	text-align: center;
+}

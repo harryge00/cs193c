@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="calendar.css" />
+<meta charset="UTF-8" />
+<title>Calendar</title>
+</head>
+<body>
+	<div id="main">
+		<h1>Weekly Calendar</h1>
+		<div class="col" id="left_col">
+			<div class="day" onclick="cancel(event);selectDay(0);">
+				<h2>Monday</h2>
+				<p></p>
+			</div>
+			<div class="day" onclick="cancel(event);selectDay(1);">
+				<h2>Tuesday</h2>
+				<p></p>
+			</div>
+			<div class="day" onclick="cancel(event);selectDay(2);">
+				<h2>Wednesday</h2>
+				<p></p>
+			</div>
+			<div class="day" onclick="cancel(event);selectDay(3);">
+				<h2>Thursday</h2>
+				<p></p>
+			</div>
+			<div class="day" onclick="cancel(event);selectDay(4);">
+				<h2>Friday</h2>
+				<p></p>
+			</div>
+		</div>
+		<div class="col" id="right_col">
+			<h3>Set Appointment</h3>
+			<form id="set_appointment">
+				<label>Name:<input id="newAppointment" type="text" name="appointment" /></label>
+				<label><input type="button" value="Set" onclick="setAppointment();" /></label><br />
+			</form>
+		</div>
+	</div>
+	<label>Grade me in Firefox please</label>
+	<script type="text/javascript">
+		// Global variables
+		var selectedIndex;
+		document.onclick = clearDays;
+
+		function selectDay(day_index) {
+			var dayArray = document.getElementsByTagName("h2");
+			clearDays();
+			dayArray[day_index].style.background = "red";
+			selectedIndex = day_index;
+			event.stopPropagation();
+		}
+
+		function cancel(event) {
+    		event.stopPropagation();
+		}
+
+		function clearDays() {
+			var dayArray = document.getElementsByTagName("h2");
+			for (var i = 0; i < dayArray.length; i++) {
+				dayArray[i].style.background = "black";
+			}
+		}
+
+		function setAppointment() {
+			var appointmentArray = document.getElementsByTagName("p");
+			if ((selectedIndex >= 0) && (selectedIndex < appointmentArray.length)) {
+				appointmentArray[selectedIndex].innerHTML=document.getElementById("newAppointment").value;
+			}
+		}
+	</script>
+</body>
+</html>
