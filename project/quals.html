@@ -1,70 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="css/template.css" />
 <style>
-	a {
-		color: green;
-		font-weight: bold;
-		text-decoration: none;
+	#quals_graph {
+		position: relative;
+		margin: auto;
+		border: 1px solid black;
 	}
 
-	table {
+	.bar {
+		position: absolute;
+		background-color: black;
+		color: white;
 		text-align: center;
-		width: 100%;
-	}
-
-	img {
-		display: block;
-	}
-
-	h1 {
-		font-size: 60px;
-		line-height: 110px;
-		margin: 0px;
-	}
-
-	.row {
-		clear: both;
-		width: 100%;
-		margin-top: 10px;
-		margin-bottom: 10px;
-		border-top: 2px solid black;
-		border-bottom: 2px solid black;
-	}
-
-	#main {
-		font-family: sans-serif;
-		width: 100%;
-		height: 100%;
-		white-space: nowrap;
-	}
-
-	#logo {
-		float: left;
-		padding: 5px;
-		margin-right: 30px;
-	}
-
-	#banner	{
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		height: 110px;
-	}
-
-	#content {
-		position: absolute;
-		top: 110px;
-		left: 0px;
-		padding: 10px;
-	}
-
-	#footer {
-		position: absolute;
 		bottom: 0px;
-		left: 0px;
+		width: 35px;
 	}
 
+	.x_label {
+		color: black;
+		position: absolute;
+		bottom: -1.5em;
+		left: 0.4em;
+	}
+
+	#y_label_max {
+		position: absolute;
+		top: 0em;
+		left: -2em;
+	}
+
+	#y_label_min {
+		position: absolute;
+		bottom: 0em;
+		left: -1em;
+	}
 
 </style>
 <link rel="shortcut icon" href="http://www.stanford.edu/~alexoz/images/alexoz_logo_favicon.ico" type="image/x-icon" />
@@ -74,33 +45,95 @@
 <body>
 	<div id="main">
 		<div class="row" id="banner">
-			<a href="index.html">
-				<img id="logo" src="images/alexoz_logo_100px.png" alt="alexoz_logo" />
-			</a>
-			<h1>Alex Omid-Zohoor</h1>
 		</div>
-		<div id="content">
-			<h2>Quals</h2>
-			<p>"Sometimes life's going to hit you in the head with a brick. Don't lose faith."</p>
-			<p>-Steve Jobs</p></br>
-			<p>If you're reading this, odds are you're prepping for the EE Quals. If you haven't already, check out these resources:</p>
-			<p>Those guides helped me, as I hope this guide will help some of you. I'll try to be brief.</p>
-			<p>Most Useful Tips</p>
-			<ul>
-				<li>Form a Study Group</li>
-				<li>If you only follow one tip, make it this one. </li>
-
-		</div>
-		<div class="row" id="footer">
-			<table>
-				<tr>
-					<td><a href="quals.html">QUALS</a></td>
-					<td><a href="advising.html">ADVISING</a></td>
-					<td><a href="projects.html">PROJECTS</a></td>
-					<td><a href="contact.html">CONTACT</a></td>
-				</tr>
+		<div id="header">
+			<div id="logo_and_name">
+				<a href="index.html">
+					<img id="logo" src="images/alexoz_logo_100px.png" alt="alexoz_logo" />
+				</a>			
+				<h1>alex<span id="oz">oz</span></h1>
+			</div>
+			<table id="menu">
+				<tr><td><a href="bio.html">BIO</a></td><td>+</td></tr>
+				<tr><td><a href="quals.html">QUALS</a></td><td>+</td></tr>
+				<tr><td><a href="advising.html">ADVISING</a></td><td>+</td></tr>
+				<tr><td><a href="projects.html">PROJECTS</a></td><td>+</td></tr>
 			</table>
 		</div>
+		<div id="content">
+			<h2>STATISTICS</h2>
+			<div id="quals_graph">
+				<div id="y_label_max"></div>
+				<div id="y_label_min">0</div>
+			</div>
+			<h2>DOWNLOADS</h2>
+			<h2>LINKS</h2>
+		</div>
 	</div>
+	<script type="text/javascript">
+		// Global variables
+		var GRAPH_WIDTH = 600;
+		var GRAPH_HEIGHT = 400;
+		var BAR_WIDTH = 35;
+		var BAR_SPACING;
+		var STUDENTS_MAX = 200;
+		var PASS_RATE_MAX = 100;
+		var statsArray = new Array({year: 2001, pass: 82, take: 160}, {year: 2002, pass: 79, take: 194}, {year: 2003, pass: 79, take: 195}, {year: 2004, pass: 78, take: 182}, {year: 2005, pass: 82, take: 148}, {year: 2006, pass: 85, take: 160}, {year: 2007, pass: 83, take: 181}, {year: 2008, pass: 80, take: 160}, {year: 2009, pass: 86, take: 174}, {year: 2010, pass: 82, take: 152}, {year: 2011, pass: 84, take: 147}, {year: 2012, pass: 82, take: 146});
+
+		window.onload = init;
+
+		function init() {
+			document.getElementById("quals_graph").style.width = GRAPH_WIDTH + "px";
+			document.getElementById("quals_graph").style.height = GRAPH_HEIGHT + "px";
+		}
+
+		function shortenYear(year) {
+			var year_string = year.toString();
+			return ("\'" + year_string.substring(year_string.length - 2, year_string.length));
+		}
+
+		function drawGraph(option) {
+			BAR_SPACING = (GRAPH_WIDTH - (statsArray.length * BAR_WIDTH))/(statsArray.length + 1);  
+			var graph = document.getElementById("quals_graph");
+			for (var i = 0; i < statsArray.length; i++) {
+				var data;
+				var bar_height;
+				switch (option) {
+					case "pass":
+						data = statsArray[i].pass;
+						bar_height = (data/STUDENTS_MAX) * GRAPH_HEIGHT;
+						document.getElementById("y_label_max").innerHTML = STUDENTS_MAX;
+						break;
+					case "take": 
+						data = statsArray[i].take;
+						bar_height = (data/STUDENTS_MAX) * GRAPH_HEIGHT;
+						document.getElementById("y_label_max").innerHTML = STUDENTS_MAX;
+						break;
+					case "rate": 
+						data = Math.round((100 * (statsArray[i].pass/statsArray[i].take)));
+						bar_height = (data/PASS_RATE_MAX) * GRAPH_HEIGHT;
+						document.getElementById("y_label_max").innerHTML = PASS_RATE_MAX;
+						break;
+				}
+
+				var div = document.createElement('DIV');
+				div.className = "bar";
+				var data_label = document.createElement('P');
+				data_label.appendChild(document.createTextNode(data));
+				var x_label = document.createElement('SPAN');
+				x_label.appendChild(document.createTextNode(shortenYear(statsArray[i].year)));
+				x_label.className = "x_label";
+				div.appendChild(data_label);
+				div.appendChild(x_label);
+
+				div.style.left = BAR_SPACING + (i * (BAR_SPACING + BAR_WIDTH)) + "px";
+				div.style.height = bar_height + "px";
+				graph.appendChild(div);
+			}
+		}
+
+		drawGraph("rate");
+
+	</script>
 </body>
 </html>
