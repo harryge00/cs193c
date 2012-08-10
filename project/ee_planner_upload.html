@@ -192,20 +192,6 @@
 
 	<script type="text/javascript">
 
-		function init() {
-				document.getElementById('file_upload_form').onsubmit=function() {
-				document.getElementById('file_upload_form').target = 'upload_target'; //'upload_target' is the name of the iframe
-				document.getElementById("upload_target").onload = uploadDone; //This function should be called when the iframe has compleated loading
-				// That will happen when the file is completely uploaded and the server has returned the data we need.
-			}
-		}
-		function uploadDone() { //Function will be called when iframe is loaded
-			var ret = frames['upload_target'].document.getElementsByTagName("body")[0].innerHTML;
-			var data = eval("("+ret+")"); //Parse JSON // Read the below explanations before passing judgment on me
-			createPlan(data.pdf_text);
-		}
-		window.onload=init;
-
 		//global variables
 		var SCIENCE_UNITS_REQUIREMENT = 12;
 		var MATH_SCIENCE_UNITS_REQUIREMENT = 45;
@@ -219,244 +205,7 @@
 
 		var subjectAbbreviationsArray = ["acct","mgtecon","finance","gsbgen","hrmgt","mktg","oit","ob","polecon","stramgt","earthsci","earthsys","eees","energy","envres","eess","ges","geophys","envrinst","educ","aa","bioe","chemeng","cee","cme","cs","ee","engr","ms&e","matsci","me","sccm","africaam","amelang","africast","amstud","anthro","appphys","archlgy","arthist","artstudi","asnamst","asnlang","astrnmy","athletic","bio","biohopk","biophys","catlang","chem","chicanst","chingen","chinlang","chinlit","classart","classgen","classgrk","classhis","classlat","comm","complit","csre","dance","dlcl","drama","eastasn","econ","english","efslang","ethicsoc","femst","filmprod","filmstud","frengen","frenlang","frenlit","gergen","gerlang","gerlit","history","hps","humbio","humsci","ilac","iberlang","fsi","iis","humnties","ips","intnlrel","italgen","itallang","itallit","japangen","japanlng","japanlit","jewishst","korgen","korlang","latinam","linguist","mcs","math","medvlst","mtl","music","nativeam","phil","physics","polisci","portlang","psych","publpol","religst","rees","sts","slavgen","slavlang","slavlit","soc","spanlang","ilac","speclang","siw","stats","symsys","tibetlng","urbanst","law","lawgen","anes","bioc","biomedin","cbio","cts","csb","compmed","derm","dbio","fammed","gene","hrp","immunol","med","inde","mi","mcp","nbio","nens","nepr","nsur","obgyn","opht","ortho","otohns","path","peds","psyc","rado","rad","stemrem","sbio","surg","urol","ctl","ihum","ospgen","ospaustl","casb","ospbarcl","ospbeij","ospber","ospcptwn","ospflor","ospkyoto","kcjs","ospkyoct","ospmadrd","ospmosc","ospoxfrd","ospparis","ospsantg","sle","uar","pwr","mla"];
 
-		function Course(subject, number, quarter, units, grade) {
-			this.subject = subject;
-			this.number = number;
-			this.quarter = quarter;
-			this.units = units;
-			this.grade = grade;
-		}
-
- 		function firstYear(array) {
- 			for (var i=0; i<array.length; i++) {
- 				if (array[i].match(/([0-9]{4}-[0-9]{4})/g) != null) {
- 					return getYear(array[i]);
- 				}
- 			}
- 		}
- 		
- 		function getYear(yearString) {
- 			return parseInt(yearString.substr(0,4));
- 		}
-
- 		//Need to finish this function
- 		function getQuarter(array, index, first_year) {
- 			var currentQuarter;
- 			switch (array[index]) {
- 				case "autumn":
- 					return (1 + 4*(getYear(array[index + 1]) - first_year)); 
-				case "winter":
- 					return (2 + 4*(getYear(array[index + 1]) - first_year)); 
-				case "spring":
- 					return (3 + 4*(getYear(array[index + 1]) - first_year)); 
-				case "summer":
- 					return (4 + 4*(getYear(array[index + 1]) - first_year)); 
- 			}
- 		}
- 		//alert(courserankArray.indexOf("physics"));
- 		//alert(subjectAbbreviationsArray.indexOf(courserankArray[50]));
- 		//alert(courserankArray);
-
- 		function parseCoursesArray(courserank_text) {
- 			courserank_text = courserank_text.replace(/&amp;/g, '&');
-			courserank_text = courserank_text.toLowerCase();
-
-
- 			var course_array = [];
- 			//create array of tokens delimited by spaces. Suitable for parsing course subjects and numbers
- 			var courserank_array_subject_number = courserank_text.match(/([\w,.&\-+]*)/g);
- 			removeEmptyStrings(courserank_array_subject_number);
-	 		//create array of tokens delimited by newlines
-	 		var courserank_array_units_grade = [];
-	 		var courserank_array_block = courserank_text.split("units grade");
-	 		for (var i = 1; i < courserank_array_block.length; i++) {
-	 			var token_array = courserank_array_block[i].split("\n");
-	 			removeEmptyStrings(token_array);
-	 			//alert(token_array);
-	 			for (var j = 0; j < token_array.length; j++) {
-	 				if ((isUnits(token_array[j])) || (isGrade(token_array[j]))) {
-	 					//alert("token:" + token_array[j]);
-	 					courserank_array_units_grade.push(token_array[j]);
-	 				} else {
-	 					break;
-	 				}	 			
-	 			}
-	 			//alert(courserank_array_units_grade);
-	 		}
-
- 			var first_year = firstYear(courserank_array_subject_number);
- 			var quarter;
- 			var unitsCounter = 0;
- 			var gradeCounter = 0;
- 			//parse subject and number
- 			for (var i=0; i<courserank_array_subject_number.length; i++) {
- 				if ((courserank_array_subject_number[i] == "autumn") || (courserank_array_subject_number[i] == "winter") || (courserank_array_subject_number[i] == "spring") || (courserank_array_subject_number[i] == "summer")) {
- 					quarter = getQuarter(courserank_array_subject_number, i, first_year);
- 				}
- 				if (isSubject(courserank_array_subject_number[i], subjectAbbreviationsArray) && isCourseNumber(courserank_array_subject_number[i + 1])) {
- 					var currentCourse = new Course(courserank_array_subject_number[i], courserank_array_subject_number[i+1], quarter);
- 					course_array.push(currentCourse);
- 				}
- 			} 			
-
-			var unitsCounter = 0;
- 			var gradeCounter = 0;
-
- 			//parse 
- 			for (var i=0; i<courserank_array_units_grade.length; i++) {
- 				if (isUnits(courserank_array_units_grade[i])) {
- 					course_array[unitsCounter].units = courserank_array_units_grade[i];
- 					unitsCounter++;
- 				} else if (isGrade(courserank_array_units_grade[i])) {
- 					course_array[gradeCounter].grade = courserank_array_units_grade[i];
- 					gradeCounter++;
- 				}
- 			}
-
- 			for (var i = 0; i < course_array.length; i++) {
- 				if(course_array[i].quarter > 16) {
-	 				course_array.splice(i,1);
-	 				i--;
- 				}
- 			}
-
-
- 			return course_array;
- 		}
-
- 		function isSubject(string) {
- 			return (subjectAbbreviationsArray.indexOf(string) != -1);
- 		}
-
- 		function isCourseNumber(string) {
- 			return (string.match(/[0-9]+/g) != null);
- 		}
-
- 		function isUnits(string) {
- 			return (string.match(/[0-9]\.[0-9]/g) != null);
- 		}
-
- 		function isGrade(string) {
- 			//Why must formatting be strict in javascript. -__-
- 			switch (string) {
- 				case "a+":
- 					return true;
- 				case "a":
- 					return true;
- 				case "a-":
- 					return true;
- 				case "b+":
- 					return true;
- 				case "b":
- 					return true;
- 				case "b-":
- 					return true;
- 				case "c+":
- 					return true;
- 				case "c":
- 					return true;
- 				case "c-":
- 					return true;
- 				case "d+":
- 					return true;
- 				case "d":
- 					return true;
- 				case "d-":
- 					return true;
- 				case "cr":
- 					return true;
- 				case "i":
- 					return true;
- 				case "l":
- 					return true;
- 				case "n":
- 					return true;
- 				case "n-":
- 					return true;
- 				case "nc":
- 					return true;
- 				case "np":
- 					return true;
- 				case "rp":
- 					return true;
- 				case "s":
- 					return true;
- 				case "w":
- 					return true;
- 				case "*":
- 					return true;
- 				case "gnr":
- 					return true;
- 				default:
- 					return false;
- 			}
- 		}
-
- 		function isLetterGrade(string) {
- 			//Why must formatting be strict in javascript. -__-
- 			switch (string) {
- 				case "a+":
- 					return true;
- 				case "a":
- 					return true;
- 				case "a-":
- 					return true;
- 				case "b+":
- 					return true;
- 				case "b":
- 					return true;
- 				case "b-":
- 					return true;
- 				case "c+":
- 					return true;
- 				case "c":
- 					return true;
- 				case "c-":
- 					return true;
- 				case "d+":
- 					return true;
- 				case "d":
- 					return true;
- 				case "d-":
- 					return true;
- 				default:
- 					return false;
- 			}
- 		}
-
- 		function writePlan(array) {
-			for (var i = 0; i < array.length; i++) {
-				var box = document.getElementById("quarter_" + array[i].quarter);
-				var p = document.createElement('P');
-				p.className = "course";
-				p.appendChild(document.createTextNode(array[i].subject.toUpperCase() + " " + array[i].number.toUpperCase() + " " + array[i].grade.toUpperCase()));
-				box.appendChild(p);
-			}
-		}
-
-		function createPlan(courserankText) {
-			//var courserankText = document.getElementById("upload_details").innerText.toLowerCase();
-			//var courserankText1 = document.getElementById("upload_details").innerHTML.toLowerCase();
-			//var courserankText = document.getElementById("upload_details").innerText.toLowerCase();
-
-			//alert(courserankText1);
-	 		clearPlan();
-	 		var courseArray = parseCoursesArray(courserankText);
-	 		checkPlan(courseArray);
-	 		writePlan(courseArray);
-	 	}
-
-	 	function clearPlan() {
-	 		var pArray = document.getElementsByTagName("p");
-	 		for(var i = 0; i < pArray.length; i++) {
-	 			if (pArray[i].className == "course") {
-	 				pArray[i].parentNode.removeChild(pArray[i]);
-	 				i--;
-	 			}
-	 		}
-	 	}
-
-	 	// Array of all courses that fulfill the SOE math requirement
+		// Array of all courses that fulfill the SOE math requirement
 	 	var mathArray = ["math19","math20", "math21", "math41", "math42", "math51", "math51m", "math52", "math53", "math51h", "math52h", "math53h", "math104", "math106", "math109", "math113", "math115", "math120", "math121", "math131p", "math132", "cme100", "cme102", "cme104", "cme108", "cs103", "cs109", "cee101d", "cee201d", "cee203", "engr62", "engr154", "engr155a", "engr155b", "engr155c", "ms&e121", "ms&e120", "stats60", "stats110", "stats116", "ee178"];
 
 	 	// Array of all courses that fulfill the SOE science requirement
@@ -501,6 +250,57 @@
 	 	// Array of all courses that count as EE191
 	 	var ee191Array = ["ee191", "ee191w"];
 
+	 	window.onload=init;
+
+	 	function init() {
+				document.getElementById('file_upload_form').onsubmit=function() {
+				document.getElementById('file_upload_form').target = 'upload_target'; //'upload_target' is the name of the iframe
+				document.getElementById("upload_target").onload = uploadDone; //This function should be called when the iframe has compleated loading
+				// That will happen when the file is completely uploaded and the server has returned the data we need.
+			}
+		}
+
+		function uploadDone() { //Function will be called when iframe is loaded
+			var ret = frames['upload_target'].document.getElementsByTagName("body")[0].innerHTML;
+			var data = eval("("+ret+")"); //Parse JSON // Read the below explanations before passing judgment on me
+			createPlan(data.pdf_text);
+		}
+
+		function Course(subject, number, quarter, units, grade) {
+			this.subject = subject;
+			this.number = number;
+			this.quarter = quarter;
+			this.units = units;
+			this.grade = grade;
+		}
+
+		function createPlan(courserankText) {
+	 		clearPlan();
+	 		var courseArray = parseCoursesArray(courserankText);
+	 		checkPlan(courseArray);
+	 		writePlan(courseArray);
+	 	}
+
+	 	function clearPlan() {
+	 		var pArray = document.getElementsByTagName("p");
+	 		for(var i = 0; i < pArray.length; i++) {
+	 			if (pArray[i].className == "course") {
+	 				pArray[i].parentNode.removeChild(pArray[i]);
+	 				i--;
+	 			}
+	 		}
+	 	}
+
+	 	function writePlan(array) {
+			for (var i = 0; i < array.length; i++) {
+				var box = document.getElementById("quarter_" + array[i].quarter);
+				var p = document.createElement('P');
+				p.className = "course";
+				p.appendChild(document.createTextNode(array[i].subject.toUpperCase() + " " + array[i].number.toUpperCase() + " " + array[i].grade.toUpperCase()));
+				box.appendChild(p);
+			}
+		}
+
 	 	function checkPlan(course_array) {
 	 		document.getElementById("math_science").style.color = meetsMathScience(course_array) ? "green" : "red";
 	 		document.getElementById("tis").style.color = meetsTIS(course_array) ? "green" : "red";
@@ -522,6 +322,108 @@
 	 		alert("EE Capstone: " + meetsCapstone(course_array));
 	 		alert("EE Topics: " + meetsTopics(course_array));*/
 	 	}
+
+ 		function parseCoursesArray(courserank_text) {
+ 			courserank_text = courserank_text.replace(/&amp;/g, '&');
+			courserank_text = courserank_text.toLowerCase();
+
+
+ 			var course_array = [];
+ 			//create array of tokens delimited by spaces. Suitable for parsing course subjects and numbers
+ 			var courserank_array_subject_number = courserank_text.match(/([\w,.&\-+]*)/g);
+ 			removeEmptyStrings(courserank_array_subject_number);
+	 		//create array of tokens delimited by newlines
+	 		var courserank_array_units_grade = [];
+	 		var courserank_array_block = courserank_text.split("units grade");
+	 		for (var i = 1; i < courserank_array_block.length; i++) {
+	 			var token_array = courserank_array_block[i].split("\n");
+	 			removeEmptyStrings(token_array);
+	 			for (var j = 0; j < token_array.length; j++) {
+	 				if ((isUnits(token_array[j])) || (isGrade(token_array[j]))) {
+	 					courserank_array_units_grade.push(token_array[j]);
+	 				} else {
+	 					break;
+	 				}	 			
+	 			}
+	 		}
+
+ 			var first_year = firstYear(courserank_array_subject_number);
+ 			var quarter;
+ 			var unitsCounter = 0;
+ 			var gradeCounter = 0;
+ 			//parse subject and number
+ 			for (var i=0; i<courserank_array_subject_number.length; i++) {
+ 				if ((courserank_array_subject_number[i] == "autumn") || (courserank_array_subject_number[i] == "winter") || (courserank_array_subject_number[i] == "spring") || (courserank_array_subject_number[i] == "summer")) {
+ 					quarter = getQuarter(courserank_array_subject_number, i, first_year);
+ 				}
+ 				if (isSubject(courserank_array_subject_number[i], subjectAbbreviationsArray) && isCourseNumber(courserank_array_subject_number[i + 1])) {
+ 					var currentCourse = new Course(courserank_array_subject_number[i], courserank_array_subject_number[i+1], quarter);
+ 					course_array.push(currentCourse);
+ 				}
+ 			} 			
+
+			var unitsCounter = 0;
+ 			var gradeCounter = 0;
+
+ 			//parse 
+ 			for (var i=0; i<courserank_array_units_grade.length; i++) {
+ 				if (isUnits(courserank_array_units_grade[i])) {
+ 					course_array[unitsCounter].units = courserank_array_units_grade[i];
+ 					unitsCounter++;
+ 				} else if (isGrade(courserank_array_units_grade[i])) {
+ 					course_array[gradeCounter].grade = courserank_array_units_grade[i];
+ 					gradeCounter++;
+ 				}
+ 			}
+
+ 			for (var i = 0; i < course_array.length; i++) {
+ 				if(course_array[i].quarter > 16) {
+	 				course_array.splice(i,1);
+	 				i--;
+ 				}
+ 			}
+
+
+ 			return course_array;
+ 		}
+
+ 		function firstYear(array) {
+ 			for (var i=0; i<array.length; i++) {
+ 				if (array[i].match(/([0-9]{4}-[0-9]{4})/g) != null) {
+ 					return getYear(array[i]);
+ 				}
+ 			}
+ 		}
+ 		
+ 		function getYear(yearString) {
+ 			return parseInt(yearString.substr(0,4));
+ 		}
+
+ 		function getQuarter(array, index, first_year) {
+ 			var currentQuarter;
+ 			switch (array[index]) {
+ 				case "autumn":
+ 					return (1 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "winter":
+ 					return (2 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "spring":
+ 					return (3 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "summer":
+ 					return (4 + 4*(getYear(array[index + 1]) - first_year)); 
+ 			}
+ 		}
+
+ 		function isSubject(string) {
+ 			return (subjectAbbreviationsArray.indexOf(string) != -1);
+ 		}
+
+ 		function isCourseNumber(string) {
+ 			return (string.match(/[0-9]+/g) != null);
+ 		}
+
+ 		function isUnits(string) {
+ 			return (string.match(/[0-9]\.[0-9]/g) != null);
+ 		}
 
 	 	function meetsMathScience(course_array) {
 	 		if (!(courseGraded(course_array, "math41") && courseGraded(course_array,"math42"))) {
@@ -788,6 +690,94 @@
 	 			}
 	 		}
 	 	}
+
+	 	function isGrade(string) {
+ 			//Why must formatting be strict in javascript. -__-
+ 			switch (string) {
+ 				case "a+":
+ 					return true;
+ 				case "a":
+ 					return true;
+ 				case "a-":
+ 					return true;
+ 				case "b+":
+ 					return true;
+ 				case "b":
+ 					return true;
+ 				case "b-":
+ 					return true;
+ 				case "c+":
+ 					return true;
+ 				case "c":
+ 					return true;
+ 				case "c-":
+ 					return true;
+ 				case "d+":
+ 					return true;
+ 				case "d":
+ 					return true;
+ 				case "d-":
+ 					return true;
+ 				case "cr":
+ 					return true;
+ 				case "i":
+ 					return true;
+ 				case "l":
+ 					return true;
+ 				case "n":
+ 					return true;
+ 				case "n-":
+ 					return true;
+ 				case "nc":
+ 					return true;
+ 				case "np":
+ 					return true;
+ 				case "rp":
+ 					return true;
+ 				case "s":
+ 					return true;
+ 				case "w":
+ 					return true;
+ 				case "*":
+ 					return true;
+ 				case "gnr":
+ 					return true;
+ 				default:
+ 					return false;
+ 			}
+ 		}
+
+ 		function isLetterGrade(string) {
+ 			//Why must formatting be strict in javascript. -__-
+ 			switch (string) {
+ 				case "a+":
+ 					return true;
+ 				case "a":
+ 					return true;
+ 				case "a-":
+ 					return true;
+ 				case "b+":
+ 					return true;
+ 				case "b":
+ 					return true;
+ 				case "b-":
+ 					return true;
+ 				case "c+":
+ 					return true;
+ 				case "c":
+ 					return true;
+ 				case "c-":
+ 					return true;
+ 				case "d+":
+ 					return true;
+ 				case "d":
+ 					return true;
+ 				case "d-":
+ 					return true;
+ 				default:
+ 					return false;
+ 			}
+ 		}	 	
 
 	</script>
 </body>
