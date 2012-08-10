@@ -37,6 +37,11 @@
 		left: -1em;
 	}
 
+	#graph_buttons {
+		text-align: center;
+		margin-bottom: 5px;
+	}
+
 </style>
 <link rel="shortcut icon" href="http://www.stanford.edu/~alexoz/images/alexoz_logo_favicon.ico" type="image/x-icon" />
 <meta charset="UTF-8" />
@@ -62,12 +67,30 @@
 		</div>
 		<div id="content">
 			<h2>STATISTICS</h2>
-			<div id="quals_graph">
+			<div id="graph_buttons">
+				<label><input type="radio" name="graphSelect" value="rate" onclick="drawGraph('rate');" checked="checked"/>Pass Rate</label>	
+				<label><input type="radio" name="graphSelect" value="take" onclick="drawGraph('take');"/>Taken</label>
+				<label><input type="radio" name="graphSelect" value="pass" onclick="drawGraph('pass');"/>Passed</label>
+			</div>
+			<div id="quals_graph">	
 				<div id="y_label_max"></div>
 				<div id="y_label_min">0</div>
-			</div>
+			</div></br>
+			<p class="gray_text">(Petitions not included. Statistics on petitions are never released. Source: John Gill, 2012)</p>
 			<h2>DOWNLOADS</h2>
+			<p>I am open sourcing my quals notebook, solutions, and examiner-sorted quals questions. My areas were circuits, devices, and systems. Hope you find it helpful.</p>
+			<ul>
+				<li>+ <a href="downloads/quals_notebook_alexoz.pdf">NOTEBOOK</a></li>
+				<li>+ <a href="downloads/quals_solutions_alexoz.pdf">SOLUTIONS</a></li>
+				<li>+ <a href="downloads/quals_sorted_alexoz.zip">QUESTIONS</a></li>
+			</ul>
 			<h2>LINKS</h2>
+			<p>Quals guides:</p>
+			<ul>
+				<li>+ <a href="http://ee.stanford.edu/phd/qualsguide/">STANFORD</a></li>
+				<li>+ <a href="http://www.ocf.berkeley.edu/~wwu/quals/advice.shtml">WILLIAM WU</a></li>
+				<li>+ <a href="http://www.stanford.edu/~rc3534/quals.html">ROBERT CHEN</a></li>
+			</ul>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -85,6 +108,7 @@
 		function init() {
 			document.getElementById("quals_graph").style.width = GRAPH_WIDTH + "px";
 			document.getElementById("quals_graph").style.height = GRAPH_HEIGHT + "px";
+			drawGraph("rate");
 		}
 
 		function shortenYear(year) {
@@ -93,6 +117,7 @@
 		}
 
 		function drawGraph(option) {
+			clearGraph();
 			BAR_SPACING = (GRAPH_WIDTH - (statsArray.length * BAR_WIDTH))/(statsArray.length + 1);  
 			var graph = document.getElementById("quals_graph");
 			for (var i = 0; i < statsArray.length; i++) {
@@ -132,7 +157,15 @@
 			}
 		}
 
-		drawGraph("rate");
+		function clearGraph() {
+			var divArray = document.getElementsByTagName("div");
+			for (var i = 0; i < divArray.length; i++) {
+				if (divArray[i].className == "bar") {
+					divArray[i].parentNode.removeChild(divArray[i]);
+					i--;
+				}
+			}
+		}
 
 	</script>
 </body>
