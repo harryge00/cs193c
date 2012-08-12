@@ -84,3 +84,20 @@ ul {
 #oz {
 	color: #57C315;
 }
+
+#quote_box {
+        width: 580px;
+        padding: 10px;
+        position: absolute;
+        height: 10em;
+        top: 50%;
+        margin-top: -5em;
+        left: 50%;
+        margin-left: -300px;
+        text-align: center;
+}
+
+#quote {
+        font-size: 20px;
+        font-weight: bold;
+}

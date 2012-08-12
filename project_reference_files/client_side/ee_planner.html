@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	body {
+		margin: 0px;
+	}
+	#main {
+		font-size: 12px;
+		font-family: sans-serif;
+	}
+
+	.row {
+		clear: both;
+	}
+
+	#row_0 {
+		background-color: #990000;
+		overflow: hidden;
+		border-top: 1px solid black;
+		border-bottom: 1px solid black;
+		padding-left: 10px;
+	}
+
+	.col_heading_box {
+		width: 132px;
+		padding: 5px;
+		margin-left: 10px;
+		margin-right: 10px;
+		float: left;
+		overflow: auto;
+	}
+
+	.col_heading {
+		font-family: helvetica;
+		font-size: 20px;
+		text-align: center;
+		color: #fff;
+	}
+
+	#col_headers {
+		width: 700px;
+	}
+
+	.quarter_box {
+		width: 130px;
+		height:	130px;
+		border: 1px #aaa solid;
+		padding: 5px;
+		margin: 10px;
+		float: left;
+		overflow: auto;
+		background: #F1F3F8;
+  		-moz-box-shadow:    1px 1px 2px 2px #ddd;
+ 		-webkit-box-shadow: 1px 1px 2px 2px #ddd;
+  		box-shadow:         1px 1px 2px 2px #ddd;
+	}
+
+	.col {
+		float: left;
+	}
+
+	#left_col {
+		width: 700px;
+		padding: 10px;
+	}
+
+	#right_col {
+		width: 200px;
+	}
+
+	p {
+		margin: 2px;
+	}
+
+	#requirements {
+		margin: 10px;
+	}
+
+</style>
+<meta charset="UTF-8" />
+<title>EE Planner</title>
+</head>
+<body>
+	<div id="main">
+		<div class="row" id="row_0">
+			<div id="col_headers">
+				<div class="col_heading_box">
+					<p class="col_heading">Autumn</p>
+				</div>
+				<div class="col_heading_box">
+					<p class="col_heading">Winter</p>
+				</div>
+				<div class="col_heading_box">
+					<p class="col_heading">Spring</p>
+				</div>
+				<div class="col_heading_box">
+					<p class="col_heading">Summer</p>
+				</div>
+			</div>
+		</div>
+		<div class="col" id="left_col">
+			<div class="row" id="row_1">
+				<div class="quarter_box" id="quarter_1">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_2">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_3">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_4">
+					<p class="empty"></p>
+				</div>
+			</div>
+			<div class="row" id="row_2">
+				<div class="quarter_box" id="quarter_5">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_6">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_7">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_8">
+					<p class="empty"></p>
+				</div>
+			</div>
+			<div class="row" id="row_3">
+				<div class="quarter_box" id="quarter_9">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_10">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_11">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_12">
+					<p class="empty"></p>
+				</div>
+			</div>
+			<div class="row" id="row_4">
+				<div class="quarter_box" id="quarter_13">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_14">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_15">
+					<p class="empty"></p>
+				</div>
+				<div class="quarter_box" id="quarter_16">
+					<p class="empty"></p>
+				</div>
+			</div>
+		</div>
+		<div class="col" id="right_col">
+			<form id="input">
+				<input id="text_box" type="text" name="text_input" />
+				<input type="button" name="create_form" onclick="createPlan();" />
+				<div id="requirements">
+					<p id="math_science">Math/Science</p>
+					<p id="tis">TIS</p>
+					<p id="wim">WIM</p>
+					<p id="fundamentals">Engineering Fundamentals</p>
+					<p id="ee_core">EE Core</p>
+					<p id="ee_physics">Physics in EE</p>
+					<p id="ee_specialty">EE Specialty Sequence</p>
+					<p id="ee_capstone">EE Capstone</p>
+					<p id="ee_topics">EE Topics</p>
+				</p>
+			</form>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+
+		//global variables
+		var SCIENCE_UNITS_REQUIREMENT = 12;
+		var MATH_SCIENCE_UNITS_REQUIREMENT = 45;
+		var TOPICS_UNITS_REQUIREMENT = 68;
+		var UNIVERSITY_UNITS_REQUIREMENT = 180;
+		var FUNDAMENTALS_COURSES_REQUIREMENT = 3;
+		var FUNDAMENTALS_COURSES_MAX = 5;
+		var SPECIALTY_COURSES_REQUIREMENT = 3;
+		var EE191_UNITS_MAX = 10;
+		var EE_TOPICS_COURSE_NUMBER_MIN = 100;
+
+		var subjectAbbreviationsArray = ["acct","mgtecon","finance","gsbgen","hrmgt","mktg","oit","ob","polecon","stramgt","earthsci","earthsys","eees","energy","envres","eess","ges","geophys","envrinst","educ","aa","bioe","chemeng","cee","cme","cs","ee","engr","ms&e","matsci","me","sccm","africaam","amelang","africast","amstud","anthro","appphys","archlgy","arthist","artstudi","asnamst","asnlang","astrnmy","athletic","bio","biohopk","biophys","catlang","chem","chicanst","chingen","chinlang","chinlit","classart","classgen","classgrk","classhis","classlat","comm","complit","csre","dance","dlcl","drama","eastasn","econ","english","efslang","ethicsoc","femst","filmprod","filmstud","frengen","frenlang","frenlit","gergen","gerlang","gerlit","history","hps","humbio","humsci","ilac","iberlang","fsi","iis","humnties","ips","intnlrel","italgen","itallang","itallit","japangen","japanlng","japanlit","jewishst","korgen","korlang","latinam","linguist","mcs","math","medvlst","mtl","music","nativeam","phil","physics","polisci","portlang","psych","publpol","religst","rees","sts","slavgen","slavlang","slavlit","soc","spanlang","ilac","speclang","siw","stats","symsys","tibetlng","urbanst","law","lawgen","anes","bioc","biomedin","cbio","cts","csb","compmed","derm","dbio","fammed","gene","hrp","immunol","med","inde","mi","mcp","nbio","nens","nepr","nsur","obgyn","opht","ortho","otohns","path","peds","psyc","rado","rad","stemrem","sbio","surg","urol","ctl","ihum","ospgen","ospaustl","casb","ospbarcl","ospbeij","ospber","ospcptwn","ospflor","ospkyoto","kcjs","ospkyoct","ospmadrd","ospmosc","ospoxfrd","ospparis","ospsantg","sle","uar","pwr","mla"];
+
+		function Course(subject, number, quarter, units, grade) {
+			this.subject = subject;
+			this.number = number;
+			this.quarter = quarter;
+			this.units = units;
+			this.grade = grade;
+		}
+
+ 		function firstYear(array) {
+ 			for (var i=0; i<array.length; i++) {
+ 				if (array[i].match(/([0-9]{4}-[0-9]{4})/g) != null) {
+ 					return getYear(array[i]);
+ 				}
+ 			}
+ 		}
+ 		
+ 		function getYear(yearString) {
+ 			return parseInt(yearString.substr(0,4));
+ 		}
+
+ 		//Need to finish this function
+ 		function getQuarter(array, index, first_year) {
+ 			var currentQuarter;
+ 			switch (array[index]) {
+ 				case "autumn":
+ 					return (1 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "winter":
+ 					return (2 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "spring":
+ 					return (3 + 4*(getYear(array[index + 1]) - first_year)); 
+				case "summer":
+ 					return (4 + 4*(getYear(array[index + 1]) - first_year)); 
+ 			}
+ 		}
+ 		//alert(courserankArray.indexOf("physics"));
+ 		//alert(subjectAbbreviationsArray.indexOf(courserankArray[50]));
+ 		//alert(courserankArray);
+
+ 		function parseCoursesArray(courserank_text) {
+ 			var course_array = [];
+ 			//create array of tokens delimited by spaces. Suitable for parsing course subjects and numbers
+ 			var courserank_array_subject_number = courserank_text.match(/([\w,.&\-+]*)/g);
+ 			removeEmptyStrings(courserank_array_subject_number);
+	 		//create array of tokens delimited by newlines
+	 		var courserank_array_units_grade = [];
+	 		var courserank_array_block = courserank_text.split("units grade");
+	 		for (var i = 1; i < courserank_array_block.length; i++) {
+	 			var token_array = courserank_array_block[i].split(" ");
+	 			removeEmptyStrings(token_array);
+	 			for (var j = 0; j < token_array.length; j++) {
+	 				if ((isUnits(token_array[j])) || (isGrade(token_array[j]))) {
+	 					courserank_array_units_grade.push(token_array[j]);
+	 				} else {
+	 					break;
+	 				}	 			
+	 			}
+	 		}
+
+ 			var first_year = firstYear(courserank_array_subject_number);
+ 			var quarter;
+ 			var unitsCounter = 0;
+ 			var gradeCounter = 0;
+ 			//parse subject and number
+ 			for (var i=0; i<courserank_array_subject_number.length; i++) {
+ 				if ((courserank_array_subject_number[i] == "autumn") || (courserank_array_subject_number[i] == "winter") || (courserank_array_subject_number[i] == "spring") || (courserank_array_subject_number[i] == "summer")) {
+ 					quarter = getQuarter(courserank_array_subject_number, i, first_year);
+ 				}
+ 				if (isSubject(courserank_array_subject_number[i], subjectAbbreviationsArray) && isCourseNumber(courserank_array_subject_number[i + 1])) {
+ 					var currentCourse = new Course(courserank_array_subject_number[i], courserank_array_subject_number[i+1], quarter);
+ 					course_array.push(currentCourse);
+ 				}
+ 			}
+ 			//parse 
+ 			for (var i=0; i<courserank_array_units_grade.length; i++) {
+ 				if (isUnits(courserank_array_units_grade[i])) {
+ 					course_array[unitsCounter].units = courserank_array_units_grade[i];
+ 					unitsCounter++;
+ 				} else if (isGrade(courserank_array_units_grade[i])) {
+ 					course_array[gradeCounter].grade = courserank_array_units_grade[i];
+ 					gradeCounter++;
+ 				}
+ 			}
+
+ 			for (var i = 0; i < course_array.length; i++) {
+ 				if(course_array[i].quarter > 16) {
+	 				course_array.splice(i,1);
+	 				i--;
+ 				}
+ 			}
+ 			return course_array;
+ 		}
+
+ 		function isSubject(string) {
+ 			return (subjectAbbreviationsArray.indexOf(string) != -1);
+ 		}
+
+ 		function isCourseNumber(string) {
+ 			return (string.match(/[0-9]+/g) != null);
+ 		}
+
+ 		function isUnits(string) {
+ 			return (string.match(/[0-9]\.[0-9]/g) != null);
+ 		}
+
+ 		function isGrade(string) {
+ 			//Why must formatting be strict in javascript. -__-
+ 			switch (string) {
+ 				case "a+":
+ 					return true;
+ 				case "a":
+ 					return true;
+ 				case "a-":
+ 					return true;
+ 				case "b+":
+ 					return true;
+ 				case "b":
+ 					return true;
+ 				case "b-":
+ 					return true;
+ 				case "c+":
+ 					return true;
+ 				case "c":
+ 					return true;
+ 				case "c-":
+ 					return true;
+ 				case "d+":
+ 					return true;
+ 				case "d":
+ 					return true;
+ 				case "d-":
+ 					return true;
+ 				case "cr":
+ 					return true;
+ 				case "i":
+ 					return true;
+ 				case "l":
+ 					return true;
+ 				case "n":
+ 					return true;
+ 				case "n-":
+ 					return true;
+ 				case "nc":
+ 					return true;
+ 				case "np":
+ 					return true;
+ 				case "rp":
+ 					return true;
+ 				case "s":
+ 					return true;
+ 				case "w":
+ 					return true;
+ 				case "*":
+ 					return true;
+ 				case "gnr":
+ 					return true;
+ 				case "n\/a":
+ 					return true;
+ 				default:
+ 					return false;
+ 			}
+ 		}
+
+ 		function isLetterGrade(string) {
+ 			//Why must formatting be strict in javascript. -__-
+ 			switch (string) {
+ 				case "a+":
+ 					return true;
+ 				case "a":
+ 					return true;
+ 				case "a-":
+ 					return true;
+ 				case "b+":
+ 					return true;
+ 				case "b":
+ 					return true;
+ 				case "b-":
+ 					return true;
+ 				case "c+":
+ 					return true;
+ 				case "c":
+ 					return true;
+ 				case "c-":
+ 					return true;
+ 				case "d+":
+ 					return true;
+ 				case "d":
+ 					return true;
+ 				case "d-":
+ 					return true;
+ 				case "n\/a":
+ 					return true;
+ 				default:
+ 					return false;
+ 			}
+ 		}
+
+ 		function writePlan(array) {
+			for (var i = 0; i < array.length; i++) {
+				var box = document.getElementById("quarter_" + array[i].quarter);
+				var p = document.createElement('P');
+				p.className = "course";
+				p.appendChild(document.createTextNode(array[i].subject.toUpperCase() + " " + array[i].number.toUpperCase() + " " + array[i].grade.toUpperCase()));
+				box.appendChild(p);
+			}
+		}
+
+		function createPlan() {
+			var courserankText = document.getElementById("input").text_input.value.toLowerCase();
+	 		clearPlan();
+	 		var courseArray = parseCoursesArray(courserankText);
+	 		checkPlan(courseArray);
+	 		writePlan(courseArray);
+	 	}
+
+	 	function clearPlan() {
+	 		var pArray = document.getElementsByTagName("p");
+	 		for(var i = 0; i < pArray.length; i++) {
+	 			if (pArray[i].className == "course") {
+	 				pArray[i].parentNode.removeChild(pArray[i]);
+	 				i--;
+	 			}
+	 		}
+	 	}
+
+	 	// Array of all courses that fulfill the SOE math requirement
+	 	var mathArray = ["math19","math20", "math21", "math41", "math42", "math51", "math51m", "math52", "math53", "math51h", "math52h", "math53h", "math104", "math106", "math109", "math113", "math115", "math120", "math121", "math131p", "math132", "cme100", "cme102", "cme104", "cme108", "cs103", "cs109", "cee101d", "cee201d", "cee203", "engr62", "engr154", "engr155a", "engr155b", "engr155c", "ms&e121", "ms&e120", "stats60", "stats110", "stats116", "ee178"];
+
+	 	// Array of all courses that fulfill the SOE science requirement
+	 	var scienceArray = ["bio41", "bio42", "bio43", "cee63", "cee64", "cee70", "chem31a", "chem31b", "chem31x", "chem33", "chem35", "chem36", "chem131", "chem135", "earthsys10", "engr31", "ges1a", "ges1b", "ges1c", "physics21", "physics23", "physics25", "physics41", "physics43", "physics45", "physics42", "physics44", "physics46", "physics61", "physics63", "physics65", "physics62", "physics64", "physics67"];
+
+	 	// Array of all courses that fulfill the SOE Technology in Society requirement
+	 	var tisArray = ["sts101", "sts201", "engr130", "sts101q", "sts110", "sts112", "sts115", "bioe131", "cs181", "cs181w", "engr145", "humbio174", "ms&e181", "ms&e193", "polisci114s", "publpol194"];
+
+		// Array of all courses that fulfill the EE WIM requirement
+		var wimArray = ["ee109", "ee133", "ee134", "ee168", "ee191w", "cs194w"];
+
+		// Array of all courses that fulfill the EE core requirement
+		var coreArray = ["ee100", "ee101a", "ee101b", "ee102a", "ee102b", "ee108a", "ee108b"];
+
+	 	// Array of all courses that fulfill the SOE Engineering Fundamentals requirement
+	 	var fundamentalsArray = ["engr10", "engr14", "engr15", "engr20", "cheme20", "engr25b", "cheme25b", "engr25e", "cheme25e", "engr30", "engr40", "engr40n", "engr40p", "ee41", "engr50", "engr50e", "engr50m", "engr60", "engr62", "ms&e111","engr70b", "cs106b", "engr70x", "cs106x", "engr80", "engr90", "cee70"];
+
+	 	// Array of all courses that fulfill the Physics in EE requirement
+		var physicsArray = ["ee41", "engr40p", "ee141"];
+
+		// Arrays of all courses that fulfill the various Specialty Sequences
+		var bioelectronicsAndBioimagingArray = ["ee122b", "ee124", "ee134", "ee168", "ee169", "ee202", "ee225"];
+
+		var circuitsAndDevicesArray = ["ee114", "ee116", "ee122a", "ee133", "ee212", "ee214b", "ee216", "ee271"];
+
+		var computerHardwareArray = ["ee109", "ee271", "ee273", "ee282", "cs107"];
+
+		var computerSoftwareArray = ["cs107", "cs108", "cs110", "cs140", "cs143", "cs145", "cs148", "cs194w", "ee284", "cs144"];
+
+		var musicArray = ["ee109", "ee264", "music256a", "music256b", "music420a", "music420b", "music421a", "music421b", "music422", "music424"];
+
+		var signalProcessingCommunicationsAndControlsArray = ["ee124", "ee133", "ee168", "ee169", "ee179", "ee261", "ee262", "ee263", "ee264", "ee265", "ee276", "ee278b", "ee279", "engr105", "engr205"];
+
+		var solidStatePhotonicsAndElectromagneticsArray = ["ee116", "ee134", "ee136", "ee141", "ee216", "ee222", "ee223", "ee228", "ee235", "ee242", "ee247", "ee268"];
+
+		// Array of all courses that fulfill the EE Capstone Design requirement
+		var capstoneArray = ["ee109", "ee133", "ee134", "ee168", "ee262", "ee265", "cs194w"];
+
+	 	//Array of all EE cognate courses (from MS degree website + cs193 classes)
+	 	var cognateArray = ["aa244", "aa251", "aa272c", "appphys202", "appphys203", "appphys207", "appphys208", "appphys227", "appphys272", "appphys273", "appphys304", "appphys305", "appphys387", "bioe334", "cs107", "cs108", "cs110", "cs140", "cs143", "cs144", "cs148", "cs193c", "cs193d", "cs193g", "cs193p", "cs193s", "cs194", "cs205a", "cs221", "cs231a", "cs228", "cs229", "cs229a", "cs240", "cs242", "cs243", "cs244", "cs244e", "cs245", "cs248", "cs255", "cs315a", "cs315b", "cs321", "cs343", "cs344", "cs347", "cs348a", "cs348b", "cs448b", "engr105", "engr205", "engr206", "engr207a", "engr207b", "engr209a", "engr210b", "engr240", "engr341", "geophys265", "matsci199", "matsci209", "matsci316", "matsci323", "matsci343", "matsci347", "me358", "ms&e237", "ms&e251", "ms&e310", "ms&e311", "ms&e313", "ms&e321", "ms&e322", "ms&e336", "ms&e338", "ms&e339", "ms&e351", "music420a", "music421a", "music422", "music424", "psych221", "rad226", "stats315a", "stats315b", "stats375"];
+
+	 	// Array of all courses that count as EE191
+	 	var ee191Array = ["ee191", "ee191w"];
+
+	 	function checkPlan(course_array) {
+	 		document.getElementById("math_science").style.color = meetsMathScience(course_array) ? "green" : "red";
+	 		document.getElementById("tis").style.color = meetsTIS(course_array) ? "green" : "red";
+	 		document.getElementById("wim").style.color = meetsWIM(course_array) ? "green" : "red";
+	 		document.getElementById("fundamentals").style.color = meetsFundamentals(course_array) ? "green" : "red";
+	 		document.getElementById("ee_core").style.color = meetsCore(course_array) ? "green" : "red";
+	 		document.getElementById("ee_physics").style.color = meetsPhysics(course_array) ? "green" : "red";
+	 		document.getElementById("ee_specialty").style.color = meetsSpecialty(course_array) ? "green" : "red";
+	 		document.getElementById("ee_capstone").style.color = meetsCapstone(course_array) ? "green" : "red";
+	 		document.getElementById("ee_topics").style.color = meetsTopics(course_array) ? "green" : "red";
+	 		
+	 		/*alert("Math/Science: " + meetsMathScience(course_array));
+	 		alert("TIS: " + meetsTIS(course_array));
+	 		alert("WIM: " + meetsWIM(course_array));
+	 		alert("Fundamentals: " + meetsFundamentals(course_array));
+	 		alert("EE Core: " + meetsCore(course_array));
+	 		alert("EE Physics: " + meetsPhysics(course_array));
+	 		alert("EE Specialty: " + meetsSpecialty(course_array));
+	 		alert("EE Capstone: " + meetsCapstone(course_array));
+	 		alert("EE Topics: " + meetsTopics(course_array));*/
+	 	}
+
+	 	function meetsMathScience(course_array) {
+	 		if (!(courseGraded(course_array, "math41") && courseGraded(course_array,"math42"))) {
+	 			return false;
+	 		}
+	 		if (!((courseGraded(course_array, "math51") && courseGraded(course_array, "math52")) || (courseGraded(course_array, "cme100") && (courseGraded(course_array, "cme104") || courseGraded(course_array, "engr155b"))))) {
+	 			return false;
+	 		}
+	 		if (!(courseGraded(course_array, "math53") || (courseGraded(course_array, "cme102") || courseGraded(course_array, "engr155a")))) {
+	 			return false;
+	 		}
+	 		if (!(courseGraded(course_array, "ee178") || courseGraded(course_array, "stats116") || courseGraded(course_array, "math151") || (courseGraded(course_array, "cme106") || courseGraded(course_array, "engr155c")) || courseGraded(course_array, "cs109"))) {
+	 			return false;
+	 		}
+	 		if (!((courseGraded(course_array, "physics41") && courseGraded(course_array, "physics43")) || (courseGraded(course_array, "physics61") && courseGraded(course_array, "physics63")) )) {
+	 			return false;
+	 		}
+	 		if (countGradedUnits(course_array, scienceArray) < SCIENCE_UNITS_REQUIREMENT) {
+	 			return false;
+	 		}
+	 		if ((countGradedUnits(course_array, scienceArray) + countGradedUnits(course_array, mathArray)) < MATH_SCIENCE_UNITS_REQUIREMENT) {
+	 			return false;
+	 		}
+
+	 		return true;
+	 	}
+
+
+	 	function meetsTIS(course_array) {
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if (tisArray.indexOf(courseToString(course_array[i])) != -1) {
+	 				if (isLetterGrade(course_array[i].grade)) {
+	 					return true;
+	 				}
+	 			}
+	 		}
+	 		return false;
+	 	}
+
+	 	function meetsWIM(course_array) {
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if (wimArray.indexOf(courseToString(course_array[i])) != -1) {
+	 				if (isLetterGrade(course_array[i].grade)) {
+	 					return true;
+	 				}
+	 			}
+	 		}
+	 		return false;
+	 	}
+
+	 	function meetsFundamentals(course_array) {
+	 		if (!((courseGraded(course_array, "cs106b") || courseGraded(course_array, "engr70b")) || (courseGraded(course_array, "cs106x") || courseGraded(course_array, "engr70x")))) {
+	 			return false;
+	 		}
+	 		if (countGradedCourses(course_array, fundamentalsArray) < FUNDAMENTALS_COURSES_REQUIREMENT) {
+	 			return false;
+	 		}
+	 		return true;
+	 	}
+
+	 	function meetsCore(course_array) {
+	 		for (var i = 0; i < coreArray.length; i++) {
+	 			if (coreArray[i] == "ee100") {
+	 				if (!courseTaken(course_array, coreArray[i])) {
+	 					return false;
+	 				}
+	 			} else if (!courseGraded(course_array, coreArray[i])) {
+	 				return false;
+	 			}
+	 		}
+	 		return true;
+	 	}
+
+	 	function meetsPhysics(course_array) {
+	 		if (courseGraded(course_array, "ee141")) {
+	 			return true;
+	 		} else if (courseGraded(course_array, "ee41") || courseGraded(course_array, "engr40p")) {
+	 			//EE41/ENGR40P can only meet this requirement if it is not used to fulfill the Fundamentals requirement.
+	 			if (countGradedCourses(course_array, fundamentalsArray) > FUNDAMENTALS_COURSES_REQUIREMENT) {
+	 				return true;
+	 			} else {
+	 				return false;
+	 			}
+	 		} else {
+	 			return false;
+	 		}
+	 	}
+
+	 	function meetsSpecialty(course_array) {
+	 		if (countGradedCourses(course_array, bioelectronicsAndBioimagingArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	 			return true;
+	 		} else if (countGradedCourses(course_array, circuitsAndDevicesArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	 			return true;
+	 		} else if (countGradedCourses(course_array, computerHardwareArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	 			return true;
+	 		} else if (countGradedCourses(course_array, computerSoftwareArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	 			return true;
+	 		} else if (countGradedCourses(course_array, musicArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	 			// Can apply EE264 or EE265 towards the Specialty requirement, but not both.
+	 			if (courseGraded(course_array, "ee264") && courseGraded(course_array, "ee265")) {
+	 				if (countGradedCourses(course_array, musicArray) > SPECIALTY_COURSES_REQUIREMENT) {
+	 					return true;
+	 				}
+	 			} else {
+	 				return true;
+	 			}
+	 		} else if (countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	 			// Can apply EE264 or EE265 towards the Specialty requirement, but not both.
+	 			if (courseGraded(course_array, "ee264") && courseGraded(course_array, "ee265")) {
+	 				if (countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray) > SPECIALTY_COURSES_REQUIREMENT) {
+	 					return true;
+	 				}
+	 			} else {
+	 				return true;
+	 			}
+	 		} else if (countGradedCourses(course_array, solidStatePhotonicsAndElectromagneticsArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	 			// EE141 can only count towards the Specialty requirement if not used to fulfill the EE Physics requirement.
+	 			if (courseGraded(course_array, "ee141")) {
+	 				if (countGradedCourses(course_array, solidStatePhotonicsAndElectromagneticsArray) > SPECIALTY_COURSES_REQUIREMENT) {
+	 					return true;
+	 				} else if ((courseGraded(course_array, "ee41") || courseGraded(course_array, "engr40p")) && (countGradedCourses(course_array, fundamentalsArray) > FUNDAMENTALS_COURSES_REQUIREMENT)) {
+	 					return true;
+	 				}
+	 			} else {
+	 				return true;
+	 			}
+	 		} else {
+	 			return false;
+	 		}
+	 	}
+
+	 	function meetsCapstone(course_array) {
+			for (var i = 0; i < course_array.length; i++) {
+	 			if (capstoneArray.indexOf(courseToString(course_array[i])) != -1) {
+	 				if (isLetterGrade(course_array[i].grade)) {
+	 					return true;
+	 				}
+	 			}
+	 		}
+	 		return false;
+	 	}
+
+	 	function meetsTopics(course_array) {
+	 		// One tricky part here is that most of the core gets counted as gradedEETopicsUnits, but EE41 gets counted as gradedUnitsFundamentals since it is below the 100 level.
+	 		var gradedUnitsCognates = countGradedUnits(course_array, cognateArray);
+	 		var gradedUnitsFundamentals = countGradedUnits(course_array, fundamentalsArray);
+	 		var gradedUnitsEE = countGradedEETopicsUnits(course_array);
+	 		var topicsUnits = gradedUnitsCognates + gradedUnitsFundamentals + gradedUnitsEE - extraUnitsEE191(course_array) - extraUnitsFundamentals(course_array);
+	 		if (topicsUnits >= TOPICS_UNITS_REQUIREMENT) {
+	 			return true;
+	 		} else {
+	 			return false;
+	 		}
+	 	}
+
+	 	function countGradedEETopicsUnits(course_array) {
+	 		var numUnits = 0;
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			//Note that EE178 cannot count towards the Topics requirement if it is already counted towards the Math and Science requirement.
+	 			if ((course_array[i].subject == "ee") && (parseInt(course_array[i].number) >= EE_TOPICS_COURSE_NUMBER_MIN)) {
+	 				if (isLetterGrade(course_array[i].grade)) {
+	 					if (courseToString(course_array[i]) == "ee178") {
+	 						if(courseGraded(course_array, "stats116") || courseGraded(course_array, "math151") || courseGraded(course_array, "cme106") || courseGraded(course_array, "engr155c") || courseGraded(course_array, "cs109")) {
+	 							numUnits += parseInt(course_array[i].units);
+	 						}
+	 					} else {
+	 						numUnits += parseInt(course_array[i].units);
+	 					}
+	 				}
+	 			}
+	 		}
+	 		return numUnits;
+	 	}
+
+	 	function extraUnitsEE191(course_array) {
+	 		var extra_units = countGradedUnits(course_array, ee191Array) - EE191_UNITS_MAX;
+	 		if (extra_units > 0) {
+	 			return extra_units;
+	 		} else {
+	 			return 0;
+	 		}
+	 	}
+
+	 	function extraUnitsFundamentals(course_array) {
+	 		var fundamentals_course_array = [];
+	 		var extra_units = 0;
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if (fundamentalsArray.indexOf(courseToString(course_array[i])) != -1) {
+	 				// I interpret the UGHB to say that students could potentially count 5 ENGR Fundamentals and EE41/ENGR40P towards the topics requirement.
+	 				if (isLetterGrade(course_array[i].grade) && (courseToString(course_array[i]) != "ee41") && (courseToString(course_array[i]) != "engr40p")) {
+	 					fundamentals_course_array.push(course_array[i]);
+	 				}
+	 			}
+	 		}
+
+	 		if (fundamentals_course_array.length > FUNDAMENTALS_COURSES_MAX) {
+	 			fundamentals_course_array.sort(function(a,b){return parseInt(a.units) - parseInt(b.units)});
+	 			for (var i = 0; i < (fundamentals_course_array.length - FUNDAMENTALS_COURSES_MAX); i++) {
+	 				extra_units += parseInt(fundamentals_course_array[i].units);
+	 			}
+	 			return extra_units;
+	 		} else {
+	 			return 0;
+	 		}
+	 	}
+
+
+	 	//counts the number of graded units taken that are contained in the reference array.
+	 	function countGradedUnits(course_array, reference_array) {
+	 		var numUnits = 0;
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if (reference_array.indexOf(courseToString(course_array[i])) != -1) {
+	 				if (isLetterGrade(course_array[i].grade)) {
+	 					numUnits += parseInt(course_array[i].units);
+	 				}
+	 			}
+	 		}
+	 		return numUnits;
+	 	}
+
+	 	//counts the number of graded courses taken that are contained in the reference array.
+	 	function countGradedCourses(course_array, reference_array) {
+	 		var numCourses = 0;
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if (reference_array.indexOf(courseToString(course_array[i])) != -1) {
+	 				if (isLetterGrade(course_array[i].grade)) {
+	 					numCourses++;
+	 				}
+	 			}
+	 		}
+	 		return numCourses;
+	 	}
+
+	 	//Determines if course is contained in the courseArray
+	 	function courseTaken(course_array, course) {
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if ((courseToString(course_array[i])) == course) {
+	 				return true;
+	 			}
+	 		}
+	 		return false;
+	 	}
+
+	 	//Determines if course is contained in the courseArray and was taken for a letter grade
+	 	function courseGraded(course_array, course) {
+	 		for (var i = 0; i < course_array.length; i++) {
+	 			if (((courseToString(course_array[i])) == course) && (isLetterGrade(course_array[i].grade))) {
+	 				return true;
+	 			}
+	 		}
+	 		return false;
+	 	}
+
+	 	//Takes Course object as parameter, returns string. E.g. {"cs", "106a", 1, "5.0", "a"} => "cs106a"
+	 	function courseToString(course_obj) {
+	 		return (course_obj.subject + course_obj.number);
+	 	}
+
+	 	function removeEmptyStrings(array) {
+	 		for (var i = 0; i < array.length; i++) {
+	 			if (array[i] == "") {
+	 				array.splice(i,1);
+	 				i--;
+	 			}
+	 		}
+	 	}
+
+	</script>
+</body>
+</html>

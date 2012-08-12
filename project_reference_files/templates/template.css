@@ -1,0 +1,86 @@
+html {
+	overflow-y: scroll;
+}
+
+a {
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #57C315;
+}
+
+img {
+	display: block;
+}
+
+h1 {
+	font-size: 60px;
+	line-height: 100px;
+	margin: 0px;
+	white-space: nowrap;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.row {
+	width: 100%;
+}
+
+.gray_text {
+	text-align: center;
+	color: #CCCCCC;
+}
+
+#main {
+	font-family: sans-serif;
+}
+
+#logo {
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#logo_and_name {
+	float: left;
+}
+
+#banner	{
+	position: absolute;
+	clear: both;
+	top: 0px;
+	left: 0px;
+	height: 0px;
+	border-bottom: 5px solid black;
+}
+
+#menu {
+	float: right;
+	text-align: right;
+}
+
+#header {
+	width: 800px;
+	margin: auto;
+	margin-top: 15px;
+	clear: both;
+}
+
+#content {
+	position: relative;
+	width: 780px;
+	min-height: 480px;
+	padding: 10px;
+	margin: auto;
+	clear: both;
+	border: 1px #CCCCCC solid;
+}
+
+#oz {
+	color: #57C315;
+}
