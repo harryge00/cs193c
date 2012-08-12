@@ -84,3 +84,46 @@ ul {
 #oz {
 	color: #57C315;
 }
+
+.bar {
+	position: absolute;
+	background-color: black;
+	color: white;
+	text-align: center;
+	bottom: 0px;
+	width: 35px;
+}
+
+.x_label {
+	color: black;
+	position: absolute;
+	bottom: -1.5em;
+	left: 0.4em;
+}
+
+#quals {
+	color: #57C315;
+}
+
+#quals_graph {
+	position: relative;
+	margin: auto;
+	border: 1px solid #CCCCCC;
+}
+
+#y_label_max {
+	position: absolute;
+	top: 0em;
+	left: -2em;
+}
+
+#y_label_min {
+	position: absolute;
+	bottom: 0em;
+	left: -1em;
+}
+
+#graph_buttons {
+	text-align: center;
+	margin-bottom: 5px;
+}

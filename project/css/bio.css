@@ -84,3 +84,18 @@ ul {
 #oz {
 	color: #57C315;
 }
+
+.favicon {
+		float: left;
+		margin: 3px;
+}
+#bio {
+	color: #57C315;
+}
+
+#portrait
+{
+	float: left;
+	margin-right: 10px;
+	border: 1px solid #CCCCCC;
+}

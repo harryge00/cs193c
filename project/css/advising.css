@@ -1,0 +1,187 @@
+html {
+	overflow-y: scroll;
+}
+
+a {
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #57C315;
+}
+
+img {
+	display: block;
+}
+
+h1 {
+	font-size: 60px;
+	line-height: 100px;
+	margin: 0px;
+	white-space: nowrap;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.row {
+	width: 100%;
+}
+
+.gray_text {
+	text-align: center;
+	color: #CCCCCC;
+}
+
+#main {
+	font-family: sans-serif;
+}
+
+#logo {
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#logo_and_name {
+	float: left;
+}
+
+#banner	{
+	position: absolute;
+	clear: both;
+	top: 0px;
+	left: 0px;
+	height: 0px;
+	border-bottom: 5px solid black;
+}
+
+#menu {
+	float: right;
+	text-align: right;
+}
+
+#header {
+	width: 800px;
+	margin: auto;
+	margin-top: 15px;
+	clear: both;
+}
+
+#content {
+	position: relative;
+	width: 780px;
+	min-height: 480px;
+	padding: 10px;
+	margin: auto;
+	clear: both;
+	border: 1px #CCCCCC solid;
+}
+
+#oz {
+	color: #57C315;
+}
+
+body {
+	margin: 0px;
+}
+
+textarea {
+	border: 1px #CCCCCC solid;
+}
+
+p {
+	margin: 2px;
+}
+
+.alignleft {
+	float: left;
+	clear: left;
+}
+
+.alignright {
+	float: right;
+	clear: right;
+}
+
+.row {
+	clear: both;
+}
+
+.req {
+	text-align: right;
+}
+
+.course {
+	font-size: 11px;
+}
+
+#row_0 {
+	background-color: black;
+	overflow: hidden;
+}
+
+.col_heading_box {
+	width: 122px;
+	padding: 5px;
+	margin-left: 10px;
+	margin-right: 10px;
+	float: left;
+	overflow: auto;
+}
+
+.col_heading {
+	font-family: helvetica;
+	text-align: center;
+	color: #fff;
+}
+
+#col_headers {
+	width: 700px;
+}
+
+.quarter_box {
+	width: 120px;
+	height:	120px;
+	border: 1px #CCCCCC solid;
+	padding: 5px;
+	margin: 10px;
+	float: left;
+	overflow: auto;
+	background: white;
+		-moz-box-shadow:    1px 1px 1px 1px #DDDDDD;
+		-webkit-box-shadow: 1px 1px 1px 1px #DDDDDD;
+		box-shadow:         1px 1px 1px 1px #DDDDDD;
+}
+
+.col {
+	float: left;
+}
+
+#advising {
+	color: #57C315;
+}
+
+#left_col {
+	width: 610px;
+}
+
+#right_col {
+	width: 170px;
+}
+
+#requirements {
+	margin: 10px;
+}
+
+#upload_target {
+	visibility: hidden;
+}
+
+#instructions {
+	text-align: left;
+	color: #CCCCCC;
+}
