@@ -97,6 +97,10 @@ p {
 	margin: 2px;
 }
 
+form {
+	margin-top: 10px;
+}
+
 .alignleft {
 	float: left;
 	clear: left;
@@ -152,9 +156,9 @@ p {
 	float: left;
 	overflow: auto;
 	background: white;
-		-moz-box-shadow:    1px 1px 1px 1px #DDDDDD;
-		-webkit-box-shadow: 1px 1px 1px 1px #DDDDDD;
-		box-shadow:         1px 1px 1px 1px #DDDDDD;
+	-moz-box-shadow:    1px 1px 1px 1px #DDDDDD;
+	-webkit-box-shadow: 1px 1px 1px 1px #DDDDDD;
+	box-shadow:         1px 1px 1px 1px #DDDDDD;
 }
 
 .col {
