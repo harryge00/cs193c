@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>ajax</title>
+</head>
+<body>
+	<div id="main">
+		<h1>Yahoo Weather via AJAX</h1>
+		<label>Enter ZIP code:<input id="zipcode_text" type="text" name="zipcode" /></label>
+		<input type="button" name="get_weather" value="Get Weather" onclick="getXML();"/>
+		<input type="button" name="clear" value="Clear" onclick="clearOutputText();"/></br>
+		<textarea id="output_text" rows="20" cols="60"></textarea>
+	</div>
+	<script type="text/javascript">
+		function getXML() {
+			var zipcode = document.getElementById("zipcode_text").value;
+			var weatherURL = "http://www.stanford.edu/~psyoung/cgi-bin/a3.php?yws_path=" + encodeURIComponent("p=" + zipcode);
+			requestObj = new XMLHttpRequest();
+			requestObj.onreadystatechange = outputResults;
+			requestObj.open('GET', weatherURL, true);
+			requestObj.send(null);
+		}
+
+		function outputResults() {
+			if ((requestObj.readyState == 4) && (requestObj.status == 200)) {
+				var location =  requestObj.responseXML.getElementsByTagName("location");
+				var condition = requestObj.responseXML.getElementsByTagName("condition");
+				document.getElementById("output_text").value += location[0].getAttribute("city") + ": " + condition[0].getAttribute("temp") + "," + condition[0].getAttribute("text") + "\n";
+			}
+		}
+
+		function clearOutputText() {
+			document.getElementById("output_text").value = "";
+		}
+	</script>
+</body>
+</html>
+
+
+
+
