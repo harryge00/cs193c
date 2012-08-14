@@ -88,6 +88,7 @@ ul {
 .favicon {
 		float: left;
 		margin: 3px;
+		border: 0px;
 }
 #bio {
 	color: #57C315;

@@ -156,8 +156,6 @@ form {
 	float: left;
 	overflow: auto;
 	background: white;
-	-moz-box-shadow:    1px 1px 1px 1px #DDDDDD;
-	-webkit-box-shadow: 1px 1px 1px 1px #DDDDDD;
 	box-shadow:         1px 1px 1px 1px #DDDDDD;
 }
 
