@@ -66,22 +66,6 @@ function fadeOutText() {
 	}
 }
 
-function Timer(callback, delay) {
-	var timerId, start, remaining = delay;
-
-	this.pause = function() {
-		window.clearTimeout(timerId);
-		remaining -= new Date() - start;
-	};
-
-	this.resume = function() {
-		start = new Date();
-		timerId = window.setTimeout(callback, remaining);
-	};
-
-	this.resume();
-}
-
 /* Takes in rgb string of the form rgb(255, 100, 32) and returns the first hex value (e.g. 255) */
 function rgbToHex(rgb) {
 	return parseInt(rgb.substring(rgb.indexOf('(') + 1, rgb.indexOf(')') - 1));
