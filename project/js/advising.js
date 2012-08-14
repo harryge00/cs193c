@@ -17,6 +17,9 @@ var mathArray = ["math19","math20", "math21", "math41", "math42", "math51", "mat
 // Array of all courses that fulfill the SOE science requirement
 var scienceArray = ["bio41", "bio42", "bio43", "cee63", "cee64", "cee70", "chem31a", "chem31b", "chem31x", "chem33", "chem35", "chem36", "chem131", "chem135", "earthsys10", "engr31", "ges1a", "ges1b", "ges1c", "physics21", "physics23", "physics25", "physics41", "physics43", "physics45", "physics42", "physics44", "physics46", "physics61", "physics63", "physics65", "physics62", "physics64", "physics67"];
 
+// Array of all courses that fulfill the SOE science requirement when not taken for a letter grade (letter grade not offered)
+var scienceNoLetterGradeArray = ["physics42", "physics44", "physics46", "physics62", "physics64", "physics67"];
+
 // Array of all courses that fulfill the SOE Technology in Society requirement
 var tisArray = ["sts101", "sts201", "engr130", "sts101q", "sts110", "sts112", "sts115", "bioe131", "cs181", "cs181w", "engr145", "humbio174", "ms&e181", "ms&e193", "polisci114s", "publpol194"];
 
@@ -238,10 +241,10 @@ function meetsMathScience(course_array) {
 	if (!((courseGraded(course_array, "physics41") && courseGraded(course_array, "physics43")) || (courseGraded(course_array, "physics61") && courseGraded(course_array, "physics63")) )) {
 		return false;
 	}
-	if (countGradedUnits(course_array, scienceArray) < SCIENCE_UNITS_REQUIREMENT) {
+	if ((countGradedUnits(course_array, scienceArray) + uncountedScienceUnits(course_array)) < SCIENCE_UNITS_REQUIREMENT) {
 		return false;
 	}
-	if ((countGradedUnits(course_array, scienceArray) + countGradedUnits(course_array, mathArray)) < MATH_SCIENCE_UNITS_REQUIREMENT) {
+	if (((countGradedUnits(course_array, scienceArray) + uncountedScienceUnits(course_array)) + countGradedUnits(course_array, mathArray)) < MATH_SCIENCE_UNITS_REQUIREMENT) {
 		return false;
 	}
 
@@ -395,6 +398,12 @@ function countGradedEETopicsUnits(course_array) {
 	return numUnits;
 }
 
+function uncountedScienceUnits(course_array) {
+	var uncounted_units = countUnits(course_array, scienceNoLetterGradeArray);
+	alert(uncounted_units);
+	return uncounted_units;
+}
+
 function extraUnitsEE191(course_array) {
 	var extra_units = countGradedUnits(course_array, ee191Array) - EE191_UNITS_MAX;
 	if (extra_units > 0) {
@@ -436,6 +445,17 @@ function countGradedUnits(course_array, reference_array) {
 			if (isLetterGrade(course_array[i].grade)) {
 				numUnits += parseInt(course_array[i].units);
 			}
+		}
+	}
+	return numUnits;
+}
+
+//counts the number of units taken that are contained in the reference array.
+function countUnits(course_array, reference_array) {
+	var numUnits = 0;
+	for (var i = 0; i < course_array.length; i++) {
+		if (reference_array.indexOf(courseToString(course_array[i])) != -1) {
+			numUnits += parseInt(course_array[i].units);
 		}
 	}
 	return numUnits;
