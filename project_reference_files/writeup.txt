@@ -1,0 +1,67 @@
+CS193C, Summer 2012
+Instructor: Dr. Young
+
+Alex Omid-Zohoor
+08.10.12
+
+Project Writeup		
+
+Partner: 
+
+	No.
+
+Project Objectives:
+
+	My goal was to create a functional and (reasonably) polished personal website using the javascript and css layout skills that I've learned in CS193C. For this project I avoided tools like jquery and dreamweaver so that I could practice using pure javascript and css, however in the future, I will probably use jquery a lot more when it makes sense. Beyond this top-level objective, I also wanted to provide resources for EE undergrads and grad students at Stanford. The two areas that I focused on were program planning for undergrads and quals prep for grad students. Specifically, I wanted to create an easy means for undergrads to check whether or not their proposed four year plans met all the requirements of the EE major. I also wanted to create a page which contains what I would consider the most useful quals information and resources for new grad students. I will expand on these below.
+
+HCI, Layout, and Design:
+
+	It may not seem like it, but I spent a considerable amount of time iterating through different versions of look and feel. My guiding principle was to keep things simple and empty. This was a style choice; to me, empty looks good. As far as colors go, I wanted to go with a white background with black text to emphasize this emptiness. To add a little bit of color, I chose a green that I really like (#57C315) for links :onhover, and for the 'oz' in my 'alexoz' webpage header. For graphics and images, I chose to use squares. I designed a logo for my site using Adobe Illustrator. I was going for a minimal representation of a black flag that would be somewhat memorable and would look okay as a favicon. I read a short book called "Thoughts on Design" by Paul Rand for guidance.
+
+	For navigation, I chose to place a menu on the right side of my page for symmetry. When on a particular page, the correspoding menu item remains highlighted in green. After some Googling, I opted not to include an explicit home option in my menu, as the current consensus seems to be that most users are familiar with using the website logo as a home button. 
+
+	Throughout the site, I aimed to eliminate any unnecessary or wordy text. 
+
+	I tested my page on Mac, PC, iPhone, and iPad using Chrome, Firefox, and Safari to make sure that the layout remained consistent and all javascript was functional. The only exception I found was that my multi-part form did not work on the iPhone.
+
+/index.html:
+	
+	For this page, I wanted to loop through a series of quotes that I like by implementing some basic animation using javascript's setTimeout() function. This proved to be interesting, since I couldn't find any straightforward way to implement an explicit delay between the time that one function returns and another function is called. Instead, I have the fadeInText() call setTimeout() with a short delay (10 ms) using itself as the callback function if the text is not completely faded in. Otherwise, it calls setTimeout() with a long delay (5000 ms) using fadeOutText() as the callback function. Similarly, fadeOutText() calls setTimeout() with a short delay (10 ms) using itself as the callback function if the text is not completely faded out. Otherwise, it updates the quote and calls setTimeout() with a long delay (3000 ms) using fadeInText() as the callback function. 
+
+	I store the quote objects in an array which gets randomly shuffled each time the page is loaded. For fading text, I gained some inspiration from "http://www.javascriptkit.com/dhtmltutors/fadingtext.shtml," using the idea that fading black text can be achieved by incrementing or decrementing the RGB values simultaneously. 
+
+/bio.html:
+
+	There's not much to this page. Just a basic bio. I chose to link to my Facebook and LinkedIn using favicons, because I think it looks better, especially for mobile platforms. 
+
+/quals.html:
+
+	For this page, I used javascript to present some graphs of past EE quals statistics. The statistics themselves are stored in an array of objects which each contain the year, number of students who took the exam, and students who passed the exam. The page uses absolutely positioned divs to represent bars, and generates a different graph depending on which radio button is selected. This was good practice using css and the DOM. I also include some useful downloads and links.
+
+/advising.html:
+
+	This page was the most involved. The motivation for the page is that program planning for EE undergrads is cumbersome. The Undergraduate Handbook, which describes EE major requirements, is obscurely worded. Furthermore, once students have read the Undergraduate Handbook, they must manually enter their classes into an excel spreadsheet to add up units and check whether or not their program meets requirements. Since this takes a pretty long time, it is difficult for undergrads to rapidly iterate and try out different plans that they may find interesting. 
+
+	To address this problem, I wanted to automate requirement checking with javascript. The biggest consideration here was ease of use. I wanted to minimize the amount of extra work needed on the part of the undergrads. To this end, I decided to leverage CourseRank, which the majority of undergrads already use. Essentially, CourseRank has a planner tool, where students list the classes they've taken and can also list future classes to create a four year plan. The interface is easy to use, and the plan can be exported to PDF at the click of a button. 
+
+	It took a good amount of experimentation, since PDF is not a very nice format to work with, but eventually I found a python library called PDFMiner that could reliably convert the CourseRank PDF into a parseable text file. In order to use this script, I had to do write some basic server side php scripts in my personal cgi space. The upload.php script was largely adapted from one of the scripts provided by Stanford CGI in their PHP Cookbook. When a student uploads a PDF, the server runs the python script to convert the pdf to text as well as another custom python script that I wrote to extract the student's name from the converted text. I save a copy of the PDF and text files using the upload timestamp as the file name. I then save a copy of the PDF and text file using the student's name concatenated with the upload timestamp as the file name. One issue with this strategy is that no two students can upload at exactly the same second. However considering that there are less than 40 EE majors per class year, I decided that this should largely go unnoticed. 
+
+	When the server passes the extracted text back to a hidden iframe on the client side using a JSON variable, the clientside javascript parses the text, and creates an array of course objects. Each course object contains subject, number, quarter, units, and grade fields. Once the array has been formed, all of the requirements are checked. This part was not incredibly interesting from a technical perspective, but took a good amount of labor, since the requirements often have various dependencies which I had to take into account. Finally, the script fills in the quarter boxes on the page with the courses taken and their respective letter grades and changes the colors of the requirements on the right to indicate whether they are met (green) or not met (red). I've included a few sample PDFs in the sample_plans folder that can be used for testing. I'm currently doing some beta testing with undergrads to beef up (and tragically complicate) my parsing code. 
+
+	Making this page helped improve my understanding of regular expressions in javascript as well as the various functions available to String objects, and HTML encoding. One challenge I faced was getting my script to work in both Chrome and Firefox, as initially I had used innerText to grab the text passed to the iFrame from the server, but realized that Firefox only supports innerHTML. This seemed like it wouldn't make a big difference, but I actually ended up spending a long time tracking down the fact that innerHTML encodes special characters such as the ampersand. This was messing up my parsing. &amp; now I will never forget it. 
+
+	Lastly, I made a simple suggestion box which takes suggestions and writes them to a text file on the server side. 
+
+	(I'm off duty as undergrad advisor during the summer, so I'm not getting paid for this).
+	
+/projects.html:
+
+	This page is pretty simple. It's just a series of embedded Youtube videos that show a few fun side projects that I've done in the past. One thing I learned here was how to change the appearance of embedded Youtube videos, namely hiding the video title and the recommended videos that normally appear when a video ends. I thought that these defaults made the page look busy. 
+
+Validation:
+
+	All pages validate without any errors for both html and css, with the exception of the projects page. In this case, there are a few errors that result from Google's automatically generated embedded video iframe. I found fixes to this, but for the sake of maintanence, I decided it was not really worth the effort. I understand where the errors are coming from, and fixing them everytime I add an embedded video would be cumbersome without adding any significant value. 
+
+	
+
+
