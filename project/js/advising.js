@@ -24,7 +24,7 @@ var scienceNoLetterGradeArray = ["physics42", "physics44", "physics46", "physics
 var tisArray = ["sts101", "sts201", "engr130", "sts101q", "sts110", "sts112", "sts115", "bioe131", "cs181", "cs181w", "engr145", "humbio174", "ms&e181", "ms&e193", "polisci114s", "publpol194"];
 
 // Array of all courses that fulfill the EE WIM requirement
-var wimArray = ["ee109", "ee133", "ee134", "ee168", "ee191w", "cs194w"];
+var wimArray = ["ee109", "ee133", "ee134", "ee168", "ee191w", "cs194w", "engr102e"];
 
 // Array of all courses that fulfill the EE core requirement
 var coreArray = ["ee100", "ee101a", "ee101b", "ee102a", "ee102b", "ee108a", "ee108b"];
@@ -93,7 +93,7 @@ function createPlan(courserankText) {
 function clearPlan() {
 	var pArray = document.getElementsByTagName("p");
 	for(var i = 0; i < pArray.length; i++) {
-		if (pArray[i].className == "course") {
+		if (pArray[i].className.indexOf("course") != -1) {
 			pArray[i].parentNode.removeChild(pArray[i]);
 			i--;
 		}
@@ -140,8 +140,12 @@ function parseCoursesArray(courserank_text) {
 	for (var i = 1; i < courserank_array_block.length; i++) {
 		var token_array = courserank_array_block[i].split("\n");
 		removeEmptyStrings(token_array);
+		removeNonUnitsGradesStrings(token_array);
+		removeNewQuarterStrings(token_array);
 		for (var j = 0; j < token_array.length; j++) {
-			if ((isUnits(token_array[j])) || (isGrade(token_array[j]))) {
+			if (isUnits(token_array[j])) {
+				courserank_array_units_grade.push(getUnits(token_array[j]));
+			} else if (isGrade(token_array[j])) {
 				courserank_array_units_grade.push(token_array[j]);
 			} else {
 				break;
@@ -221,8 +225,35 @@ function isCourseNumber(string) {
 	return (string.match(/[0-9]+/g) != null);
 }
 
+
+/* Had to adapt (and complicate) this function, because during beta testing, one student's pdf -> text file placed units at the end 
+ * of a string, like this: "Linear Algebra and Partial Differential Equations for Engineers 5.0"  Usually, units and 
+ * grades appear alone, on their own line. But it seems that for particularly long course titles, the units may appear
+ * on the same line as the course title. 
+ */
 function isUnits(string) {
-	return (string.match(/[0-9]\.[0-9]/g) != null);
+	//why does javascript not support lookbehinds?
+	var index = string.search(/\d\.\d(?=$| )/g);
+	if (index != -1) {
+		if (index == 0) {
+			return true;
+		} else if (string.charAt(index - 1) == ' ') {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
+/* Had to add this function, because during beta testing, one student's pdf -> text file placed units at the end of a string, like
+ * this: "Linear Algebra and Partial Differential Equations for Engineers 5.0"  Usually, units and grades appear alone,
+ * on their own line. But it seems that for particularly long course titles, the units may appear on the same line as
+ * the course title. 
+ */
+function getUnits(string) {
+	return string.match(/\d\.\d(?=$| )/g)[0];
 }
 
 function meetsMathScience(course_array) {
@@ -301,7 +332,7 @@ function meetsPhysics(course_array) {
 	if (courseGraded(course_array, "ee141")) {
 		return true;
 	} else if (courseGraded(course_array, "ee41") || courseGraded(course_array, "engr40p")) {
-		//EE41/ENGR40P can only meet this requirement if it is not used to fulfill the Fundamentals requirement.
+		//EE41/ENGR40P can only meet this requirement if it is not used to fulfill the Fundamentals requirement
 		if (countGradedCourses(course_array, fundamentalsArray) > FUNDAMENTALS_COURSES_REQUIREMENT) {
 			return true;
 		} else {
@@ -322,7 +353,7 @@ function meetsSpecialty(course_array) {
 	} else if (countGradedCourses(course_array, computerSoftwareArray) >= SPECIALTY_COURSES_REQUIREMENT) {
 		return true;
 	} else if (countGradedCourses(course_array, musicArray) >= SPECIALTY_COURSES_REQUIREMENT) {
-		// Can apply EE264 or EE265 towards the Specialty requirement, but not both.
+		// Can apply EE264 or EE265 towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee264") && courseGraded(course_array, "ee265")) {
 			if (countGradedCourses(course_array, musicArray) > SPECIALTY_COURSES_REQUIREMENT) {
 				return true;
@@ -331,7 +362,7 @@ function meetsSpecialty(course_array) {
 			return true;
 		}
 	} else if (countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray) >= SPECIALTY_COURSES_REQUIREMENT) {
-		// Can apply EE264 or EE265 towards the Specialty requirement, but not both.
+		// Can apply EE264 or EE265 towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee264") && courseGraded(course_array, "ee265")) {
 			if (countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray) > SPECIALTY_COURSES_REQUIREMENT) {
 				return true;
@@ -340,7 +371,7 @@ function meetsSpecialty(course_array) {
 			return true;
 		}
 	} else if (countGradedCourses(course_array, solidStatePhotonicsAndElectromagneticsArray) >= SPECIALTY_COURSES_REQUIREMENT) {
-		// EE141 can only count towards the Specialty requirement if not used to fulfill the EE Physics requirement.
+		// EE141 can only count towards the Specialty requirement if not used to fulfill the EE Physics requirement
 		if (courseGraded(course_array, "ee141")) {
 			if (countGradedCourses(course_array, solidStatePhotonicsAndElectromagneticsArray) > SPECIALTY_COURSES_REQUIREMENT) {
 				return true;
@@ -367,7 +398,7 @@ for (var i = 0; i < course_array.length; i++) {
 }
 
 function meetsTopics(course_array) {
-	// One tricky part here is that most of the core gets counted as gradedEETopicsUnits, but EE41 gets counted as gradedUnitsFundamentals since it is below the 100 level.
+	// One tricky part here is that most of the core gets counted as gradedEETopicsUnits, but EE41 gets counted as gradedUnitsFundamentals since it is below the 100 level
 	var gradedUnitsCognates = countGradedUnits(course_array, cognateArray);
 	var gradedUnitsFundamentals = countGradedUnits(course_array, fundamentalsArray);
 	var gradedUnitsEE = countGradedEETopicsUnits(course_array);
@@ -382,7 +413,7 @@ function meetsTopics(course_array) {
 function countGradedEETopicsUnits(course_array) {
 	var numUnits = 0;
 	for (var i = 0; i < course_array.length; i++) {
-		//Note that EE178 cannot count towards the Topics requirement if it is already counted towards the Math and Science requirement.
+		//Note that EE178 cannot count towards the Topics requirement if it is already counted towards the Math and Science requirement
 		if ((course_array[i].subject == "ee") && (parseInt(course_array[i].number) >= EE_TOPICS_COURSE_NUMBER_MIN)) {
 			if (isLetterGrade(course_array[i].grade)) {
 				if (courseToString(course_array[i]) == "ee178") {
@@ -400,7 +431,6 @@ function countGradedEETopicsUnits(course_array) {
 
 function uncountedScienceUnits(course_array) {
 	var uncounted_units = countUnits(course_array, scienceNoLetterGradeArray);
-	alert(uncounted_units);
 	return uncounted_units;
 }
 
@@ -418,7 +448,7 @@ function extraUnitsFundamentals(course_array) {
 	var extra_units = 0;
 	for (var i = 0; i < course_array.length; i++) {
 		if (fundamentalsArray.indexOf(courseToString(course_array[i])) != -1) {
-			// I interpret the UGHB to say that students could potentially count 5 ENGR Fundamentals and EE41/ENGR40P towards the topics requirement.
+			// I interpret the UGHB to say that students could potentially count 5 ENGR Fundamentals and EE41/ENGR40P towards the topics requirement
 			if (isLetterGrade(course_array[i].grade) && (courseToString(course_array[i]) != "ee41") && (courseToString(course_array[i]) != "engr40p")) {
 				fundamentals_course_array.push(course_array[i]);
 			}
@@ -437,7 +467,7 @@ function extraUnitsFundamentals(course_array) {
 }
 
 
-//counts the number of graded units taken that are contained in the reference array.
+//counts the number of graded units taken that are contained in the reference array
 function countGradedUnits(course_array, reference_array) {
 	var numUnits = 0;
 	for (var i = 0; i < course_array.length; i++) {
@@ -450,7 +480,7 @@ function countGradedUnits(course_array, reference_array) {
 	return numUnits;
 }
 
-//counts the number of units taken that are contained in the reference array.
+//counts the number of units taken that are contained in the reference array
 function countUnits(course_array, reference_array) {
 	var numUnits = 0;
 	for (var i = 0; i < course_array.length; i++) {
@@ -461,7 +491,7 @@ function countUnits(course_array, reference_array) {
 	return numUnits;
 }
 
-//counts the number of graded courses taken that are contained in the reference array.
+//counts the number of graded courses taken that are contained in the reference array
 function countGradedCourses(course_array, reference_array) {
 	var numCourses = 0;
 	for (var i = 0; i < course_array.length; i++) {
@@ -502,6 +532,25 @@ function courseToString(course_obj) {
 function removeEmptyStrings(array) {
 	for (var i = 0; i < array.length; i++) {
 		if (array[i] == "") {
+			array.splice(i,1);
+			i--;
+		}
+	}
+}
+
+function removeNonUnitsGradesStrings(array) {
+	for (var i = 0; i < array.length; i++) {
+		if (!((isUnits(array[i])) || (isGrade(array[i])))) {
+			array.splice(i,1);
+			i--;
+		}
+	}
+}
+
+// These strings should be removed so that total quarter units and gpa are not mistaken for course units during parsing
+function removeNewQuarterStrings(array) {
+	for (var i = 0; i < array.length; i++) {
+		if ((array[i].indexOf("spring") != -1) || (array[i].indexOf("winter") != -1) || (array[i].indexOf("autumn") != -1) || (array[i].indexOf("summer") != -1) ) {
 			array.splice(i,1);
 			i--;
 		}
