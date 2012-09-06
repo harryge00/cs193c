@@ -42,13 +42,15 @@
 			<div id="graph_buttons">
 				<label><input type="radio" name="graphSelect" value="rate" onclick="drawGraph('rate');" checked="checked"/>Pass Rate</label>	
 				<label><input type="radio" name="graphSelect" value="take" onclick="drawGraph('take');"/>Taken</label>
-				<label><input type="radio" name="graphSelect" value="pass" onclick="drawGraph('pass');"/>Passed</label>
+				<label><input type="radio" name="graphSelect" value="pass (total)" onclick="drawGraph('pass_total');"/>Passed (Total)</label>
+				<label><input type="radio" name="graphSelect" value="pass (threshold)" onclick="drawGraph('pass_threshold');"/>Passed (Threshold)</label>
+				<!-- <label><input type="radio" name="graphSelect" value="pass (appeal)" onclick="drawGraph('pass_appeal');"/>Passed (Appeal)</label> -->
 			</div>
 			<div id="quals_graph">	
 				<div id="y_label_max"></div>
 				<div id="y_label_min">0</div>
 			</div><br />
-			<p class="gray_text">(Petitions not included. Statistics on petitions are never released. Source: John Gill, 2012)</p>
+			<p class="gray_text">(Total pass numbers include passes by threshold and passes by appeal. Source: John Gill, 2012)</p>
 			<h2>DOWNLOADS</h2>
 			<p>I am open-sourcing my quals notebook, solutions, and examiner-sorted quals questions. My areas were circuits, devices, and systems. I hope this helps. Good luck</p>
 			<ul>

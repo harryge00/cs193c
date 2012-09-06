@@ -5,7 +5,7 @@ var BAR_WIDTH = 35;
 var BAR_SPACING;
 var STUDENTS_MAX = 200;
 var PASS_RATE_MAX = 100;
-var statsArray = new Array({year: 2001, pass: 82, take: 160}, {year: 2002, pass: 79, take: 194}, {year: 2003, pass: 79, take: 195}, {year: 2004, pass: 78, take: 182}, {year: 2005, pass: 82, take: 148}, {year: 2006, pass: 85, take: 160}, {year: 2007, pass: 83, take: 181}, {year: 2008, pass: 80, take: 160}, {year: 2009, pass: 86, take: 174}, {year: 2010, pass: 82, take: 152}, {year: 2011, pass: 84, take: 147}, {year: 2012, pass: 82, take: 146});
+var statsArray = new Array({year: 2000, pass_total: 86, pass_threshold: 79, pass_appeal: 7, take: 144}, {year: 2001, pass_total: 85, pass_threshold: 82, pass_appeal: 3, take: 160}, {year: 2002, pass_total: 89, pass_threshold: 79, pass_appeal: 10, take: 194}, {year: 2003, pass_total: 94, pass_threshold: 79, pass_appeal: 15, take: 195}, {year: 2004, pass_total: 93, pass_threshold: 78, pass_appeal: 15, take: 182}, {year: 2005, pass_total: 87, pass_threshold: 82, pass_appeal: 5, take: 148}, {year: 2006, pass_total: 94, pass_threshold: 85, pass_appeal: 9, take: 160}, {year: 2007, pass_total: 102, pass_threshold: 83, pass_appeal: 19, take: 181}, {year: 2008, pass_total: 96, pass_threshold: 80, pass_appeal: 16, take: 161}, {year: 2009, pass_total: 104, pass_threshold: 86, pass_appeal: 18, take: 174}, {year: 2010, pass_total: 93, pass_threshold: 82, pass_appeal: 11, take: 152}, {year: 2011, pass_total: 102, pass_threshold: 84, pass_appeal: 18, take: 147}, {year: 2012, pass_total: 101, pass_threshold: 82, pass_appeal: 19, take: 143});
 
 window.onload = init;
 
@@ -28,18 +28,28 @@ function drawGraph(option) {
 		var data;
 		var bar_height;
 		switch (option) {
-			case "pass":
-				data = statsArray[i].pass;
+			case "pass_total":
+				data = statsArray[i].pass_total;
 				bar_height = (data/STUDENTS_MAX) * GRAPH_HEIGHT;
 				document.getElementById("y_label_max").innerHTML = STUDENTS_MAX;
 				break;
+			case "pass_threshold":
+				data = statsArray[i].pass_threshold;
+				bar_height = (data/STUDENTS_MAX) * GRAPH_HEIGHT;
+				document.getElementById("y_label_max").innerHTML = STUDENTS_MAX;
+				break;
+			/*case "pass_appeal":
+				data = statsArray[i].pass_appeal;
+				bar_height = (data/STUDENTS_MAX) * GRAPH_HEIGHT;
+				document.getElementById("y_label_max").innerHTML = STUDENTS_MAX;
+				break;*/
 			case "take": 
 				data = statsArray[i].take;
 				bar_height = (data/STUDENTS_MAX) * GRAPH_HEIGHT;
 				document.getElementById("y_label_max").innerHTML = STUDENTS_MAX;
 				break;
 			case "rate": 
-				data = Math.round((100 * (statsArray[i].pass/statsArray[i].take)));
+				data = Math.round((100 * (statsArray[i].pass_total/statsArray[i].take)));
 				bar_height = (data/PASS_RATE_MAX) * GRAPH_HEIGHT;
 				document.getElementById("y_label_max").innerHTML = PASS_RATE_MAX;
 				break;
