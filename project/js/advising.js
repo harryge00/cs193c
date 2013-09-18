@@ -9,10 +9,10 @@ var SPECIALTY_COURSES_REQUIREMENT = 3;
 var EE191_UNITS_MAX = 10;
 var EE_TOPICS_COURSE_NUMBER_MIN = 100;
 
-var subjectAbbreviationsArray = ["acct","mgtecon","finance","gsbgen","hrmgt","mktg","oit","ob","polecon","stramgt","earthsci","earthsys","eees","energy","envres","eess","ges","geophys","envrinst","educ","aa","bioe","chemeng","cee","cme","cs","ee","engr","ms&e","matsci","me","sccm","africaam","amelang","africast","amstud","anthro","appphys","archlgy","arthist","artstudi","asnamst","asnlang","astrnmy","athletic","bio","biohopk","biophys","catlang","chem","chicanst","chingen","chinlang","chinlit","classart","classgen","classgrk","classhis","classlat","comm","complit","csre","dance","dlcl","drama","eastasn","econ","english","efslang","ethicsoc","femst","filmprod","filmstud","frengen","frenlang","frenlit","gergen","gerlang","gerlit","history","hps","humbio","humsci","ilac","iberlang","fsi","iis","humnties","ips","intnlrel","italgen","itallang","itallit","japangen","japanlng","japanlit","jewishst","korgen","korlang","latinam","linguist","mcs","math","medvlst","mtl","music","nativeam","phil","physics","polisci","portlang","psych","publpol","religst","rees","sts","slavgen","slavlang","slavlit","soc","spanlang","ilac","speclang","siw","stats","symsys","tibetlng","urbanst","law","lawgen","anes","bioc","biomedin","cbio","cts","csb","compmed","derm","dbio","fammed","gene","hrp","immunol","med","inde","mi","mcp","nbio","nens","nepr","nsur","obgyn","opht","ortho","otohns","path","peds","psyc","rado","rad","stemrem","sbio","surg","urol","ctl","ihum","ospgen","ospaustl","casb","ospbarcl","ospbeij","ospber","ospcptwn","ospflor","ospkyoto","kcjs","ospkyoct","ospmadrd","ospmosc","ospoxfrd","ospparis","ospsantg","sle","uar","pwr","mla"];
+var subjectAbbreviationsArray = ["acct","mgtecon","finance","gsbgen","hrmgt","mktg","oit","ob","polecon","stramgt","earthsci","earthsys","eees","energy","envres","eess","ges","geophys","envrinst","educ","aa","bioe","chemeng","cee","cme","cs","ee","engr","ms&e","matsci","me","sccm","africaam","amelang","africast","amstud","anthro","appphys","arablang","archlgy","arthist","artstudi","asnamst","asnlang","astrnmy","athletic","bio","biohopk","biophys","catlang","chem","chilatst","chicanst","chingen","chinlang","chinlit","classart","classgen","classgrk","classhis","classlat","comm","complit","csre","dance","dlcl","taps","drama","eastasn","econ","english","efslang","ethicsoc","femst","filmprod","filmstud","frengen","frenlang","frenlit","french","gergen","gerlang","gerlit","german","history","hps","humbio","humsci","ilac","iberlang","fsi","iis","humnties","ips","intnlrel","italgen","itallang","itallit","italian","japangen","japanlng","japanlit","jewishst","korgen","korlang","latinam","linguist","mcs","math","medvlst","mtl","music","nativeam","phil","physics","polisci","portlang","psych","publpol","religst","rees","sts","slavgen","slavlang","slavlit","slavic","soc","spanlang","ilac","speclang","siw","stats","symsys","tibetlng","urbanst","law","lawgen","anes","bioc","biomedin","cbio","cts","csb","compmed","derm","dbio","fammed","gene","hrp","immunol","med","inde","mi","mcp","nbio","nens","nepr","nsur","obgyn","opht","ortho","otohns","path","peds","psyc","rado","rad","somgen","stemrem","sbio","surg","urol","ctl","ihum","ospgen","ospaustl","casb","ospbarcl","ospbeij","ospber","ospcptwn","ospflor","ospkyoto","kcjs","ospkyoct","ospmadrd","ospmosc","ospoxfrd","ospparis","ospsantg","rotcaf","rotcarmy","rotcnavy","sle","think","uar","pwr","mla"];
 
 // Array of all courses that fulfill the SOE math requirement
-var mathArray = ["math19","math20", "math21", "math41", "math42", "math51", "math51m", "math52", "math53", "math51h", "math52h", "math53h", "math104", "math106", "math109", "math113", "math115", "math120", "math121", "math131p", "math132", "cme100", "cme102", "cme104", "cme108", "cs103", "cs109", "cee101d", "cee201d", "cee203", "engr62", "engr154", "engr155a", "engr155b", "engr155c", "ms&e121", "ms&e120", "stats60", "stats110", "stats116", "ee178"];
+var mathArray = ["math19","math20", "math21", "math41", "math42", "math51", "math51m", "math52", "math53", "math41a", "math42a", "math51a", "math52a", "math53a", "math51h", "math52h", "math53h", "math104", "math106", "math109", "math113", "math115", "math120", "math121", "math131p", "math132", "cme100", "cme102", "cme104", "cme100a", "cme102a", "cme104a", "cme108", "cs103", "cs109", "cee101d", "cee201d", "cee203", "engr62", "engr154", "engr155a", "engr155b", "engr155c", "ms&e121", "ms&e120", "stats60", "stats110", "stats116", "ee178"];
 
 // Array of all courses that fulfill the SOE science requirement
 var scienceArray = ["bio41", "bio42", "bio43", "cee63", "cee64", "cee70", "chem31a", "chem31b", "chem31x", "chem33", "chem35", "chem36", "chem131", "chem135", "earthsys10", "engr31", "ges1a", "ges1b", "ges1c", "physics21", "physics23", "physics25", "physics41", "physics43", "physics45", "physics42", "physics44", "physics46", "physics61", "physics63", "physics65", "physics62", "physics64", "physics67"];
@@ -257,19 +257,19 @@ function getUnits(string) {
 }
 
 function meetsMathScience(course_array) {
-	if (!(courseGraded(course_array, "math41") && courseGraded(course_array,"math42"))) {
+	if (!((courseGraded(course_array, "math41") || courseGraded(course_array, "math41a")) && (courseGraded(course_array,"math42") || courseGraded(course_array,"math42a")))) {
 		return false;
 	}
-	if (!((courseGraded(course_array, "math51") && courseGraded(course_array, "math52")) || (courseGraded(course_array, "cme100") && (courseGraded(course_array, "cme104") || courseGraded(course_array, "engr155b"))))) {
+	if (!(((courseGraded(course_array, "math51") || (courseGraded(course_array, "math51a"))) && (courseGraded(course_array, "math52") || courseGraded(course_array, "math52a"))) || ((courseGraded(course_array, "cme100") || courseGraded(course_array, "cme100a")) && ((courseGraded(course_array, "cme104") || courseGraded(course_array, "cme104a")) || courseGraded(course_array, "engr155b"))))) {
 		return false;
 	}
-	if (!(courseGraded(course_array, "math53") || (courseGraded(course_array, "cme102") || courseGraded(course_array, "engr155a")))) {
+	if (!((courseGraded(course_array, "math53") || courseGraded(course_array, "math53a")) || ((courseGraded(course_array, "cme102") || courseGraded(course_array, "cme102a")) || courseGraded(course_array, "engr155a")))) {
 		return false;
 	}
 	if (!(courseGraded(course_array, "ee178") || courseGraded(course_array, "stats116") || courseGraded(course_array, "math151") || (courseGraded(course_array, "cme106") || courseGraded(course_array, "engr155c")) || courseGraded(course_array, "cs109"))) {
 		return false;
 	}
-	if (!((courseGraded(course_array, "physics41") && courseGraded(course_array, "physics43")) || (courseGraded(course_array, "physics61") && courseGraded(course_array, "physics63")) )) {
+	if (!((courseGraded(course_array, "physics41") && courseGraded(course_array, "physics43")) || (courseGraded(course_array, "physics61") && courseGraded(course_array, "physics63")))) {
 		return false;
 	}
 	if ((countGradedUnits(course_array, scienceArray) + uncountedScienceUnits(course_array)) < SCIENCE_UNITS_REQUIREMENT) {
