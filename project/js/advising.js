@@ -134,6 +134,7 @@ function checkPlan(course_array) {
 	document.getElementById("ee_core").style.color = meetsCore(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_physics").style.color = meetsPhysics(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_specialty").style.color = meetsSpecialty(course_array) ? "#57C315" : "red";
+	document.getElementById("ee_electives").style.color = meetsElectives(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_topics").style.color = meetsTopics(course_array) ? "#57C315" : "red";	
 }
 
