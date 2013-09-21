@@ -135,7 +135,7 @@ function checkPlan(course_array) {
 	document.getElementById("ee_core").style.color = meetsCore(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_physics").style.color = meetsPhysics(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_specialty").style.color = meetsSpecialty(course_array) ? "#57C315" : "red";
-	document.getElementById("engr_topics").style.color = meetsTopics(course_array) ? "#57C315" : "red";	
+	document.getElementById("engr_topics").style.color = meetsTopics(course_array) ? "#57C315" : "red";
 }
 
 function parseCoursesArray(courserank_text) {
@@ -376,7 +376,7 @@ function meetsPhysics(course_array) {
 }
 
 function meetsSpecialty(course_array) {
-	if ((courseGraded(course_array, "ee101b") || courseGraded(course_array, "ee102b")) && (courseGraded(course_array, "ee134") || courseGraded(course_array, "ee168") || courseGraded(course_array, "ee169")) && (countGradedUnits(course_array, bioelectronicsAndBioimagingArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, bioelectronicsAndBioimagingArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	if ((courseGraded(course_array, "ee101b") || courseGraded(course_array, "ee102b")) && (courseGraded(course_array, "ee134") || courseGraded(course_array, "ee168") || courseGraded(course_array, "ee169")) && (countGradedUnits(course_array, bioelectronicsAndBioimagingArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, bioelectronicsAndBioimagingArray) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		// Can apply EE101B or EE102B towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee101b") && courseGraded(course_array, "ee102b")) {
 			if ((countGradedCourses(course_array, bioelectronicsAndBioimagingArray) - 1 >= SPECIALTY_COURSES_REQUIREMENT) && (countGradedUnits(course_array, bioelectronicsAndBioimagingArray) - EE101B_UNITS >= SPECIALTY_UNITS_REQUIREMENT)) {
@@ -385,11 +385,11 @@ function meetsSpecialty(course_array) {
 		} else {
 			return true;
 		}
-	} else if ((courseGraded(course_array, "ee101b")) && (courseGraded(course_array, "ee133") || courseGraded(course_array, "ee152")) && (countGradedUnits(course_array, circuitsAndDevicesArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, circuitsAndDevicesArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	} else if ((courseGraded(course_array, "ee101b")) && (courseGraded(course_array, "ee133") || courseGraded(course_array, "ee152")) && (countGradedUnits(course_array, circuitsAndDevicesArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, circuitsAndDevicesArray) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		return true;
-	} else if ((courseGraded(course_array, "ee108b")) && (courseGraded(course_array, "ee109") || courseGraded(course_array, "ee152")) && (countGradedUnits(course_array, computerHardwareArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, computerHardwareArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	} else if ((courseGraded(course_array, "ee108b")) && (courseGraded(course_array, "ee109") || courseGraded(course_array, "ee152")) && (countGradedUnits(course_array, computerHardwareArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, computerHardwareArray) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		return true;
-	} else if ((courseGraded(course_array, "ee108b")) && (courseGraded(course_array, "cs194w") || courseGraded(course_array, "ee152")) && (countGradedUnits(course_array, computerSoftwareArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, computerSoftwareArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	} else if ((courseGraded(course_array, "ee108b")) && (courseGraded(course_array, "cs194w") || courseGraded(course_array, "ee152")) && (countGradedUnits(course_array, computerSoftwareArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, computerSoftwareArray) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		// Can apply EE284 or CS144 towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee284") && courseGraded(course_array, "cs144")) {
 			if ((countGradedCourses(course_array, computerSoftwareArray) - 1 >= SPECIALTY_COURSES_REQUIREMENT) && (countGradedUnits(course_array, computerSoftwareArray) - EE284_UNITS >= SPECIALTY_UNITS_REQUIREMENT)) {
@@ -398,7 +398,7 @@ function meetsSpecialty(course_array) {
 		} else {
 			return true;
 		}
-	} else if ((courseGraded(course_array, "ee102b") || courseGraded(course_array, "music320")) && (courseGraded(course_array, "ee109") || courseGraded(course_array, "ee265")) && (countGradedUnits(course_array, musicArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, musicArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	} else if ((courseGraded(course_array, "ee102b") || courseGraded(course_array, "music320")) && (courseGraded(course_array, "ee109") || courseGraded(course_array, "ee265")) && (countGradedUnits(course_array, musicArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, musicArray) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		// Can apply EE264 or EE265 towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee264") && courseGraded(course_array, "ee265")) {
 			// Can apply EE102B or MUSIC320 towards the Specialty requirement, but not both
@@ -420,7 +420,7 @@ function meetsSpecialty(course_array) {
 				return true;
 			}
 		}
-	} else if ((courseGraded(course_array, "ee102b")) && (courseGraded(course_array, "ee133") || courseGraded(course_array, "ee168") || courseGraded(course_array, "ee169") || courseGraded(course_array, "ee262") || courseGraded(course_array, "ee265")) && (countGradedUnits(course_array, signalProcessingCommunicationsAndControlsArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	} else if ((courseGraded(course_array, "ee102b")) && (courseGraded(course_array, "ee133") || courseGraded(course_array, "ee168") || courseGraded(course_array, "ee169") || courseGraded(course_array, "ee262") || courseGraded(course_array, "ee265")) && (countGradedUnits(course_array, signalProcessingCommunicationsAndControlsArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		// Can apply EE264 or EE265 towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee264") && courseGraded(course_array, "ee265")) {
 			if ((countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray) - 1 >= SPECIALTY_COURSES_REQUIREMENT) && (countGradedUnits(course_array, signalProcessingCommunicationsAndControlsArray) - EE264_UNITS >= SPECIALTY_UNITS_REQUIREMENT)) {
@@ -429,7 +429,7 @@ function meetsSpecialty(course_array) {
 		} else {
 			return true;
 		}
-	} else if ((courseGraded(course_array, "ee101b")) && (courseGraded(course_array, "ee134")) && (countGradedUnits(course_array, solidStatePhotonicsAndElectromagneticsArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, solidStatePhotonicsAndElectromagneticsArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	} else if ((courseGraded(course_array, "ee101b")) && (courseGraded(course_array, "ee134")) && (countGradedUnits(course_array, solidStatePhotonicsAndElectromagneticsArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, solidStatePhotonicsAndElectromagneticsArray) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		// EE141 can only count towards the Specialty requirement if not used to fulfill the EE Physics requirement
 		if (courseGraded(course_array, "ee141")) {
 			if ((countGradedCourses(course_array, solidStatePhotonicsAndElectromagneticsArray) - 1 >= SPECIALTY_COURSES_REQUIREMENT) && (countGradedUnits(course_array, solidStatePhotonicsAndElectromagneticsArray) - EE141_UNITS >= SPECIALTY_UNITS_REQUIREMENT)) {
@@ -440,7 +440,7 @@ function meetsSpecialty(course_array) {
 		} else {
 			return true;
 		}
-	} else if ((courseGraded(course_array, "ee101b") || courseGraded(course_array, "ee108b")) && (courseGraded(course_array, "ee134") || courseGraded(course_array, "ee152") || courseGraded(course_array, "ee168")) && (countGradedUnits(course_array, energyAndEnvironmentArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, energyAndEnvironmentArray) >= SPECIALTY_COURSES_REQUIREMENT) {
+	} else if ((courseGraded(course_array, "ee101b") || courseGraded(course_array, "ee108b")) && (courseGraded(course_array, "ee134") || courseGraded(course_array, "ee152") || courseGraded(course_array, "ee168")) && (countGradedUnits(course_array, energyAndEnvironmentArray) >= SPECIALTY_UNITS_REQUIREMENT) && (countGradedCourses(course_array, energyAndEnvironmentArray) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		// Can apply EE101B or EE108B towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee101b") && courseGraded(course_array, "ee108b")) {
 			if ((countGradedCourses(course_array, energyAndEnvironmentArray) - 1 >= SPECIALTY_COURSES_REQUIREMENT) && (countGradedUnits(course_array, energyAndEnvironmentArray) - EE101B_UNITS >= SPECIALTY_UNITS_REQUIREMENT)) {
