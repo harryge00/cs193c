@@ -127,7 +127,8 @@ function writePlan(array) {
 }
 
 function checkPlan(course_array) {
-	document.getElementById("math_science").style.color = meetsMathScience(course_array) ? "#57C315" : "red";
+	document.getElementById("math").style.color = meetsMath(course_array) ? "#57C315" : "red";
+	document.getElementById("science").style.color = meetsScience(course_array) ? "#57C315" : "red";
 	document.getElementById("tis").style.color = meetsTIS(course_array) ? "#57C315" : "red";
 	document.getElementById("wim").style.color = meetsWIM(course_array) ? "#57C315" : "red";
 	document.getElementById("fundamentals").style.color = meetsFundamentals(course_array) ? "#57C315" : "red";
@@ -267,7 +268,7 @@ function getUnits(string) {
 	return string.match(/\d\.\d(?=$| )/g)[0];
 }
 
-function meetsMathScience(course_array) {
+function meetsMath(course_array) {
 	var course_array_minus_ee102b = [];
 	for (var i = 0; i < course_array.length; i++) {
 		if (courseToString(course_array[i]) != 'ee102b') {
@@ -291,17 +292,22 @@ function meetsMathScience(course_array) {
 	if (!(courseGraded(course_array, "ee178") || courseGraded(course_array, "stats116") || courseGraded(course_array, "cs109"))) {
 		return false;
 	}
-	if (!((courseGraded(course_array, "physics41") && courseGraded(course_array, "physics43")) || (courseGraded(course_array, "physics61") && courseGraded(course_array, "physics63")))) {
-		return false;
-	}
-	if ((countGradedUnits(course_array, scienceArray) + uncountedScienceUnits(course_array)) < SCIENCE_UNITS_REQUIREMENT) {
-		return false;
-	}
 	if (meetsSpecialty(course_array_minus_ee102b)) {
 		if (countGradedUnits(course_array, mathArray) < MATH_UNITS_REQUIREMENT) {
 			return false;
 		}
 	} else if (countGradedUnits(course_array_minus_ee102b, mathArray) < MATH_UNITS_REQUIREMENT) {
+		return false;
+	}
+
+	return true;
+}
+
+function meetsScience(course_array) {
+	if (!((courseGraded(course_array, "physics41") && courseGraded(course_array, "physics43")) || (courseGraded(course_array, "physics61") && courseGraded(course_array, "physics63")))) {
+		return false;
+	}
+	if ((countGradedUnits(course_array, scienceArray) + uncountedScienceUnits(course_array)) < SCIENCE_UNITS_REQUIREMENT) {
 		return false;
 	}
 
