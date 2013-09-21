@@ -134,7 +134,6 @@ function checkPlan(course_array) {
 	document.getElementById("ee_core").style.color = meetsCore(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_physics").style.color = meetsPhysics(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_specialty").style.color = meetsSpecialty(course_array) ? "#57C315" : "red";
-	document.getElementById("ee_electives").style.color = meetsElectives(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_topics").style.color = meetsTopics(course_array) ? "#57C315" : "red";	
 }
 
@@ -444,17 +443,6 @@ function meetsSpecialty(course_array) {
 	} else {
 		return false;
 	}
-}
-
-function meetsCapstone(course_array) {
-for (var i = 0; i < course_array.length; i++) {
-		if (capstoneArray.indexOf(courseToString(course_array[i])) != -1) {
-			if (isLetterGrade(course_array[i].grade)) {
-				return true;
-			}
-		}
-	}
-	return false;
 }
 
 function meetsTopics(course_array) {
