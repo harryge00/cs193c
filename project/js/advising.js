@@ -8,7 +8,7 @@ var FUNDAMENTALS_COURSES_MAX = 5;
 var SPECIALTY_COURSES_REQUIREMENT = 4;
 var SPECIALTY_UNITS_REQUIREMENT = 14;
 var EE191_UNITS_MAX = 0;
-var EE_TOPICS_COURSE_NUMBER_MIN = 100;
+var ENGR_TOPICS_COURSE_NUMBER_MIN = 100;
 var EE101B_UNITS = 4;
 var EE102B_UNITS = 4;
 var EE108B_UNITS = 4;
@@ -134,7 +134,7 @@ function checkPlan(course_array) {
 	document.getElementById("ee_core").style.color = meetsCore(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_physics").style.color = meetsPhysics(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_specialty").style.color = meetsSpecialty(course_array) ? "#57C315" : "red";
-	document.getElementById("ee_topics").style.color = meetsTopics(course_array) ? "#57C315" : "red";	
+	document.getElementById("engr_topics").style.color = meetsTopics(course_array) ? "#57C315" : "red";	
 }
 
 function parseCoursesArray(courserank_text) {
@@ -462,7 +462,7 @@ function countGradedEETopicsUnits(course_array) {
 	var numUnits = 0;
 	for (var i = 0; i < course_array.length; i++) {
 		//Note that EE178 cannot count towards the Topics requirement if it is already counted towards the Math and Science requirement
-		if ((course_array[i].subject == "ee") && (parseInt(course_array[i].number) >= EE_TOPICS_COURSE_NUMBER_MIN)) {
+		if ((course_array[i].subject == "ee") && (parseInt(course_array[i].number) >= ENGR_TOPICS_COURSE_NUMBER_MIN)) {
 			if (isLetterGrade(course_array[i].grade)) {
 				if (courseToString(course_array[i]) == "ee178") {
 					if(courseGraded(course_array, "stats116") || courseGraded(course_array, "math151") || courseGraded(course_array, "cme106") || courseGraded(course_array, "engr155c") || courseGraded(course_array, "cs109")) {
