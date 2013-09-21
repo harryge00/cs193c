@@ -1,14 +1,14 @@
 // Global variables
 var SCIENCE_UNITS_REQUIREMENT = 12;
-var MATH_SCIENCE_UNITS_REQUIREMENT = 45;
-var TOPICS_UNITS_REQUIREMENT = 68;
+var MATH_UNITS_REQUIREMENT = 28;
+var TOPICS_UNITS_REQUIREMENT = 60;
 var UNIVERSITY_UNITS_REQUIREMENT = 180;
 var FUNDAMENTALS_COURSES_REQUIREMENT = 3;
 var FUNDAMENTALS_COURSES_MAX = 5;
 var SPECIALTY_COURSES_REQUIREMENT = 4;
 var SPECIALTY_UNITS_REQUIREMENT = 14;
 var EE191_UNITS_MAX = 0;
-var EE_TOPICS_COURSE_NUMBER_MIN = 100;
+var ENGR_TOPICS_COURSE_NUMBER_MIN = 100;
 var EE101B_UNITS = 4;
 var EE102B_UNITS = 4;
 var EE108B_UNITS = 4;
@@ -127,7 +127,8 @@ function writePlan(array) {
 }
 
 function checkPlan(course_array) {
-	document.getElementById("math_science").style.color = meetsMathScience(course_array) ? "#57C315" : "red";
+	document.getElementById("math").style.color = meetsMath(course_array) ? "#57C315" : "red";
+	document.getElementById("science").style.color = meetsScience(course_array) ? "#57C315" : "red";
 	document.getElementById("tis").style.color = meetsTIS(course_array) ? "#57C315" : "red";
 	document.getElementById("wim").style.color = meetsWIM(course_array) ? "#57C315" : "red";
 	document.getElementById("fundamentals").style.color = meetsFundamentals(course_array) ? "#57C315" : "red";
@@ -135,7 +136,7 @@ function checkPlan(course_array) {
 	document.getElementById("ee_physics").style.color = meetsPhysics(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_specialty").style.color = meetsSpecialty(course_array) ? "#57C315" : "red";
 	document.getElementById("ee_capstone").style.color = meetsCapstone(course_array) ? "#57C315" : "red";
-	document.getElementById("ee_topics").style.color = meetsTopics(course_array) ? "#57C315" : "red";	
+	document.getElementById("engr_topics").style.color = meetsTopics(course_array) ? "#57C315" : "red";	
 }
 
 function parseCoursesArray(courserank_text) {
@@ -268,32 +269,51 @@ function getUnits(string) {
 	return string.match(/\d\.\d(?=$| )/g)[0];
 }
 
-function meetsMathScience(course_array) {
+function meetsMath(course_array) {
+	var course_array_minus_ee102b = [];
+	for (var i = 0; i < course_array.length; i++) {
+		if (courseToString(course_array[i]) != "ee102b") {
+			course_array_minus_ee102b.push(course_array[i]);
+		}
+	}
 	if (!((courseGraded(course_array, "math41") || courseGraded(course_array, "math41a")) && (courseGraded(course_array,"math42") || courseGraded(course_array,"math42a")))) {
 		return false;
 	}
-	if (!(((courseGraded(course_array, "math51") || (courseGraded(course_array, "math51a"))) && (courseGraded(course_array, "math52") || courseGraded(course_array, "math52a"))) || ((courseGraded(course_array, "cme100") || courseGraded(course_array, "cme100a")) && ((courseGraded(course_array, "cme104") || courseGraded(course_array, "cme104a")) || courseGraded(course_array, "engr155b"))))) {
+	if (!((courseGraded(course_array, "math53") || (courseGraded(course_array, "math53a"))) || (courseGraded(course_array, "cme102") || courseGraded(course_array, "cme102a")))) {
 		return false;
 	}
-	if (!((courseGraded(course_array, "math53") || courseGraded(course_array, "math53a")) || ((courseGraded(course_array, "cme102") || courseGraded(course_array, "cme102a")) || courseGraded(course_array, "engr155a")))) {
+	if (!((courseGraded(course_array, "math52") || (courseGraded(course_array, "math52a"))) || (courseGraded(course_array, "cme100") || courseGraded(course_array, "cme100a")))) {
 		return false;
 	}
-	if (!(courseGraded(course_array, "ee178") || courseGraded(course_array, "stats116") || courseGraded(course_array, "math151") || (courseGraded(course_array, "cme106") || courseGraded(course_array, "engr155c")) || courseGraded(course_array, "cs109"))) {
+	if (!(courseGraded(course_array, "ee141") || courseGraded(course_array, "cme104") || courseGraded(course_array, "math113") || courseGraded(course_array, "cs103"))) {
+		if (!((courseGraded(course_array, "ee102b")) && meetsSpecialty(course_array_minus_ee102b))) {
+			return false;
+		}
+	}
+	if (!(courseGraded(course_array, "ee178") || courseGraded(course_array, "stats116") || courseGraded(course_array, "cs109"))) {
 		return false;
 	}
-	if (!((courseGraded(course_array, "physics41") && courseGraded(course_array, "physics43")) || (courseGraded(course_array, "physics61") && courseGraded(course_array, "physics63")))) {
-		return false;
-	}
-	if ((countGradedUnits(course_array, scienceArray) + uncountedScienceUnits(course_array)) < SCIENCE_UNITS_REQUIREMENT) {
-		return false;
-	}
-	if (((countGradedUnits(course_array, scienceArray) + uncountedScienceUnits(course_array)) + countGradedUnits(course_array, mathArray)) < MATH_SCIENCE_UNITS_REQUIREMENT) {
+	if (meetsSpecialty(course_array_minus_ee102b)) {
+		if ((countGradedUnits(course_array, mathArray)) < MATH_UNITS_REQUIREMENT) {
+			return false;
+		}
+	} else if ((countGradedUnits(course_array_minus_ee102b, mathArray)) < MATH_UNITS_REQUIREMENT) {
 		return false;
 	}
 
 	return true;
 }
 
+function meetsScience(course_array) {
+	if (!((courseGraded(course_array, "physics41") && courseGraded(course_array, "physics43")) || (courseGraded(course_array, "physics61") && courseGraded(course_array, "physics63")))) {
+		return false;
+	}
+	if (((countGradedUnits(course_array, scienceArray)) + uncountedScienceUnits(course_array)) < SCIENCE_UNITS_REQUIREMENT) {
+		return false;
+	}
+
+	return true;
+}
 
 function meetsTIS(course_array) {
 	for (var i = 0; i < course_array.length; i++) {
@@ -462,7 +482,7 @@ function countGradedEETopicsUnits(course_array) {
 	var numUnits = 0;
 	for (var i = 0; i < course_array.length; i++) {
 		//Note that EE178 cannot count towards the Topics requirement if it is already counted towards the Math and Science requirement
-		if ((course_array[i].subject == "ee") && (parseInt(course_array[i].number) >= EE_TOPICS_COURSE_NUMBER_MIN)) {
+		if ((course_array[i].subject == "ee") && (parseInt(course_array[i].number) >= ENGR_TOPICS_COURSE_NUMBER_MIN)) {
 			if (isLetterGrade(course_array[i].grade)) {
 				if (courseToString(course_array[i]) == "ee178") {
 					if(courseGraded(course_array, "stats116") || courseGraded(course_array, "math151") || courseGraded(course_array, "cme106") || courseGraded(course_array, "engr155c") || courseGraded(course_array, "cs109")) {
