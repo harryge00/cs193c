@@ -277,7 +277,10 @@ function meetsMathScience(course_array) {
 	if (!((courseGraded(course_array, "math41") || courseGraded(course_array, "math41a")) && (courseGraded(course_array,"math42") || courseGraded(course_array,"math42a")))) {
 		return false;
 	}
-	if (!(((courseGraded(course_array, "math53") || (courseGraded(course_array, "math53a"))) && (courseGraded(course_array, "math52") || courseGraded(course_array, "math52a"))) || ((courseGraded(course_array, "cme100") || courseGraded(course_array, "cme100a")) && ((courseGraded(course_array, "cme102") || courseGraded(course_array, "cme102a")))))) {
+	if (!((courseGraded(course_array, "math53") || (courseGraded(course_array, "math53a"))) || (courseGraded(course_array, "cme102") || courseGraded(course_array, "cme102a")))) {
+		return false;
+	}
+	if (!((courseGraded(course_array, "math52") || (courseGraded(course_array, "math52a"))) || (courseGraded(course_array, "cme100") || courseGraded(course_array, "cme100a")))) {
 		return false;
 	}
 	if (!(courseGraded(course_array, "ee141") || courseGraded(course_array, "cme104") || courseGraded(course_array, "math113") || courseGraded(course_array, "cs103"))) {
