@@ -373,7 +373,7 @@ function meetsPhysics(course_array) {
 }
 
 function meetsSpecialty(course_array) {
-	if ((courseGraded(course_array, "ee101b") || courseGraded(course_array, "ee102b")) && (courseGraded(course_array, "ee134") || courseGraded(course_array, "ee168") || courseGraded(course_array, "ee169")) && ((countGradedUnits(course_array, bioelectronicsAndBioimagingArray)) >= SPECIALTY_UNITS_REQUIREMENT) && ((countGradedCourses(course_array, bioelectronicsAndBioimagingArray)) >= SPECIALTY_COURSES_REQUIREMENT)) {
+	if ((courseGraded(course_array, "ee101b") || courseGraded(course_array, "ee102b")) && (courseGraded(course_array, "ee134") || courseGraded(course_array, "ee168")) && ((countGradedUnits(course_array, bioelectronicsAndBioimagingArray)) >= SPECIALTY_UNITS_REQUIREMENT) && ((countGradedCourses(course_array, bioelectronicsAndBioimagingArray)) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		// Can apply EE101B or EE102B towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee101b") && courseGraded(course_array, "ee102b")) {
 			if ((((countGradedCourses(course_array, bioelectronicsAndBioimagingArray)) - 1) >= SPECIALTY_COURSES_REQUIREMENT) && (((countGradedUnits(course_array, bioelectronicsAndBioimagingArray)) - EE101B_UNITS) >= SPECIALTY_UNITS_REQUIREMENT)) {
@@ -417,7 +417,7 @@ function meetsSpecialty(course_array) {
 				return true;
 			}
 		}
-	} else if ((courseGraded(course_array, "ee102b")) && (courseGraded(course_array, "ee133") || courseGraded(course_array, "ee168") || courseGraded(course_array, "ee169") || courseGraded(course_array, "ee262") || courseGraded(course_array, "ee265")) && ((countGradedUnits(course_array, signalProcessingCommunicationsAndControlsArray)) >= SPECIALTY_UNITS_REQUIREMENT) && ((countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray)) >= SPECIALTY_COURSES_REQUIREMENT)) {
+	} else if ((courseGraded(course_array, "ee102b")) && (courseGraded(course_array, "ee133") || courseGraded(course_array, "ee168") || courseGraded(course_array, "ee262") || courseGraded(course_array, "ee265")) && ((countGradedUnits(course_array, signalProcessingCommunicationsAndControlsArray)) >= SPECIALTY_UNITS_REQUIREMENT) && ((countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray)) >= SPECIALTY_COURSES_REQUIREMENT)) {
 		// Can apply EE264 or EE265 towards the Specialty requirement, but not both
 		if (courseGraded(course_array, "ee264") && courseGraded(course_array, "ee265")) {
 			if ((((countGradedCourses(course_array, signalProcessingCommunicationsAndControlsArray)) - 1) >= SPECIALTY_COURSES_REQUIREMENT) && (((countGradedUnits(course_array, signalProcessingCommunicationsAndControlsArray)) - EE264_UNITS) >= SPECIALTY_UNITS_REQUIREMENT)) {
