@@ -34,7 +34,7 @@ var scienceNoLetterGradeArray = ["physics42", "physics44", "physics46", "physics
 var tisArray = ["sts101", "sts201", "engr130", "sts101q", "sts110", "sts112", "sts115", "bioe131", "cs181", "cs181w", "engr145", "humbio174", "ms&e181", "ms&e193", "polisci114s", "publpol194"];
 
 // Array of all courses that fulfill the EE WIM requirement
-var wimArray = ["ee109", "ee133", "ee134", "ee168", "ee191w", "ee262", "cs194w", "engr102e"];
+var wimArray = ["ee109", "ee133", "ee134", "ee168", "ee191w", "cs194w", "engr102e"];
 
 // Array of all courses that fulfill the EE core requirement
 var coreArray = ["ee100", "ee101a", "ee102a", "ee108a"];
@@ -56,14 +56,14 @@ var computerSoftwareArray = ["ee108b", "ee152", "cs107", "cs108", "cs110", "cs14
 
 var musicArray = ["ee102b", "ee109", "ee122a", "ee264", "ee265", "music256a", "music256b", "music320", "music420a", "music420b", "music421a", "music422", "music424"];
 
-var energyAndEnvironmentArray = ["ee101b", "ee108b", "ee116", "ee140", "ee151", "ee152", "ee168", "ee134", "ee263", "ee292j", "ee293a", "ee293b", "cee173a", "cee176a", "cee176b", "engr105", "engr205", "me185", "matsci156"];
+var energyAndEnvironmentArray = ["ee101b", "ee108b", "ee116", "ee151", "ee152", "ee168", "ee134", "ee263", "ee292j", "ee293a", "ee293b", "cee173a", "cee176a", "cee176b", "engr105", "engr205", "me185", "matsci156"];
 
 var signalProcessingCommunicationsAndControlsArray = ["ee102b", "ee124", "ee133", "ee168", "ee169", "ee179", "ee261", "ee262", "ee263", "ee264", "ee265", "ee276", "ee278b", "ee279", "engr105", "engr205"];
 
-var solidStatePhotonicsAndElectromagneticsArray = ["ee101b", "ee116", "ee134", "ee136", "ee141", "ee216", "ee222", "ee223", "ee228", "ee235", "ee242", "ee247", "ee268"];
+var solidStatePhotonicsAndElectromagneticsArray = ["ee101b", "ee116", "ee134", "ee136", "ee141", "ee216", "ee222", "ee223", "ee228", "ee236a", "ee236b", "ee242", "ee247"];
 
 // Array of all courses that fulfill the EE Capstone Design requirement
-var capstoneArray = ["ee109", "ee133", "ee134", "ee152", "ee168", "ee169", "ee262", "ee265", "cs194w"];
+var capstoneArray = ["ee109", "ee133", "ee134", "ee152", "ee168", "ee262", "ee265", "cs194w"];
 
 //Array of all EE cognate courses (from MS degree website + cs193 classes)
 var cognateArray = ["cee173a", "cee176a", "cee176b", "engr105", "engr205", "me185", "matsci156", "aa244", "aa251", "aa272c", "appphys202", "appphys203", "appphys207", "appphys208", "appphys227", "appphys272", "appphys273", "appphys304", "appphys305", "appphys387", "bioe334", "cs107", "cs108", "cs110", "cs140", "cs143", "cs144", "cs148", "cs193c", "cs193d", "cs193g", "cs193p", "cs193s", "cs194", "cs205a", "cs221", "cs231a", "cs228", "cs229", "cs229a", "cs240", "cs242", "cs243", "cs244", "cs244e", "cs245", "cs248", "cs255", "cs315a", "cs315b", "cs321", "cs343", "cs344", "cs347", "cs348a", "cs348b", "cs448b", "engr105", "engr205", "engr206", "engr207a", "engr207b", "engr209a", "engr210b", "engr240", "engr341", "geophys265", "matsci199", "matsci209", "matsci316", "matsci323", "matsci343", "matsci347", "me358", "ms&e237", "ms&e251", "ms&e310", "ms&e311", "ms&e313", "ms&e321", "ms&e322", "ms&e336", "ms&e338", "ms&e339", "ms&e351", "music420a", "music421a", "music422", "music424", "psych221", "rad226", "stats315a", "stats315b", "stats375"];
@@ -279,10 +279,7 @@ function meetsMath(course_array) {
 	if (!((courseGraded(course_array, "math41") || courseGraded(course_array, "math41a")) && (courseGraded(course_array,"math42") || courseGraded(course_array,"math42a")))) {
 		return false;
 	}
-	if (!((courseGraded(course_array, "math53") || (courseGraded(course_array, "math53a"))) || (courseGraded(course_array, "cme102") || courseGraded(course_array, "cme102a")))) {
-		return false;
-	}
-	if (!((courseGraded(course_array, "math52") || (courseGraded(course_array, "math52a"))) || (courseGraded(course_array, "cme100") || courseGraded(course_array, "cme100a")))) {
+	if (!(((courseGraded(course_array, "math53") || (courseGraded(course_array, "math53a"))) && (courseGraded(course_array, "math52") || courseGraded(course_array, "math52a"))) || ((courseGraded(course_array, "cme100") || courseGraded(course_array, "cme100a")) && ((courseGraded(course_array, "cme102") || courseGraded(course_array, "cme102a")))))) {
 		return false;
 	}
 	if (!(courseGraded(course_array, "ee141") || courseGraded(course_array, "cme104") || courseGraded(course_array, "math113") || courseGraded(course_array, "cs103"))) {
