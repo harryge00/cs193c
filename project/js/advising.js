@@ -354,6 +354,9 @@ function meetsCore(course_array) {
 			return false;
 		}
 	}
+	if (!(meetsPhysics(course_array))) {
+		return false;
+	}
 	return true;
 }
 
