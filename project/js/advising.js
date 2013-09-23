@@ -282,12 +282,12 @@ function meetsMath(course_array) {
 	if (!(((courseGraded(course_array, "math53") || (courseGraded(course_array, "math53a"))) && (courseGraded(course_array, "math52") || courseGraded(course_array, "math52a"))) || ((courseGraded(course_array, "cme100") || courseGraded(course_array, "cme100a") || courseGraded("engr154")) && ((courseGraded(course_array, "cme102") || courseGraded(course_array, "cme102a") || courseGraded("cme155a")))))) {
 		return false;
 	}
-	if (!(courseGraded(course_array, "ee141") || courseGraded(course_array, "cme104") || courseGraded(course_array, "math113") || courseGraded(course_array, "cs103"))) {
+	if (!(courseGraded(course_array, "ee141") || (courseGraded(course_array, "cme104") || courseGraded("engr155b")) || courseGraded(course_array, "math113") || courseGraded(course_array, "cs103"))) {
 		if (!((courseGraded(course_array, "ee102b")) && meetsSpecialty(course_array_minus_ee102b))) {
 			return false;
 		}
 	}
-	if (!(courseGraded(course_array, "ee178") || courseGraded(course_array, "stats116") || courseGraded(course_array, "cs109"))) {
+	if (!(courseGraded(course_array, "ee178") || courseGraded(course_array, "cs109"))) {
 		return false;
 	}
 	if (meetsSpecialty(course_array_minus_ee102b)) {
