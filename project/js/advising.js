@@ -37,7 +37,7 @@ var tisArray = ["sts101", "sts201", "engr130", "sts101q", "sts110", "sts112", "s
 var wimArray = ["ee109", "ee133", "ee134", "ee168", "ee191w", "cs194w", "engr102e"];
 
 // Array of all courses that fulfill the EE core requirement
-var coreArray = ["ee100", "ee100x", "ee101a", "ee102a", "ee108a"];
+var coreArray = ["ee100", "ee101a", "ee102a", "ee108a"];
 
 // Array of all courses that fulfill the SOE Engineering Fundamentals requirement
 var fundamentalsArray = ["engr10", "engr14", "engr15", "engr20", "cheme20", "engr25b", "cheme25b", "engr25e", "cheme25e", "engr30", "engr40", "engr40n", "engr40p", "ee41", "engr50", "engr50e", "engr50m", "engr60", "engr62", "ms&e111","engr70b", "cs106b", "engr70x", "cs106x", "engr80", "engr90", "cee70"];
